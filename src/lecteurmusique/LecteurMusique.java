@@ -15,6 +15,13 @@ public class LecteurMusique {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        Connexion cnx = new Connexion();
+        cnx.getSon();
+    
+        Connexion cnx2 = new Connexion("jeremy", "jeremy");
+        cnx2.getArtiste();
+        
     }
     
 }
