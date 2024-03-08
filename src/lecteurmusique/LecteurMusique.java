@@ -6,7 +6,7 @@ package lecteurmusique;
 
 /**
  *
- * @author jerem
+ * @author jeremy Hoarau
  */
 public class LecteurMusique {
 
@@ -17,7 +17,7 @@ public class LecteurMusique {
         // TODO code application logic here
         
         Connexion cnx = new Connexion();
-        cnx.getSon();
+        cnx.getMusique();
     
         Connexion cnx2 = new Connexion("jeremy", "jeremy");
         cnx2.getArtiste();
