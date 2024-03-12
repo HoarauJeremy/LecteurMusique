@@ -33,11 +33,13 @@ public class SignUpController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         signupButton.setOnAction((ActionEvent event) -> {
-            if (!tf_email.getText().trim().isEmpty() && !tf_username.getText().trim().isEmpty() && !pf_password.getText().isEmpty()) {
+            if (!tf_email.getText().trim().isEmpty() && !tf_username.getText().trim().isEmpty() && !pf_password.getText().trim().isEmpty()) {
                 Connexion.signUpUser(event, tf_username.getText(), tf_email.getText(), pf_password.getText());            
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -24,27 +24,15 @@ import lecteurmusique.controllers.LoggedInController;
 public class Connexion {
     
     protected String url, user, password;
-
-    /**
-     * Constructs a connection with the database.
-     */
-    public Connexion() {
-        this.url = "jdbc:mysql://localhost:3306/dizzer&car";
-        this.user = "jeremy";
-        this.password = "jeremy";
-    }
+    /*
+    private static final String JDBC_URL = DatabaseConfig.getDbUrl();
+    private static final String USER = DatabaseConfig.getDbUser();
+    private static final String PASSSWORD = DatabaseConfig.getDbPassword();
+    */
     
-    /**
-     * Construct a connection with the database for a specifics user.
-     *
-     * @param user Name of the user
-     * @param password Password of the user
-     */
-    public Connexion(String user, String password) {
-        this.url = "jdbc:mysql://localhost:3306/dizzer&car";
-        this.user = user;
-        this.password = password;
-    }
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/rezeed";
+    private static final String USER = "jeremy";
+    private static final String PASSSWORD = "jeremy";
 
     /**
      * Fonction pour récuperée les artistes dans la base de données <b>MySQL</b>.
@@ -139,7 +127,13 @@ public class Connexion {
         return null;
     }
     
-    
+    /**
+     *
+     * @param event
+     * @param fxmlFile
+     * @param title
+     * @param username
+     */
     public static void changeScene(ActionEvent event, String fxmlFile, String title, String username) {
         Parent root = null;
         
@@ -166,6 +160,39 @@ public class Connexion {
         stage.show();
     }
     
+    public static void changeSceneToProfile(ActionEvent event, String fxmlFile, String title, String user_name, String user_email) {
+        Parent root = null;
+        
+        if (user_name != null && user_email != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
+                root = loader.load();
+                LoggedInController loggedInController = loader.getController();
+                loggedInController.setUserInformation(user_name);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                root = FXMLLoader.load(Connexion.class.getResource(fxmlFile));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    
+    /**
+     *
+     * @param event
+     * @param user_name
+     * @param user_email
+     * @param user_password
+     */
     public static void signUpUser(ActionEvent event, String user_name, String user_email, String user_password) {
         Connection connection = null;
         PreparedStatement psInsert = null;
@@ -173,24 +200,25 @@ public class Connexion {
         ResultSet resultSet = null;
         
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rezeed", "jeremy", "jeremy");
+            connection = DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
             psCheckUserExists = connection.prepareStatement("SELECT * FROM utilisateur WHERE nom = ?");
             psCheckUserExists.setString(1, user_name);
             resultSet = psCheckUserExists.executeQuery();
             
             if (resultSet.isBeforeFirst()) {
-                System.out.println("User already exists !");
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("You cannot use this username.");
-                alert.show();
+                showAlert(Alert.AlertType.ERROR, "You cannot use this username.");
             } else {
-                psInsert = connection.prepareStatement("INSERT INTO utilisateur (nom, email, password) VALUES (?, ?, ?)");
-                psInsert.setString(1, user_name);
-                psInsert.setString(2, user_email);
-                psInsert.setString(3, user_password);
-                psInsert.executeUpdate();
-            
-                changeScene(event, "logged-in.fxml", "Welcome!", user_name);
+                if (user_password.length() < 12) {
+                    showAlert(Alert.AlertType.ERROR, "Votre mot de passe doit contenir au minimun 12 caractères.");
+                } else {
+                    psInsert = connection.prepareStatement("INSERT INTO utilisateur (nom, email, password) VALUES (?, ?, ?)");
+                    psInsert.setString(1, user_name);
+                    psInsert.setString(2, user_email);
+                    psInsert.setString(3, user_password);
+                    psInsert.executeUpdate();
+
+                    changeScene(event, "logged-in.fxml", "Welcome!", user_name);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -226,37 +254,36 @@ public class Connexion {
         }
     }
     
+    /**
+     *
+     * @param event
+     * @param user_email
+     * @param user_password
+     */
     public static void logInUser(ActionEvent event, String user_email, String user_password) {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rezeed", "jeremy", "jeremy");
+            connection = DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
             ps = connection.prepareStatement("SELECT * FROM utilisateur WHERE email = ?");
             ps.setString(1, user_email);
             resultSet = ps.executeQuery();
             
             if (!resultSet.isBeforeFirst()) {
                 System.out.println("User not found !");
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
-                alert.show();
+                showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
             } else {
 
                 while (resultSet.next()) {
                     String retrievedName = resultSet.getString("nom");
                     String retrievedPassword = resultSet.getString("password");
                     
-                    System.out.println(resultSet.getString("email"));
-
-                    
                     if (retrievedPassword.equals(user_password)) {
-                        changeScene(event, "logged-in.fxml", "Welcome!", retrievedName);   
+                        changeScene(event, "homePage.fxml", "Welcome!", null);   
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
-                        alert.show();
+                        showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
                     }
                 }
             }
@@ -285,5 +312,114 @@ public class Connexion {
                 }
             }
         }
+    }
+    
+    public static void showProfileUser(ActionEvent event, int user_id) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        
+        String user_email = null;
+        String user_name = null;
+        
+        try {
+            connection = DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
+            ps = connection.prepareStatement("SELECT * FROM utilisateur WHERE id = ?");
+            ps.setInt(1, user_id);
+            resultSet = ps.executeQuery();
+            
+            if (resultSet.isBeforeFirst()) {
+                showAlert(Alert.AlertType.ERROR, "msg temporaire");
+            } else {            
+                changeSceneToProfile(event, "logged-in.fxml", "Welcome!", user_name, user_email);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    
+    public static void showPlaylistUser(ActionEvent event) {
+        
+    }
+    
+    public static void showSongGender() {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            ps = connection.prepareStatement("SELECT * FROM genre");
+            resultSet = ps.executeQuery();
+            
+            /*if (resultSet.next()) {
+                
+            }*/
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        
+    }
+    
+    /**
+     * Function pour afficher des alertes.
+     * 
+     * @param alertType Definit le type de l'alerte (<i><strong>CONFIRMATION, ERROR, INFORMATION, NONE, WARNING<strong></i>).
+     * @param message Affiche un message sur l'alerte.
+     */
+    private static void showAlert(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType);
+        //alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+    }
+    
+    private static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(USER, USER, PASSSWORD);
     }
 }

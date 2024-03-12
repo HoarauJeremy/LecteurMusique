@@ -34,10 +34,18 @@ public class LoggedInController implements Initializable {
         
     }   
     
+    /**
+     *
+     * @param username
+     */
     public void setUserInformation(String username) {
         name_label.setText(username);
     }
     
+    /**
+     *
+     * @param event
+     */
     public void logout(ActionEvent event) {
         Connexion.changeScene(event, "ConnectionPage.fxml", "Log in!", null);
     }
