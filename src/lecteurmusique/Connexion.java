@@ -324,13 +324,18 @@ public class Connexion {
         
         try {
             connection = DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
-            ps = connection.prepareStatement("SELECT * FROM utilisateur WHERE id = ?");
+            ps = connection.prepareStatement("SELECT * FROM utilisateur WHERE idUser = ?");
             ps.setInt(1, user_id);
             resultSet = ps.executeQuery();
             
             if (resultSet.isBeforeFirst()) {
                 showAlert(Alert.AlertType.ERROR, "msg temporaire");
-            } else {            
+            } else {
+                while (resultSet.next()) {
+                    user_name = resultSet.getString("nom");
+                    user_email = resultSet.getString("email");
+                }
+                
                 changeSceneToProfile(event, "logged-in.fxml", "Welcome!", user_name, user_email);
             }
         } catch (SQLException e) {
@@ -360,8 +365,51 @@ public class Connexion {
         }
     }
     
-    public static void showPlaylistUser(ActionEvent event) {
+    public static void showPlaylistUser(ActionEvent event, int user_id) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
         
+        try {
+            connection = DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
+            ps = connection.prepareStatement("SELECT * FROM utilisateur u INNER JOIN playlist p ON u.idUser = p.idUser WHERE u.idUser = ?");
+            ps.setInt(1, user_id);
+            resultSet = ps.executeQuery();
+            
+            if (resultSet.isBeforeFirst()) {
+                showAlert(Alert.AlertType.ERROR, "msg temporaire");
+            } else {
+                while (resultSet.next()) {
+                    
+                }
+                
+                changeSceneToProfile(event, "logged-in.fxml", "Welcome!", user_name, user_email);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
     
     public static void showSongGender() {
