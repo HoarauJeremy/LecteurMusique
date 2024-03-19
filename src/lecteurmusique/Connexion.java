@@ -186,6 +186,32 @@ public class Connexion {
         stage.show();
     }
     
+    public static void changeSceneToPlaylist(ActionEvent event, String fxmlFile, String title, int idPlaylist, String nom) {
+        Parent root = null;
+        
+        if (idPlaylist != null && nom != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
+                root = loader.load();
+                // PlaylistController playlistController = loader.getController();
+                // playlistController.setPlaylistInformation(idPlaylist, nom);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                root = FXMLLoader.load(Connexion.class.getResource(fxmlFile));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    
     /**
      *
      * @param event
@@ -372,7 +398,7 @@ public class Connexion {
         
         try {
             connection = DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
-            ps = connection.prepareStatement("SELECT * FROM utilisateur u INNER JOIN playlist p ON u.idUser = p.idUser WHERE u.idUser = ?");
+            ps = connection.prepareStatement("SELECT p.* FROM utilisateur u INNER JOIN playlist p ON u.idUser = p.idUser WHERE u.idUser = ?");
             ps.setInt(1, user_id);
             resultSet = ps.executeQuery();
             
@@ -380,10 +406,11 @@ public class Connexion {
                 showAlert(Alert.AlertType.ERROR, "msg temporaire");
             } else {
                 while (resultSet.next()) {
-                    
+                    String idPlaylist = resultSet.getString(1);
+                    String nom = resultSet.getString(2);
                 }
                 
-                changeSceneToProfile(event, "logged-in.fxml", "Welcome!", user_name, user_email);
+                changeSceneToPlaylist(event, "logged-in.fxml", "Welcome!", 0, null);
             }
         } catch (SQLException e) {
             e.printStackTrace();
