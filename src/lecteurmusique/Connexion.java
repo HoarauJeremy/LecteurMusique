@@ -495,6 +495,6 @@ public class Connexion {
     }
     
     private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(USER, USER, PASSSWORD);
+        return DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
     }
 }
