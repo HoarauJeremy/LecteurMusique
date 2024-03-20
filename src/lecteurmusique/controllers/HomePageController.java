@@ -25,12 +25,14 @@ public class HomePageController implements Initializable {
         // TODO
     }
     
-    public void showPlaylist() {
+    public void showPlaylist(ActionEvent event) {
         System.out.println("PLAYLIST");
+        Connexion.showPlaylistUser(event, 0);
     }
     
-    public void showGender() {
+    public void showGender(ActionEvent event) {
         System.out.println("GENRE");
+        Connexion.showSongGender(event);
     }
     
     public void showProfile(ActionEvent event) {
