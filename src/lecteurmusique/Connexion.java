@@ -142,7 +142,7 @@ public class Connexion {
                 FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
                 root = loader.load();
                 LoggedInController loggedInController = loader.getController();
-                loggedInController.setUserInformation(username);
+                loggedInController.setUserInformation(username, null);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -168,7 +168,7 @@ public class Connexion {
                 FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
                 root = loader.load();
                 LoggedInController loggedInController = loader.getController();
-                loggedInController.setUserInformation(user_name);
+                loggedInController.setUserInformation(user_name, user_email);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -189,7 +189,7 @@ public class Connexion {
     public static void changeSceneToPlaylist(ActionEvent event, String fxmlFile, String title, int idPlaylist, String nom) {
         Parent root = null;
         
-        if (idPlaylist != null && nom != null) {
+        if (nom != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
                 root = loader.load();
@@ -354,7 +354,7 @@ public class Connexion {
             ps.setInt(1, user_id);
             resultSet = ps.executeQuery();
             
-            if (resultSet.isBeforeFirst()) {
+            if (!resultSet.isBeforeFirst()) {
                 showAlert(Alert.AlertType.ERROR, "msg temporaire");
             } else {
                 while (resultSet.next()) {
@@ -439,7 +439,7 @@ public class Connexion {
         }
     }
     
-    public static void showSongGender() {
+    public static void showSongGender(ActionEvent event) {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
@@ -449,9 +449,14 @@ public class Connexion {
             ps = connection.prepareStatement("SELECT * FROM genre");
             resultSet = ps.executeQuery();
             
-            /*if (resultSet.next()) {
+            if (resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    resultSet.getString(1);
+                    resultSet.getString(2);
+                }
                 
-            }*/
+                changeScene(event, "genre.fxml", "Genre", null);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

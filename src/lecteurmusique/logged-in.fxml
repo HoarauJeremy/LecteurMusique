@@ -26,5 +26,10 @@
             <Font name="Arial" size="20.0" />
          </font>
       </Button>
+      <Label fx:id="Fname_label" alignment="CENTER" contentDisplay="CENTER" layoutX="226.0" layoutY="221.0" prefHeight="32.0" prefWidth="450.0" text="Fname">
+         <font>
+            <Font name="Arial" size="28.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

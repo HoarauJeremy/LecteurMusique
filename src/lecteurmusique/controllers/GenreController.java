@@ -6,36 +6,31 @@ package lecteurmusique.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import lecteurmusique.Connexion;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 
 /**
  * FXML Controller class
  *
  * @author jerem
  */
-public class HomePageController implements Initializable {
+public class GenreController implements Initializable {
+    
+    @FXML
+    private Button button1, button2, button3, button4, button5, button6;
+    
+    @FXML
+    private GridPane gridPane;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
-    
-    public void showPlaylist() {
-        System.out.println("PLAYLIST");
-    }
-    
-    public void showGender() {
-        System.out.println("GENRE");
-    }
-    
-    public void showProfile(ActionEvent event) {
-        System.out.println("PROFILE");
-        Connexion.showProfileUser(event, 1);
-    }
+        
+        
+    }    
     
 }

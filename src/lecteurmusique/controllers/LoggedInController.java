@@ -26,8 +26,13 @@ public class LoggedInController implements Initializable {
     @FXML
     private Label name_label;
     
+    @FXML 
+    private Label Fname_label;
+    
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -37,9 +42,11 @@ public class LoggedInController implements Initializable {
     /**
      *
      * @param username
+     * @param Fname
      */
-    public void setUserInformation(String username) {
+    public void setUserInformation(String username, String Fname) {
         name_label.setText(username);
+        Fname_label.setText(Fname);
     }
     
     /**
