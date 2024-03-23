@@ -23,11 +23,9 @@ import lecteurmusique.controllers.LoggedInController;
  */
 public class Connexion {
     
-    protected String url, user, password;
-    
     private static final String JDBC_URL = DatabaseConfig.getDbUrl();
     private static final String USER = DatabaseConfig.getDbUser();
-    private static final String PASSSWORD = DatabaseConfig.getDbPassword();
+    private static final String PASSWORD = DatabaseConfig.getDbPassword();
 
     /**
      * Fonction pour récuperée les artistes dans la base de données <b>MySQL</b>.
@@ -36,7 +34,7 @@ public class Connexion {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             
-            try (Connection cnct = DriverManager.getConnection(url, user, password)) {
+            try (Connection cnct = DriverManager.getConnection(JDBC_URL, USER, PASSWORD)) {
                 System.out.println("Connection OK");
                 
                 Statement stmt = cnct.createStatement();
@@ -64,7 +62,7 @@ public class Connexion {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             
-            try (Connection cnct = DriverManager.getConnection(url, user, password)) {
+            try (Connection cnct = DriverManager.getConnection(JDBC_URL, USER, PASSWORD)) {
                 System.out.println("Connection OK");
                 
                 Statement stmt = cnct.createStatement();
@@ -96,7 +94,7 @@ public class Connexion {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             
-            try (Connection cnct = DriverManager.getConnection(url, user, password)) {
+            try (Connection cnct = DriverManager.getConnection(JDBC_URL, USER, PASSWORD)) {
                 System.out.println("Connection OK");
                 
                 Statement stmt = cnct.createStatement();
@@ -237,7 +235,7 @@ public class Connexion {
         ResultSet resultSet = null;
         
         try {
-            connection = DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
+            connection = getConnection();
             psCheckUserExists = connection.prepareStatement("SELECT * FROM utilisateur WHERE nom = ?");
             psCheckUserExists.setString(1, user_name);
             resultSet = psCheckUserExists.executeQuery();
@@ -303,7 +301,7 @@ public class Connexion {
         ResultSet resultSet = null;
         
         try {
-            connection = DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
+            connection = getConnection();
             ps = connection.prepareStatement("SELECT * FROM utilisateur WHERE email = ?");
             ps.setString(1, user_email);
             resultSet = ps.executeQuery();
@@ -365,7 +363,7 @@ public class Connexion {
         String user_name = null;
         
         try {
-            connection = DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
+            connection = getConnection();
             ps = connection.prepareStatement("SELECT * FROM utilisateur WHERE idUser = ?");
             ps.setInt(1, user_id);
             resultSet = ps.executeQuery();
@@ -418,7 +416,7 @@ public class Connexion {
         ResultSet resultSet = null;
         
         try {
-            connection = DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
+            connection = getConnection();
             ps = connection.prepareStatement("SELECT p.* FROM utilisateur u INNER JOIN playlist p ON u.idUser = p.idUser WHERE u.idUser = ?");
             ps.setInt(1, user_id);
             resultSet = ps.executeQuery();
@@ -526,6 +524,6 @@ public class Connexion {
     
     
     private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
+        return DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
     }
 }
