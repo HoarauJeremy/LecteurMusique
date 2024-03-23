@@ -1,7 +1,7 @@
-/*
- * Empty Stylesheet file.
- */
+.background {
+    -fx-background-color: #333333;
+}
 
-.mainFxmlClass {
-
+.menu-btn {
+    -fx-color: red;
 }

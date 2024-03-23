@@ -32,7 +32,6 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -49,10 +48,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lecteurmusique.controllers.HomePageController">
-    <stylesheets>
-        <URL value="@lecteurmusique/resources/css/homepage.css" />
-    </stylesheets>
+<VBox prefHeight="600.0" prefWidth="900.0" styleClass="background" stylesheets="@../resources/css/homepage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lecteurmusique.controllers.HomePageController">
     <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -85,17 +81,14 @@
     </MenuBar>
     <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
-        <AnchorPane styleClass="menu" stylesheets="@resources/css/homepage.css" SplitPane.resizableWithParent="false">
+        <AnchorPane maxWidth="228.0" styleClass="menu" SplitPane.resizableWithParent="false">
           <children>
-            <Label alignment="CENTER" layoutX="11.0" layoutY="14.0" minWidth="60.0" prefHeight="27.0" prefWidth="200.0" style="&#10;" text="Menu" textAlignment="CENTER" wrapText="false">
+            <Label alignment="CENTER" layoutX="11.0" layoutY="14.0" minWidth="60.0" prefHeight="27.0" prefWidth="200.0" style="&#10;" text="Menu" textAlignment="CENTER" textFill="#9c9c9c" wrapText="false">
               <font>
                 <Font size="18.0" fx:id="x1" />
               </font>
-              <textFill>
-                <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
-              </textFill>
             </Label>
-                  <Button fx:id="playlistButton" layoutX="12.0" layoutY="51.0" mnemonicParsing="false" onAction="#showPlaylist" prefHeight="40.0" prefWidth="200.0" styleClass="menu-btn" stylesheets="@resources/css/homepage.css" text="Playlist" textAlignment="CENTER">
+                  <Button fx:id="playlistButton" layoutX="12.0" layoutY="51.0" mnemonicParsing="false" onAction="#showPlaylist" prefHeight="40.0" prefWidth="200.0" styleClass="menu-btn" text="Playlist" textAlignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="18.0" />
                      </font>
@@ -105,7 +98,7 @@
                         <Font name="Arial Bold" size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="profileButton" layoutX="12.0" layoutY="498.0" mnemonicParsing="false" onAction="#showProfile" prefHeight="40.0" prefWidth="200.0" text="Profile">
+                  <Button fx:id="profileButton" layoutX="12.0" layoutY="498.0" mnemonicParsing="false" onAction="#showProfile" prefHeight="40.0" prefWidth="200.0" text="Profile" AnchorPane.bottomAnchor="13.0">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -116,7 +109,7 @@
           <content>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
               <children>
-                <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="View" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+                <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="View" textAlignment="CENTER" wrapText="false" />
               </children>
             </AnchorPane>
           </content>

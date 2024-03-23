@@ -44,12 +44,3 @@ public class DatabaseConfig {
     }
     
 }
-
-
-/*File f = new File("C:\\Users\\jerem\\Desktop\\Workplace_java\\NetBeans21\\LecteurMusique\\src\\lecteurmusique\\config.properties");
-        
-        if (f.exists()) {
-            System.out.println("OK");
-        } else {
-            System.out.println("PAS OK");
-        }*/

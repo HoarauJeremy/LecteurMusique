@@ -28,11 +28,6 @@ public class Connexion {
     private static final String JDBC_URL = DatabaseConfig.getDbUrl();
     private static final String USER = DatabaseConfig.getDbUser();
     private static final String PASSSWORD = DatabaseConfig.getDbPassword();
-    
-    /*
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/rezeed";
-    private static final String USER = "jeremy";
-    private static final String PASSSWORD = "jeremy";*/
 
     /**
      * Fonction pour récuperée les artistes dans la base de données <b>MySQL</b>.
@@ -160,6 +155,14 @@ public class Connexion {
         stage.show();
     }
     
+    /**
+     *
+     * @param event
+     * @param fxmlFile
+     * @param title
+     * @param user_name
+     * @param user_email
+     */
     public static void changeSceneToProfile(ActionEvent event, String fxmlFile, String title, String user_name, String user_email) {
         Parent root = null;
         
@@ -186,6 +189,14 @@ public class Connexion {
         stage.show();
     }
     
+    /**
+     *
+     * @param event
+     * @param fxmlFile
+     * @param title
+     * @param idPlaylist
+     * @param nom
+     */
     public static void changeSceneToPlaylist(ActionEvent event, String fxmlFile, String title, int idPlaylist, String nom) {
         Parent root = null;
         
@@ -340,6 +351,11 @@ public class Connexion {
         }
     }
     
+    /**
+     *
+     * @param event
+     * @param user_id
+     */
     public static void showProfileUser(ActionEvent event, int user_id) {
         Connection connection = null;
         PreparedStatement ps = null;
@@ -391,6 +407,11 @@ public class Connexion {
         }
     }
     
+    /**
+     *
+     * @param event
+     * @param user_id
+     */
     public static void showPlaylistUser(ActionEvent event, int user_id) {
         Connection connection = null;
         PreparedStatement ps = null;
@@ -439,6 +460,10 @@ public class Connexion {
         }
     }
     
+    /**
+     *
+     * @param event
+     */
     public static void showSongGender(ActionEvent event) {
         Connection connection = null;
         PreparedStatement ps = null;
@@ -498,6 +523,7 @@ public class Connexion {
         alert.setContentText(message);
         alert.show();
     }
+    
     
     private static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(JDBC_URL, USER, PASSSWORD);
