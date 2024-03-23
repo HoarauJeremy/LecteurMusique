@@ -23,16 +23,16 @@
             <Font name="Arial" size="20.0" />
          </font>
       </Label>
-      <PasswordField fx:id="pf_password" layoutX="450.0" layoutY="221.0" prefHeight="25.0" prefWidth="300.0" promptText="Password">
-         <font>
-            <Font name="Arial" size="18.0" />
-         </font>
-      </PasswordField>
       <TextField fx:id="tf_username" layoutX="450.0" layoutY="146.0" prefHeight="25.0" prefWidth="300.0" promptText="Username">
          <font>
             <Font name="Arial" size="18.0" />
          </font>
       </TextField>
+      <PasswordField fx:id="pf_password" layoutX="450.0" layoutY="221.0" prefHeight="25.0" prefWidth="300.0" promptText="Password">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </PasswordField>
       <Button fx:id="loginButton" layoutX="399.0" layoutY="319.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="103.0" text="Login">
          <font>
             <Font name="Arial" size="20.0" />

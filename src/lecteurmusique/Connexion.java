@@ -24,15 +24,15 @@ import lecteurmusique.controllers.LoggedInController;
 public class Connexion {
     
     protected String url, user, password;
-    /*
+    
     private static final String JDBC_URL = DatabaseConfig.getDbUrl();
     private static final String USER = DatabaseConfig.getDbUser();
     private static final String PASSSWORD = DatabaseConfig.getDbPassword();
-    */
     
+    /*
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/rezeed";
     private static final String USER = "jeremy";
-    private static final String PASSSWORD = "jeremy";
+    private static final String PASSSWORD = "jeremy";*/
 
     /**
      * Fonction pour récuperée les artistes dans la base de données <b>MySQL</b>.
@@ -243,7 +243,7 @@ public class Connexion {
                     psInsert.setString(3, user_password);
                     psInsert.executeUpdate();
 
-                    changeScene(event, "logged-in.fxml", "Welcome!", user_name);
+                    changeScene(event, "components/logged-in.fxml", "Welcome!", user_name);
                 }
             }
         } catch (SQLException e) {
@@ -307,7 +307,7 @@ public class Connexion {
                     String retrievedPassword = resultSet.getString("password");
                     
                     if (retrievedPassword.equals(user_password)) {
-                        changeScene(event, "homePage.fxml", "Welcome!", null);   
+                        changeScene(event, "components/homePage.fxml", "Welcome!", null);   
                     } else {
                         showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
                     }
@@ -362,7 +362,7 @@ public class Connexion {
                     user_email = resultSet.getString("email");
                 }
                 
-                changeSceneToProfile(event, "logged-in.fxml", "Welcome!", user_name, user_email);
+                changeSceneToProfile(event, "components/logged-in.fxml", "Welcome!", user_name, user_email);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -410,7 +410,7 @@ public class Connexion {
                     String nom = resultSet.getString(2);
                 }
                 
-                changeSceneToPlaylist(event, "logged-in.fxml", "Welcome!", 0, null);
+                changeSceneToPlaylist(event, "components/logged-in.fxml", "Welcome!", 0, null);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -455,7 +455,7 @@ public class Connexion {
                     resultSet.getString(2);
                 }
                 
-                changeScene(event, "genre.fxml", "Genre", null);
+                changeScene(event, "components/genre.fxml", "Genre", null);
             }
         } catch (SQLException e) {
             e.printStackTrace();

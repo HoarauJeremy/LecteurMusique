@@ -54,7 +54,7 @@ public class LoggedInController implements Initializable {
      * @param event
      */
     public void logout(ActionEvent event) {
-        Connexion.changeScene(event, "ConnectionPage.fxml", "Log in!", null);
+        Connexion.changeScene(event, "components/ConnectionPage.fxml", "Log in!", null);
     }
     
 }

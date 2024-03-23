@@ -4,7 +4,13 @@
  */
 package lecteurmusique;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -22,10 +28,13 @@ import javafx.stage.WindowEvent;
  */
 public class LecteurMusique extends Application {
     
+    String result = "";
+    InputStream inputStream;
+    
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("ConnectionPage.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("components/ConnectionPage.fxml"));
             Scene scene = new Scene(root, 900, 600);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Lecteur de musique");
@@ -45,9 +54,9 @@ public class LecteurMusique extends Application {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         launch(args);
     }
-    
 }

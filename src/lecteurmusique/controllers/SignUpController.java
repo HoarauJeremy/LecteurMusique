@@ -49,7 +49,7 @@ public class SignUpController implements Initializable {
         });
         
         LoginButton.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "ConnectionPage.fxml", "Login", null);
+            Connexion.changeScene(event, "components/ConnectionPage.fxml", "Login", null);
         });
     }    
     
