@@ -6,6 +6,7 @@ package lecteurmusique;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.HashMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,13 +14,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import lecteurmusique.controllers.GenreController;
 import lecteurmusique.controllers.LoggedInController;
 
 /**
  * Class de connexion à une base de donnée <b>MySQL</b>, pour une application
  * d'ecoute de musique.
  *
- * @author jerem
+ * @author Jérémy Hoarau
  */
 public class Connexion {
     
@@ -204,6 +206,32 @@ public class Connexion {
                 root = loader.load();
                 // PlaylistController playlistController = loader.getController();
                 // playlistController.setPlaylistInformation(idPlaylist, nom);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                root = FXMLLoader.load(Connexion.class.getResource(fxmlFile));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    
+        public static void changeSceneToGenre(ActionEvent event, String fxmlFile, String title, HashMap<Integer, String> tabGenre) {
+        Parent root = null;
+
+        if (tabGenre != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
+                root = loader.load();
+                GenreController genreController = loader.getController();
+                genreController.setGenre(tabGenre);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -466,6 +494,7 @@ public class Connexion {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
+        HashMap<Integer, String> tab = new HashMap<>();
 
         try {
             connection = getConnection();
@@ -474,11 +503,12 @@ public class Connexion {
             
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {
-                    resultSet.getString(1);
-                    resultSet.getString(2);
+                    tab.put(resultSet.getInt(1), resultSet.getString(2));
+                    //resultSet.getString(1);
+                    //resultSet.getString(2);
                 }
+                changeSceneToGenre(event, "components/genre.fxml", "Genre", tab);
                 
-                changeScene(event, "components/genre.fxml", "Genre", null);
             }
         } catch (SQLException e) {
             e.printStackTrace();
