@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import lecteurmusique.Connexion;
+import lecteurmusique.VerifDonnees;
 
 /**
  * FXML Controller class
@@ -26,12 +27,14 @@ public class ConnectionPageController implements Initializable {
     @FXML
     private Button loginButton, signUpButton;
     @FXML
-    private TextField tf_username;
+    private TextField tf_userEmail;
     @FXML
     private PasswordField pf_password;
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -39,12 +42,18 @@ public class ConnectionPageController implements Initializable {
             
             @Override
             public void handle(ActionEvent event) {
-                if (tf_username.getText().trim().isEmpty() || pf_password.getText().trim().isEmpty()) {
+                if (!tf_userEmail.getText().trim().isEmpty() && !pf_password.getText().trim().isEmpty()) {
+                    if (VerifDonnees.verifEmail(tf_userEmail.getText().trim()) != false) {
+                        Connexion.logInUser(event, tf_userEmail.getText(), pf_password.getText());
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Veuiller saisire toutes les informations valide et necessaire pour vous connecter.");
+                        alert.show();
+                    }
+                } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Veuiller saisire toutes les information necessaire pour vous connecter.");
                     alert.show();
-                } else {
-                    Connexion.logInUser(event, tf_username.getText(), pf_password.getText());
                 }
             }
         });

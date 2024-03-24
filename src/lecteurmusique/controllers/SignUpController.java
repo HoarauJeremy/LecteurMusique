@@ -19,7 +19,7 @@ import lecteurmusique.VerifDonnees;
 /**
  * FXML Controller class
  *
- * @author jerem
+ * @author Jérémy Hoarau
  */
 public class SignUpController implements Initializable {
     

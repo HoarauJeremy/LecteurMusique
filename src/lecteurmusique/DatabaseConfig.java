@@ -9,7 +9,7 @@ import java.util.Properties;
 
 /**
  *
- * @author jerem
+ * @author Jérémy Hoarau
  */
 public class DatabaseConfig {
     

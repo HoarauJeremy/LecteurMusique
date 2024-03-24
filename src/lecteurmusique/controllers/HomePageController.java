@@ -13,7 +13,7 @@ import lecteurmusique.Connexion;
 /**
  * FXML Controller class
  *
- * @author jerem
+ * @author Jérémy Hoarau
  */
 public class HomePageController implements Initializable {
 

@@ -16,7 +16,7 @@ import lecteurmusique.Connexion;
 /**
  * FXML Controller class
  *
- * @author jerem
+ * @author Jérémy Hoarau
  */
 public class LoggedInController implements Initializable {
     
