@@ -5,7 +5,6 @@
 package lecteurmusique;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -22,9 +21,6 @@ import javafx.stage.WindowEvent;
  * @author Jérémy Hoarau
  */
 public class LecteurMusique extends Application {
-    
-    String result = "";
-    InputStream inputStream;
     
     @Override
     public void start(Stage primaryStage) {
