@@ -62,7 +62,7 @@ public class ConnectionPageController implements Initializable {
             
             @Override
             public void handle(ActionEvent event) {
-                Connexion.changeScene(event, "components/sign-up.fxml", "Signup", null);
+                Connexion.changeScene(event, "View/sign-up.fxml", "Signup", null);
             }
         });
     }

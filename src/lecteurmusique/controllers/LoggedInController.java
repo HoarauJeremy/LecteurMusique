@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import lecteurmusique.Connexion;
+import lecteurmusique.DatabaseConfig;
 
 /**
  * FXML Controller class
@@ -21,13 +22,10 @@ import lecteurmusique.Connexion;
 public class LoggedInController implements Initializable {
     
     @FXML
-    private Button logoutButton;
+    private Button btnRetour, btnPlaylist, btnGenre, btnModifcation, btnLogout;
 
     @FXML
-    private Label name_label;
-    
-    @FXML 
-    private Label Fname_label;
+    private Label name_label, Fname_label;
     
     /**
      * Initializes the controller class.
@@ -37,6 +35,25 @@ public class LoggedInController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        btnPlaylist.setOnAction((ActionEvent event) -> {
+            Connexion.showPlaylistUser(event, 1);
+        });
+        
+        btnGenre.setOnAction((ActionEvent event) -> {
+            Connexion.showSongGender(event);
+        });
+        
+        btnRetour.setOnAction((ActionEvent event) -> {
+            Connexion.changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);
+        });
+        
+        btnModifcation.setOnAction((ActionEvent event) -> {
+            Connexion.changeScene(event, "", DatabaseConfig.getAppName(""), null);
+        });
+        
+        btnLogout.setOnAction((ActionEvent event) -> {
+            this.logout(event);
+        });
     }   
     
     /**
@@ -54,7 +71,7 @@ public class LoggedInController implements Initializable {
      * @param event
      */
     public void logout(ActionEvent event) {
-        Connexion.changeScene(event, "components/ConnectionPage.fxml", "Log in!", null);
+        Connexion.changeScene(event, "View/ConnectionPage.fxml", "Log in!", null);
     }
     
 }

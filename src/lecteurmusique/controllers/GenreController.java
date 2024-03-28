@@ -15,6 +15,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import lecteurmusique.Connexion;
+import lecteurmusique.DatabaseConfig;
 
 /**
  * FXML Controller class
@@ -26,7 +28,7 @@ public class GenreController implements Initializable {
     @FXML
     private ListView<Button> listView;
     @FXML
-    private Button btn;
+    private Button btn, btnRetour, btnPlaylist;
 
     /**
      * Initializes the controller class.
@@ -36,6 +38,13 @@ public class GenreController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //gridPane.add(new Button("NOM DU GENRE"), 0, 0);
+        btnRetour.setOnAction((ActionEvent event) -> {
+            Connexion.changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);
+        });
+        
+        btnPlaylist.setOnAction((ActionEvent event) -> {
+            Connexion.showPlaylistUser(event, 1);
+        });
     }
     
     public void setGenre(HashMap<Integer, String> tab) {
@@ -58,12 +67,6 @@ public class GenreController implements Initializable {
         }
         
         listView.setItems(buttons);
-    }
-    
-    public void getGenre(HashMap<Integer, String> tab) {
-        for (int i = 1; i < tab.size()+1; i++) {
-            System.out.println("Key: " + tab.get(i));
-        }
     }
     
 }
