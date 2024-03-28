@@ -43,4 +43,8 @@ public class DatabaseConfig {
         return properties.getProperty("db.password");
     }
     
+    public static String getAppName(String action) {
+        return properties.getProperty("APP.Name").concat(" - " + action);
+    }
+    
 }

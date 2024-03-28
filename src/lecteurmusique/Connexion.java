@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import lecteurmusique.controllers.GenreController;
 import lecteurmusique.controllers.LoggedInController;
+import lecteurmusique.controllers.PlaylistListeController;
 
 /**
  * Class de connexion à une base de donnée <b>MySQL</b>, pour une application
@@ -163,7 +164,7 @@ public class Connexion {
      * @param user_name
      * @param user_email
      */
-    public static void changeSceneToProfile(ActionEvent event, String fxmlFile, String title, String user_name, String user_email) {
+    private static void changeSceneToProfile(ActionEvent event, String fxmlFile, String title, String user_name, String user_email) {
         Parent root = null;
         
         if (user_name != null && user_email != null) {
@@ -197,15 +198,15 @@ public class Connexion {
      * @param idPlaylist
      * @param nom
      */
-    public static void changeSceneToPlaylist(ActionEvent event, String fxmlFile, String title, int idPlaylist, String nom) {
+    private static void changeSceneToPlaylist(ActionEvent event, String fxmlFile, String title, int idPlaylist, String nom) {
         Parent root = null;
         
         if (nom != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
                 root = loader.load();
-                // PlaylistController playlistController = loader.getController();
-                // playlistController.setPlaylistInformation(idPlaylist, nom);
+                PlaylistListeController playlistListeController = loader.getController();
+                //PlaylistListeController.setPlaylistInformation(idPlaylist, nom);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -223,7 +224,7 @@ public class Connexion {
         stage.show();
     }
     
-        public static void changeSceneToGenre(ActionEvent event, String fxmlFile, String title, HashMap<Integer, String> tabGenre) {
+        private static void changeSceneToGenre(ActionEvent event, String fxmlFile, String title, HashMap<Integer, String> tabGenre) {
         Parent root = null;
 
         if (tabGenre != null) {
@@ -280,7 +281,7 @@ public class Connexion {
                     psInsert.setString(3, user_password);
                     psInsert.executeUpdate();
 
-                    changeScene(event, "components/logged-in.fxml", "Welcome!", user_name);
+                    changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), user_name);
                 }
             }
         } catch (SQLException e) {
@@ -344,7 +345,7 @@ public class Connexion {
                     String retrievedPassword = resultSet.getString("password");
                     
                     if (retrievedPassword.equals(user_password)) {
-                        changeScene(event, "components/homePage.fxml", "Welcome!", null);   
+                        changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);   
                     } else {
                         showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
                     }
@@ -404,7 +405,7 @@ public class Connexion {
                     user_email = resultSet.getString("email");
                 }
                 
-                changeSceneToProfile(event, "components/logged-in.fxml", "Welcome!", user_name, user_email);
+                changeSceneToProfile(event, "View/logged-in.fxml", DatabaseConfig.getAppName("Profile de " + user_name), user_name, user_email);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -434,7 +435,8 @@ public class Connexion {
     }
     
     /**
-     *
+     * Fonction qui va récupérer toutes les données de la table Playlist en fonction de l'id de l'utilisateur et les affichées sur une nouvelle scène.
+     * 
      * @param event
      * @param user_id
      */
@@ -457,7 +459,7 @@ public class Connexion {
                     String nom = resultSet.getString(2);
                 }
                 
-                changeSceneToPlaylist(event, "components/logged-in.fxml", "Welcome!", 0, null);
+                changeSceneToPlaylist(event, "View/Playlist-Liste.fxml", DatabaseConfig.getAppName("Playlist"), 0, null);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -487,7 +489,7 @@ public class Connexion {
     }
     
     /**
-     *
+     * Fonction qui va récupérer toutes les données de la table genre et les affichées sur une nouvelle scène.
      * @param event
      */
     public static void showSongGender(ActionEvent event) {
@@ -504,11 +506,8 @@ public class Connexion {
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {
                     tab.put(resultSet.getInt(1), resultSet.getString(2));
-                    //resultSet.getString(1);
-                    //resultSet.getString(2);
                 }
-                changeSceneToGenre(event, "components/genre.fxml", "Genre", tab);
-                
+                changeSceneToGenre(event, "View/genre.fxml", DatabaseConfig.getAppName("Genre"), tab);
             }
         } catch (SQLException e) {
             e.printStackTrace();
