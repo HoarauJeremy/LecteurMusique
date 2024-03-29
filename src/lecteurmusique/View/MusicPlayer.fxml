@@ -6,44 +6,52 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="700.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="lecteurmusique.controllers.MusicPlayerController">
+<AnchorPane id="AnchorPane" prefHeight="135.0" prefWidth="700.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lecteurmusique.controllers.MusicPlayerController">
     <stylesheets>
         <URL value="@/lecteurmusique/resources/css/musicplayer.css" />
     </stylesheets>
    <children>
       <ProgressBar fx:id="songProgressBar" layoutX="15.0" layoutY="70.0" prefHeight="10.0" prefWidth="670.0" progress="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0" />
-      <Button fx:id="btnPause" layoutX="238.0" layoutY="86.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" text="PAUSE" AnchorPane.bottomAnchor="15.0">
-         <font>
-            <Font name="Noto Sans Regular" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnReset" layoutX="163.0" layoutY="86.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" text="RESET" AnchorPane.bottomAnchor="15.0">
-         <font>
-            <Font name="Noto Sans Regular" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnPrevious" layoutX="388.0" layoutY="86.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" text="PREV" AnchorPane.bottomAnchor="15.0">
-         <font>
-            <Font name="Noto Sans Regular" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnPlay" layoutX="313.0" layoutY="86.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" text="PLAY" AnchorPane.bottomAnchor="15.0">
-         <font>
-            <Font name="Noto Sans Regular" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnNext" layoutX="463.0" layoutY="86.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" text="NEXT" AnchorPane.bottomAnchor="15.0">
-         <font>
-            <Font name="Noto Sans Regular" size="12.0" />
-         </font>
-      </Button>
-      <Slider fx:id="volumeSlider" layoutX="545.0" layoutY="104.0" max="100.0" value="50.0" AnchorPane.rightAnchor="15.0" />
-      <Label fx:id="songName" alignment="CENTER" contentDisplay="CENTER" layoutX="336.0" layoutY="14.0" prefHeight="35.0" prefWidth="700.0" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+      <Label fx:id="songName" alignment="CENTER" contentDisplay="CENTER" layoutX="336.0" prefHeight="40.0" prefWidth="700.0" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
          <font>
             <Font name="Noto Sans Regular" size="14.0" />
          </font>
       </Label>
+      <AnchorPane layoutY="80.0" prefHeight="10.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button fx:id="btnPause1" contentDisplay="CENTER" layoutX="40.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="PAUSE">
+               <font>
+                  <Font name="Noto Sans Regular" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnReset1" layoutX="123.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="RESET">
+               <font>
+                  <Font name="Noto Sans Regular" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnPrevious1" layoutX="218.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="PREV">
+               <font>
+                  <Font name="Noto Sans Regular" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnPlay1" layoutX="313.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="PLAY">
+               <font>
+                  <Font name="Noto Sans Regular" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnNext1" layoutX="408.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="NEXT">
+               <font>
+                  <Font name="Noto Sans Regular" size="12.0" />
+               </font>
+            </Button>
+            <Pane layoutX="388.0" layoutY="20.0" prefHeight="25.0" prefWidth="20.0" AnchorPane.bottomAnchor="33.0" AnchorPane.topAnchor="20.0" />
+            <Pane layoutX="293.0" layoutY="17.0" prefHeight="25.0" prefWidth="20.0" />
+            <Slider fx:id="volumeSlider" layoutX="501.0" layoutY="23.0" max="100.0" value="50.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+            <Pane layoutX="198.0" layoutY="17.0" prefHeight="25.0" prefWidth="20.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

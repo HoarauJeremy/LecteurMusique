@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +19,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
@@ -59,6 +66,37 @@ public class MusicPlayerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        songs = new ArrayList<File>();
+        
+        directory = new File("music");
+        
+        files = directory.listFiles();
+        
+        if (files != null) {
+            
+            for(File file : files) {
+                
+                songs.add(file);
+            }
+        }
+            
+        try {           
+            media = new Media(songs.get(songNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+            songName.setText(songs.get(songNumber).getName());
+        } catch (MediaException me) {
+            me.getStackTrace();
+        }
+        
+        volumeSlider.valueProperty().addListener(new ChangeListener<Number> () {
+            @Override
+            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {    
+                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+            }
+        });
+        
+        songProgressBar.setStyle("-fx-accent: #00ff00");
+        
         btnPlay.setOnAction((ActionEvent event) -> {
             this.playMedia();
         });
@@ -78,30 +116,38 @@ public class MusicPlayerController implements Initializable {
         btnReset.setOnAction((ActionEvent event) -> {
             this.resetMedia();
         });
-        
-        songProgressBar.setOnDragDone((t) -> {
-            //
-        });
     }
     
+    /**
+     * Fonction qui va lire la musique
+     */
     public void playMedia() {
         beginTimer();
         mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
         mediaPlayer.play();
     }
     
+    /**
+     * Fonction qui va mettre la musique sur pause
+     */
     public void pauseMedia() {
         
         cancelTimer();
         mediaPlayer.pause();
     }
     
+    /**
+     * Fonction qui va redémarer la musique
+     */
     public void resetMedia() {
         
         songProgressBar.setProgress(0);
         mediaPlayer.seek(Duration.ZERO);
     }
     
+    /**
+     * Fonction qui va passer à la musique suivante
+     */
     public void previousMedia() {
         if (songNumber > 0) {
             songNumber--;
@@ -136,6 +182,9 @@ public class MusicPlayerController implements Initializable {
         }
     }
     
+    /**
+     * Fonction qui va passer à la musique précedente
+     */
     public void nextMedia() {
         if (songNumber < songs.size() - 1) {
             songNumber++;
@@ -170,6 +219,9 @@ public class MusicPlayerController implements Initializable {
         }
     }
     
+    /**
+     * Fonction qui remplir la ProgressBar en fonction de l'avancer de la musique
+     */
     public void beginTimer() {
         timer = new Timer();
         
@@ -189,7 +241,10 @@ public class MusicPlayerController implements Initializable {
                 
         timer.scheduleAtFixedRate(task, 0, 1000);
     }
-    
+
+    /**
+     * Fonction qui réinitialiser la ProgressBar
+     */    
     public void cancelTimer() {
         running = false;
         timer.cancel();

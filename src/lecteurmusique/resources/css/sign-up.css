@@ -2,6 +2,6 @@
  * Empty Stylesheet file.
  */
 
-.mainFxmlClass {
-
+.background {
+    -fx-background-color: #4f4f4f;
 }
