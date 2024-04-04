@@ -29,99 +29,6 @@ public class Connexion {
     private static final String JDBC_URL = DatabaseConfig.getDbUrl();
     private static final String USER = DatabaseConfig.getDbUser();
     private static final String PASSWORD = DatabaseConfig.getDbPassword();
-
-    /**
-     * Fonction pour récuperée les artistes dans la base de données <b>MySQL</b>.
-     */
-    public void getArtiste() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            try (Connection cnct = DriverManager.getConnection(JDBC_URL, USER, PASSWORD)) {
-                System.out.println("Connection OK");
-                
-                Statement stmt = cnct.createStatement();
-                
-                String sql = "SELECT * FROM artiste";
-                
-                ResultSet res = stmt.executeQuery(sql);
-                
-                while (res.next()) {
-                    int id = res.getInt(1);
-                    String nom = res.getString(2);
-                    System.out.println("ID Artiste: " + id +  " | Nom Artiste: " + nom);
-                }
-            }
-            
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e);
-        }        
-    }
-    
-    /**
-     * Fonction pour récuperée les musiques dans la base de données <b>MySQL</b>.
-     */
-    public void getMusique() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            try (Connection cnct = DriverManager.getConnection(JDBC_URL, USER, PASSWORD)) {
-                System.out.println("Connection OK");
-                
-                Statement stmt = cnct.createStatement();
-                
-                String sql = "SELECT * FROM son";
-                
-                ResultSet res = stmt.executeQuery(sql);
-                
-                while (res.next()) {
-                    int id = res.getInt("IdSon");
-                    String nom = res.getString("NomSon");
-                    Time duree = res.getTime("Duree");
-                    String lien = res.getString("lien");
-                    System.out.println("ID : " + id +  " | Nom : " + nom + " | Durée : " + duree + " | Lien : " + lien);
-                }
-            }
-            
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e);
-        }
-    }
-    
-    /**
-     * Fonction pour récuperée les genres de musique dans la base de données <b>MySQL</b>.
-     * 
-     * @return
-     */
-    public Object getGenre() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            try (Connection cnct = DriverManager.getConnection(JDBC_URL, USER, PASSWORD)) {
-                System.out.println("Connection OK");
-                
-                Statement stmt = cnct.createStatement();
-                
-                String sql = "SELECT * FROM genre";
-                
-                ResultSet res = stmt.executeQuery(sql);
-                /*
-                while (res.next()) {
-                    int id = res.getInt(1);
-                    String nom = res.getString(2);
-                    System.out.println("ID : " + id +  " | Nom : " + nom);
-                    String [] tab;
-                }*/
-                
-                return res;
-            }
-            
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e);
-        }
-        
-        return null;
-    }
     
     /**
      *
@@ -224,7 +131,14 @@ public class Connexion {
         stage.show();
     }
     
-        private static void changeSceneToGenre(ActionEvent event, String fxmlFile, String title, HashMap<Integer, String> tabGenre) {
+    /**
+     * 
+     * @param event
+     * @param fxmlFile
+     * @param title
+     * @param tabGenre 
+     */
+    private static void changeSceneToGenre(ActionEvent event, String fxmlFile, String title, HashMap<Integer, String> tabGenre) {
         Parent root = null;
 
         if (tabGenre != null) {
@@ -451,7 +365,7 @@ public class Connexion {
             ps.setInt(1, user_id);
             resultSet = ps.executeQuery();
             
-            if (resultSet.isBeforeFirst()) {
+            if (!resultSet.isBeforeFirst()) {
                 showAlert(Alert.AlertType.ERROR, "msg temporaire");
             } else {
                 while (resultSet.next()) {
@@ -540,10 +454,10 @@ public class Connexion {
     /**
      * Function pour afficher des alertes.
      * 
-     * @param alertType Definit le type de l'alerte (<i><strong>CONFIRMATION, ERROR, INFORMATION, NONE, WARNING<strong></i>).
+     * @param alertType Definit le type de l'alerte (<i><strong>CONFIRMATION, ERROR, INFORMATION, NONE, WARNING</strong></i>).
      * @param message Affiche un message sur l'alerte.
      */
-    private static void showAlert(Alert.AlertType alertType, String message) {
+    public static void showAlert(Alert.AlertType alertType, String message) {
         Alert alert = new Alert(alertType);
         //alert.setTitle(title);
         alert.setHeaderText(null);

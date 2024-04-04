@@ -1,6 +1,6 @@
 /build/
 
 /music/
-/*/*.mp3
+/music/*.mp3
 
 config.properties

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -65,27 +66,27 @@
             </Label>
             <AnchorPane layoutY="80.0" prefHeight="10.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <Button fx:id="btnPause1" contentDisplay="CENTER" layoutX="40.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="PAUSE">
+                  <Button fx:id="btnPause" contentDisplay="CENTER" layoutX="40.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="PAUSE">
                      <font>
                         <Font name="Noto Sans Regular" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnReset1" layoutX="123.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="RESET">
+                  <Button fx:id="btnReset" layoutX="123.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="RESET">
                      <font>
                         <Font name="Noto Sans Regular" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnPrevious1" layoutX="218.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="PREV">
+                  <Button fx:id="btnPrevious" layoutX="218.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="PREV">
                      <font>
                         <Font name="Noto Sans Regular" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnPlay1" layoutX="313.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="PLAY">
+                  <Button fx:id="btnPlay" layoutX="313.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="PLAY">
                      <font>
                         <Font name="Noto Sans Regular" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnNext1" layoutX="408.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="NEXT">
+                  <Button fx:id="btnNext" layoutX="408.0" layoutY="18.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="NEXT">
                      <font>
                         <Font name="Noto Sans Regular" size="12.0" />
                      </font>
@@ -98,5 +99,11 @@
             </AnchorPane>
          </children>
       </AnchorPane>
+      <Button fx:id="btnAjoutPlaylist" layoutX="846.0" layoutY="50.0" mnemonicParsing="false" text="+" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="50.0">
+         <font>
+            <Font name="Noto Sans Regular" size="16.0" />
+         </font>
+      </Button>
+      <ScrollPane layoutX="225.0" layoutY="50.0" prefHeight="389.0" prefWidth="602.0" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="50.0" />
    </children>
 </AnchorPane>

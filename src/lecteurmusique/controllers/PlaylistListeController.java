@@ -7,7 +7,6 @@ package lecteurmusique.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -22,7 +21,7 @@ import lecteurmusique.DatabaseConfig;
 public class PlaylistListeController implements Initializable {
     
     @FXML
-    private Button btnRetour, btnGenre;
+    private Button btnRetour, btnGenre, btnAjoutPlaylist;
 
     /**
      * Initializes the controller class.
@@ -40,9 +39,16 @@ public class PlaylistListeController implements Initializable {
         });
         
         /**
-         * Retourne sur la page d'accueil.
+         * Affiche la page des genres de musiques.
          */
         btnGenre.setOnAction(Connexion::showSongGender);
-    }    
+        
+        /**
+         * Affiche la page de création de playlist
+         */
+        btnAjoutPlaylist.setOnAction((ActionEvent event) -> {
+            //Connexion.changeScene(event, "View/", DatabaseConfig.getAppName("Playlist"), null);
+        });        
+    }
     
 }
