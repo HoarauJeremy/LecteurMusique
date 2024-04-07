@@ -271,7 +271,7 @@ public class Connexion {
                     
                 }
             } else {
-                message = "Aucune playlist disponible";
+                message = "Aucune playliste disponible";
             }
             
             changeSceneToPlaylisList(event, "View/Playlist-Liste.fxml", DatabaseConfig.getAppName("PLaylist"), message);
