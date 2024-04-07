@@ -43,7 +43,7 @@ public class GenreController implements Initializable {
         });
         
         btnPlaylist.setOnAction((ActionEvent event) -> {
-            Connexion.showPlaylistUser(event, 1);
+            Connexion.showPlaylistList(event);
         });
     }
     

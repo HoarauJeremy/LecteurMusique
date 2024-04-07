@@ -7,7 +7,6 @@ package lecteurmusique.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -15,12 +14,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import lecteurmusique.Connexion;
+import lecteurmusique.Model.Utilisateur;
 import lecteurmusique.VerifDonnees;
 
 /**
  * FXML Controller class
  *
- * @author jerem
+ * @author jeremu Hoarau
  */
 public class ConnectionPageController implements Initializable {
     
@@ -38,32 +38,24 @@ public class ConnectionPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loginButton.setOnAction(new EventHandler<ActionEvent> () {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                if (!tf_userEmail.getText().trim().isEmpty() && !pf_password.getText().trim().isEmpty()) {
-                    if (VerifDonnees.verifEmail(tf_userEmail.getText().trim()) != false) {
-                        Connexion.logInUser(event, tf_userEmail.getText(), pf_password.getText());
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("Veuiller saisire toutes les informations valide et necessaire pour vous connecter.");
-                        alert.show();
-                    }
+        loginButton.setOnAction((ActionEvent event) -> {
+            if (!tf_userEmail.getText().trim().isEmpty() && !pf_password.getText().trim().isEmpty()) {
+                if (VerifDonnees.verifEmail(tf_userEmail.getText().trim()) != false) {
+                    Utilisateur.logIn(event, tf_userEmail.getText(), pf_password.getText());
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Veuiller saisire toutes les information necessaire pour vous connecter.");
+                    alert.setContentText("Veuiller saisire toutes les informations valide et necessaire pour vous connecter.");
                     alert.show();
                 }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Veuiller saisire toutes les information necessaire pour vous connecter.");
+                alert.show();
             }
         });
         
-        signUpButton.setOnAction(new EventHandler<ActionEvent> () {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                Connexion.changeScene(event, "View/sign-up.fxml", "Signup", null);
-            }
+        signUpButton.setOnAction((ActionEvent event) -> {
+            Connexion.changeScene(event, "View/sign-up.fxml", "Signup", null);
         });
     }
 }

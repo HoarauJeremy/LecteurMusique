@@ -16,7 +16,37 @@ import javafx.scene.control.ButtonType;
  *
  * @author Jérémy Hoarau
  */
-public class Playlist extends databaseConnection {
+public class Playlist extends DatabaseConnection {
+    
+    public int playlistId, idUser;
+    public String nom;
+    public Date dateCreation;
+
+    public Playlist() {
+    }
+
+    public Playlist(int playlistId, int idUser, String nom, Date dateCreation) {
+        this.playlistId = playlistId;
+        this.idUser = idUser;
+        this.nom = nom;
+        this.dateCreation = dateCreation;
+    }
+
+    public int getPlaylistId() {
+        return playlistId;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public Date getDateCreation() {
+        return dateCreation;
+    }
     
     /**
      * Fonction pour créer une playlist

@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import lecteurmusique.Connexion;
+import lecteurmusique.Model.Utilisateur;
 import lecteurmusique.VerifDonnees;
 
 /**
@@ -42,7 +43,7 @@ public class SignUpController implements Initializable {
         signupButton.setOnAction((ActionEvent event) -> {
             if (!tf_email.getText().trim().isEmpty() && !tf_username.getText().trim().isEmpty() && !pf_password.getText().trim().isEmpty()) {
                 if (VerifDonnees.verifEmail(tf_email.getText().trim()) != false && VerifDonnees.verifNomUtilisateur(tf_username.getText().trim()) != false) {
-                    Connexion.signUpUser(event, tf_username.getText(), tf_email.getText(), pf_password.getText());                
+                    Utilisateur.signUp(event, tf_username.getText(), tf_email.getText(), pf_password.getText());                
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Veuiller saisire toutes les informations valide et necessaire pour vous connecter.");

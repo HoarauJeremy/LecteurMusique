@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import lecteurmusique.Connexion;
 import lecteurmusique.DatabaseConfig;
 
@@ -22,6 +23,9 @@ public class PlaylistListeController implements Initializable {
     
     @FXML
     private Button btnRetour, btnGenre, btnAjoutPlaylist;
+    
+    @FXML
+    private Label messageLabel;
 
     /**
      * Initializes the controller class.
@@ -49,6 +53,18 @@ public class PlaylistListeController implements Initializable {
         btnAjoutPlaylist.setOnAction((ActionEvent event) -> {
             //Connexion.changeScene(event, "View/", DatabaseConfig.getAppName("Playlist"), null);
         });        
+    }
+    
+    /**
+     *
+     * @param message
+     */
+    public void setInformationMessage(String message) {
+        messageLabel.setText(message);
+    }
+    
+    public void setPlaylistList() {
+        
     }
     
 }

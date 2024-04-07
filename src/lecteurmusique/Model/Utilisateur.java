@@ -18,16 +18,40 @@ import lecteurmusique.DatabaseConfig;
  *
  * @author Jérémy Hoarau
  */
-public class Utilisateur extends databaseConnection {
+public class Utilisateur extends DatabaseConnection {
+    
+    int idUser;
+    public String nom, email;    
+
+    public Utilisateur() {}
+    
+    public Utilisateur(int idUser, String nom, String email) {
+        this.idUser = idUser;
+        this.nom = nom;
+        this.email = email;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getEmail() {
+        return email;
+    }
     
     /**
+     * Fonction pour enregistrer un nouvelle utilisateur
      *
      * @param event
      * @param user_name
      * @param user_email
      * @param user_password
      */
-    public static void signUpUser(ActionEvent event, String user_name, String user_email, String user_password) {
+    public static void signUp(ActionEvent event, String user_name, String user_email, String user_password) {
         Connection connection = null;
         PreparedStatement psInsert = null;
         PreparedStatement psCheckUserExists = null;
@@ -89,12 +113,13 @@ public class Utilisateur extends databaseConnection {
     }
     
     /**
+     * Fonction pour se connecter à l'application
      *
      * @param event
      * @param user_email
      * @param user_password
      */
-    public static void logInUser(ActionEvent event, String user_email, String user_password) {
+    public static void logIn(ActionEvent event, String user_email, String user_password) {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
