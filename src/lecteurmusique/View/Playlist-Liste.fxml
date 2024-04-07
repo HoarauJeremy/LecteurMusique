@@ -104,7 +104,7 @@
             <Font name="Noto Sans Regular" size="16.0" />
          </font>
       </Button>
-      <ScrollPane layoutX="225.0" layoutY="50.0" prefHeight="389.0" prefWidth="602.0" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="50.0">
+      <ScrollPane fx:id="scrollPane" layoutX="225.0" layoutY="50.0" prefHeight="389.0" prefWidth="602.0" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="50.0">
          <content>
             <Label fx:id="messageLabel" alignment="CENTER" prefHeight="53.0" prefWidth="600.0">
                <font>

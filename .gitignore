@@ -3,6 +3,5 @@
 /music/
 */*.mp3
 *.mp3
-DatabaseConnection.java
-DatabaseConnection.*
+/Model/DatabaseConnection.java
 config.properties
