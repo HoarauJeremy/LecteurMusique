@@ -1,0 +1,32 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.background{
+    -fx-background-color: #4f4f4f;
+}
+
+.menu-nav {
+    -fx-background-color: #3f3f3f;
+}
+
+.btn-retour, .menu-btn {
+    -fx-background-color: #e5e5e5;
+    -fx-border-width: 0;
+    /*-fx-text-fill: ;*/
+}
+
+.logout-btn {
+    -fx-background-color: #ff0000;
+    -fx-text-fill: white;
+}
+
+.logout-btn:hover {
+    -fx-background-color: #ff2222;
+    -fx-cursor: hand;
+}
+
+.update-btn {
+    -fx-background-color: #22ff22;
+}
+

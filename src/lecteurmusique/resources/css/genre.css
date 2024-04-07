@@ -1,0 +1,33 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.background{
+    -fx-background-color: #4f4f4f;
+}
+
+.menu-nav {
+    -fx-background-color: #3f3f3f;
+}
+
+.btn-retour, .menu-btn {
+    -fx-background-color: #e5e5e5;
+    -fx-border-width: 0;
+    /*-fx-text-fill: ;*/
+}
+
+.listView {
+    -fx-background-color: #4f4f4f;
+}
+
+.list-cell:even, .list-cell:odd {
+    -fx-background-color: #5f5f5f;
+}
+
+.listView .list-cell Button {
+    -fx-background-color: #e5e5e5;
+    -fx-max-width: 600;
+    -fx-min-width: 600;
+    -fx-prefer-width: 600;
+    -fx-cursor: hand;
+}
