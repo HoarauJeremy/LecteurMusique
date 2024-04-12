@@ -78,6 +78,7 @@ public class PlaylistListeController implements Initializable {
             // Ajoute un bouton pour chaque playlist à la liste
             for (Playlist playlist : playlists) {
                 Button button = new Button(playlist.getNom()); // Crée un bouton avec le nom de la playlist
+                button.setId(Integer.toString(playlist.getPlaylistId()));
                 button.setOnAction((ActionEvent event) -> {
                     // Logique à exécuter lorsque le bouton est cliqué
                     System.out.println("Bouton cliqué: " + playlist.getPlaylistId());
