@@ -8,12 +8,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 /**
- *
+ * Class pour les playlist
+ * 
  * @author Jérémy Hoarau
  */
 public class Playlist extends DatabaseConnection {
@@ -22,9 +32,13 @@ public class Playlist extends DatabaseConnection {
     public String nom;
     public Date dateCreation;
 
-    public Playlist() {
-    }
-
+    /**
+     *
+     * @param playlistId
+     * @param idUser
+     * @param nom
+     * @param dateCreation
+     */
     public Playlist(int playlistId, int idUser, String nom, Date dateCreation) {
         this.playlistId = playlistId;
         this.idUser = idUser;
@@ -32,21 +46,51 @@ public class Playlist extends DatabaseConnection {
         this.dateCreation = dateCreation;
     }
 
+    /**
+     *
+     * @return l'id de la playlist
+     */
     public int getPlaylistId() {
         return playlistId;
     }
 
+    /**
+     *
+     * @return l'id de l'utilisateur qui a créer la playlist
+     */
     public int getIdUser() {
         return idUser;
     }
 
+    /**
+     *
+     * @return le nom de la playlist
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     *
+     * @return la date de creation de la playlist
+     */
     public Date getDateCreation() {
         return dateCreation;
     }
+    
+    /**
+     * Formate la date 
+     *
+     * @param datePlaylist Recuperer la date de creation d'une playlist
+     * @return la date au format <i>JJ/MM/AAAA</i>
+     */
+    public static String formatDate(Date datePlaylist) {
+        String pattern = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(datePlaylist);
+        System.out.println(date);
+        return date;
+  }
     
     /**
      * Fonction pour créer une playlist

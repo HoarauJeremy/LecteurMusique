@@ -18,9 +18,15 @@ public class Musique {
     public Date creationDate;
     public int idGenre, idArtiste;
 
-    public Musique() {
-    }
-
+    /**
+     *
+     * @param idMusique
+     * @param nom
+     * @param lien
+     * @param creationDate
+     * @param idGenre
+     * @param idArtiste
+     */
     public Musique(int idMusique, String nom, String lien, Date creationDate, int idGenre, int idArtiste) {
         this.idMusique = idMusique;
         this.nom = nom;
@@ -30,26 +36,50 @@ public class Musique {
         this.idArtiste = idArtiste;
     }
 
+    /**
+     *
+     * @return l'id de la musique
+     */
     public int getIdMusique() {
         return idMusique;
     }
 
+    /**
+     *
+     * @return le nom de la musique
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     *
+     * @return le lien de la musique
+     */
     public String getLien() {
         return lien;
     }
 
+    /**
+     *
+     * @return la date de creation de la musique
+     */
     public Date getCreationDate() {
         return creationDate;
     }
 
+    /**
+     *
+     * @return l'id du genre de la musique
+     */
     public int getIdGenre() {
         return idGenre;
     }
 
+    /**
+     *
+     * @return l'id de l'artiste de la musique
+     */
     public int getIdArtiste() {
         return idArtiste;
     }
