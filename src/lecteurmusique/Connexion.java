@@ -111,8 +111,8 @@ public class Connexion {
             try {
                 FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
                 root = loader.load();
-                PlaylistListeController playlistListeController = loader.getController();
-                //PlaylistListeController.setPlaylistInformation(idPlaylist, nom);
+                PlaylistController playlistController = loader.getController();
+                playlistController.setInformationPlaylist(playlists, musiques);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -323,13 +323,13 @@ public class Connexion {
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {
                     playlists.add(new Playlist(resultSet.getInt(1), resultSet.getInt(4), resultSet.getString(2), resultSet.getDate(3)));
-                    musiques.add(new Musique(resultSet.getInt("playlistId"), resultSet.getString("nom"), resultSet.getString("lien"), resultSet.getDate("creationDate"), resultSet.getInt("playlistId"), resultSet.getInt("playlistId")));
+                    musiques.add(new Musique(resultSet.getInt("idMusique"), resultSet.getString(6), resultSet.getString("lien"), resultSet.getDate("creationDate"), resultSet.getInt("idGenre"), resultSet.getInt("idArtiste")));
                 }
             } else {
-                //showAlert(Alert.AlertType.ERROR, "msg temporaire");
                 message = "Aucune Musique dans cette Playlist";
             }
-                changeSceneToPlaylist(event, "View/Playlist.fxml", DatabaseConfig.getAppName("Playlist"), message, playlists, musiques);
+            
+            changeSceneToPlaylist(event, "View/Playlist.fxml", DatabaseConfig.getAppName("Playlist"), message, playlists, musiques);
             
         } catch (SQLException e) {
             e.printStackTrace();
