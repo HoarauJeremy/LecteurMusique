@@ -31,7 +31,7 @@ import javafx.util.Duration;
 /**
  * FXML Controller class
  *
- * @author jerem
+ * @author Jérémy Hoarau
  */
 public class MusicPlayerController implements Initializable {
     

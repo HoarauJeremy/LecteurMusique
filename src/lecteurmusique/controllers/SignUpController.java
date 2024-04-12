@@ -45,14 +45,10 @@ public class SignUpController implements Initializable {
                 if (VerifDonnees.verifEmail(tf_email.getText().trim()) != false && VerifDonnees.verifNomUtilisateur(tf_username.getText().trim()) != false) {
                     Utilisateur.signUp(event, tf_username.getText(), tf_email.getText(), pf_password.getText());                
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Veuiller saisire toutes les informations valide et necessaire pour vous connecter.");
-                    alert.show();
+                    Connexion.showAlert(Alert.AlertType.ERROR, "Veuiller saisire toutes les informations valide et necessaire pour vous connecter.");
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Veuiller saisire toutes les information necessaire pour vous connecter.");
-                alert.show();
+                Connexion.showAlert(Alert.AlertType.ERROR, "Veuiller saisire toutes les information necessaire pour vous connecter.");
             }
         });
         

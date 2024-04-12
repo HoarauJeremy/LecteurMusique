@@ -64,13 +64,19 @@ public class PlaylistListeController implements Initializable {
     }
     
     /**
+     * Affiche un message si la liste des playlist est vide.
      *
-     * @param message
+     * @param message message à afficher
      */
     public void setMessageInformation(String message) {
         messageLabel.setText(message);
     }
     
+    /**
+     * Affiche les playlist d'un utilisateur.
+     *
+     * @param playlists Liste de playlist à afficher
+     */
     public void setPlaylistList(ArrayList<Playlist> playlists) {
         if (playlists != null) {
             VBox buttonContainer = new VBox(); // Crée un conteneur vertical pour les boutons

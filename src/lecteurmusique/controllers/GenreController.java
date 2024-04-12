@@ -47,6 +47,11 @@ public class GenreController implements Initializable {
         });
     }
     
+    /**
+     * Affiche la liste des genres de musique avec un boutton.
+     *
+     * @param tab Collection qui recuppere les id et les noms des genres.
+     */
     public void setGenre(HashMap<Integer, String> tab) {
         ObservableList<Button> buttons = FXCollections.observableArrayList();
         

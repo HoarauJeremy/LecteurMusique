@@ -13,7 +13,6 @@ import java.util.TimerTask;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -33,7 +32,7 @@ import lecteurmusique.Model.Playlist;
 /**
  * FXML Controller class
  *
- * @author jerem
+ * @author Jérémy Hoarau
  */
 public class PlaylistController extends MusicPlayerController implements Initializable {
 
@@ -139,8 +138,15 @@ public class PlaylistController extends MusicPlayerController implements Initial
         btnPlaylist.setOnAction(Connexion::showPlaylistList);   
     }
     
+    /**
+     * Affiche les informations de la playlist (nom et date de creation)
+     * et affiche une liste des musiques avec des boutton.
+     *
+     * @param playlists liste d'objet de type <b>Playlist</b> {@link lecteurmusique.Model.Playlist}
+     * @param musiques liste d'objet de type <b>Musique</b> {@link lecteurmusique.Model.Musique}
+     */
     public void setInformationPlaylist(ArrayList<Playlist> playlists, ArrayList<Musique> musiques) {
-        nomPlaylist.setText(playlists.get(0).getNom());
+        nomPlaylist.setText(playlists.getFirst().getNom());
         datePlaylist.setText(Playlist.formatDate(playlists.getFirst().getDateCreation()));
         
         if (musiques != null) {
@@ -165,6 +171,11 @@ public class PlaylistController extends MusicPlayerController implements Initial
         }
     }
     
+    /**
+     * Affiche un message si la playlist est vide.
+     *
+     * @param message message à afficher
+     */
     public void setMessageInformation(String message) {
         messageLabel.setText(message);
     }

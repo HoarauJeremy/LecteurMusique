@@ -10,11 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
-import static lecteurmusique.Connexion.changeScene;
-import static lecteurmusique.Connexion.showAlert;
+import lecteurmusique.Connexion;
 import lecteurmusique.DatabaseConfig;
 
 /**
+ * Classe correspondante à la table utilisateur.
  *
  * @author Jérémy Hoarau
  */
@@ -22,23 +22,40 @@ public class Utilisateur extends DatabaseConnection {
     
     int idUser;
     public String nom, email;    
-
-    public Utilisateur() {}
     
+    /**
+     * Constructeur de la classe Utilisateur
+     *
+     * @param idUser de l'utilisateur
+     * @param nom de l'utilisateur
+     * @param email de l'utilisateur
+     */
     public Utilisateur(int idUser, String nom, String email) {
         this.idUser = idUser;
         this.nom = nom;
         this.email = email;
     }
 
+    /**
+     *
+     * @return l'id de l'utilisateur
+     */
     public int getIdUser() {
         return idUser;
     }
 
+    /**
+     *
+     * @return le nom de l'utilisateur
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     *
+     * @return l'email de l'utilisateur
+     */
     public String getEmail() {
         return email;
     }
@@ -47,9 +64,9 @@ public class Utilisateur extends DatabaseConnection {
      * Fonction pour enregistrer un nouvelle utilisateur
      *
      * @param event
-     * @param user_name
-     * @param user_email
-     * @param user_password
+     * @param user_name nom que l'utilisateur à saisie
+     * @param user_email email que l'utilisateur à saisie
+     * @param user_password mot de passe que l'utilisateur à saisie
      */
     public static void signUp(ActionEvent event, String user_name, String user_email, String user_password) {
         Connection connection = null;
@@ -64,10 +81,10 @@ public class Utilisateur extends DatabaseConnection {
             resultSet = psCheckUserExists.executeQuery();
             
             if (resultSet.isBeforeFirst()) {
-                showAlert(Alert.AlertType.ERROR, "You cannot use this username.");
+                Connexion.showAlert(Alert.AlertType.ERROR, "You cannot use this username.");
             } else {
                 if (user_password.length() < 12) {
-                    showAlert(Alert.AlertType.ERROR, "Votre mot de passe doit contenir au minimun 12 caractères.");
+                    Connexion.showAlert(Alert.AlertType.ERROR, "Votre mot de passe doit contenir au minimun 12 caractères.");
                 } else {
                     psInsert = connection.prepareStatement("INSERT INTO utilisateur (nom, email, password) VALUES (?, ?, ?)");
                     psInsert.setString(1, user_name);
@@ -75,7 +92,7 @@ public class Utilisateur extends DatabaseConnection {
                     psInsert.setString(3, user_password);
                     psInsert.executeUpdate();
 
-                    changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), user_name);
+                    Connexion.changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), user_name);
                 }
             }
         } catch (SQLException e) {
@@ -116,8 +133,8 @@ public class Utilisateur extends DatabaseConnection {
      * Fonction pour se connecter à l'application
      *
      * @param event
-     * @param user_email
-     * @param user_password
+     * @param user_email email que l'utilisateur à saisie
+     * @param user_password mot de passe que l'utilisateur à saisie
      */
     public static void logIn(ActionEvent event, String user_email, String user_password) {
         Connection connection = null;
@@ -132,7 +149,7 @@ public class Utilisateur extends DatabaseConnection {
             
             if (!resultSet.isBeforeFirst()) {
                 System.out.println("User not found !");
-                showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
+                Connexion.showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
             } else {
 
                 while (resultSet.next()) {
@@ -140,9 +157,9 @@ public class Utilisateur extends DatabaseConnection {
                     String retrievedPassword = resultSet.getString("password");
                     
                     if (retrievedPassword.equals(user_password)) {
-                        changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);   
+                        Connexion.changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);   
                     } else {
-                        showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
+                        Connexion.showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
                     }
                 }
             }

@@ -28,6 +28,11 @@
                   <Font name="Arial" size="17.0" />
                </font>
             </Button>
+            <Button fx:id="btnGenre" disable="true" layoutX="101.0" layoutY="59.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="menu-btn" text="Genre" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
       <MenuBar layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="912.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

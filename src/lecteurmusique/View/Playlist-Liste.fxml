@@ -27,9 +27,14 @@
                   <Font name="Noto Sans Regular" size="17.0" />
                </font>
             </Button>
-            <Button fx:id="btnGenre" layoutX="55.0" layoutY="65.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="102.0" styleClass="menu-btn" text="Genre" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+            <Button fx:id="btnGenre" mnemonicParsing="false" prefHeight="40.0" prefWidth="102.0" styleClass="menu-btn" text="Genre" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
                <font>
                   <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnPlaylist" disable="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="menu-btn" text="Playlist" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+               <font>
+                  <Font name="Arial" size="17.0" />
                </font>
             </Button>
          </children>
