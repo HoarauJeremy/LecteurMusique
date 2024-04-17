@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import lecteurmusique.Connexion;
 import lecteurmusique.DatabaseConfig;
+import lecteurmusique.Model.Genre;
 
 /**
  * FXML Controller class
@@ -52,11 +53,11 @@ public class GenreController implements Initializable {
      *
      * @param tab Collection qui recuppere les id et les noms des genres.
      */
-    public void setGenre(HashMap<Integer, String> tab) {
+    public void setGenre(HashMap<Integer, Genre> tab) {
         ObservableList<Button> buttons = FXCollections.observableArrayList();
         
         for (int i = 1; i < tab.size()+1; i++) {
-            btn = new Button(tab.get(i));
+            btn = new Button(tab.get(i).getNom());
             btn.setId(Integer.toString(i));
             
             final int buttonId = i;

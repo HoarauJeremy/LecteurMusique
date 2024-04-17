@@ -118,7 +118,7 @@ public class Playlist extends DatabaseConnection {
                 psInsert.executeUpdate();
             }
             
-            closeConnection();
+            closeConnection(connection, psCheckPlaylistExists, psInsert, resultSet);
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -158,7 +158,7 @@ public class Playlist extends DatabaseConnection {
                 }
             }
             
-            closeConnection();
+            closeConnection(connection, psCheckPlaylist, psDeletePlaylist, resultSet);
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());

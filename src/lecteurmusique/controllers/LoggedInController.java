@@ -22,7 +22,7 @@ import lecteurmusique.DatabaseConfig;
 public class LoggedInController implements Initializable {
     
     @FXML
-    private Button btnRetour, btnPlaylist, btnGenre, btnModifcation, btnLogout;
+    private Button btnRetour, btnPlaylist, btnGenre, btnModifcation, btnModificationMDP, btnLogout;
 
     @FXML
     private Label name_label, Fname_label;
@@ -36,7 +36,7 @@ public class LoggedInController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         btnPlaylist.setOnAction((ActionEvent event) -> {
-            Connexion.showPlaylistUser(event, 1);
+            Connexion.showPlaylistList(event);
         });
         
         btnGenre.setOnAction((ActionEvent event) -> {
@@ -48,11 +48,15 @@ public class LoggedInController implements Initializable {
         });
         
         btnModifcation.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "", DatabaseConfig.getAppName(""), null);
+            Connexion.changeScene(event, "View/UserInfoModification.fxml", DatabaseConfig.getAppName("Modification"), null);
+        });
+        
+        btnModificationMDP.setOnAction((ActionEvent event) -> {
+            Connexion.changeScene(event, "View/UserPasswordModification.fxml", DatabaseConfig.getAppName("Modification"), null);
         });
         
         btnLogout.setOnAction((ActionEvent event) -> {
-            this.logout(event);
+            Connexion.changeScene(event, "View/ConnectionPage.fxml", "Log in!", null);
         });
     }   
     
@@ -64,14 +68,6 @@ public class LoggedInController implements Initializable {
     public void setUserInformation(String username, String Fname) {
         name_label.setText(username);
         Fname_label.setText(Fname);
-    }
-    
-    /**
-     *
-     * @param event
-     */
-    public void logout(ActionEvent event) {
-        Connexion.changeScene(event, "View/ConnectionPage.fxml", "Log in!", null);
     }
     
 }

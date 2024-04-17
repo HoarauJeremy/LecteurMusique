@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import lecteurmusique.Model.DatabaseConnection;
+import lecteurmusique.Model.Genre;
 import lecteurmusique.Model.Musique;
 import lecteurmusique.Model.Playlist;
 import lecteurmusique.controllers.GenreController;
@@ -140,7 +143,7 @@ public class Connexion {
      * @param title
      * @param tabGenre 
      */
-    private static void changeSceneToGenre(ActionEvent event, String fxmlFile, String title, HashMap<Integer, String> tabGenre) {
+    private static void changeSceneToGenre(ActionEvent event, String fxmlFile, String title, HashMap<Integer, Genre> tabGenre) {
         Parent root = null;
 
         if (tabGenre != null) {
@@ -235,26 +238,10 @@ public class Connexion {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                DatabaseConnection.closeConnection(connection, ps, null, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -290,12 +277,10 @@ public class Connexion {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (connection != null) {
-                try {
-                    DatabaseConnection.closeConnection();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                DatabaseConnection.closeConnection(connection, ps, null, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -334,26 +319,10 @@ public class Connexion {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                DatabaseConnection.closeConnection(connection, ps, null, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -366,7 +335,7 @@ public class Connexion {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
-        HashMap<Integer, String> tab = new HashMap<>();
+        HashMap<Integer, Genre> tab = new HashMap<>();
 
         try {
             connection = DatabaseConnection.getConnection();
@@ -375,33 +344,17 @@ public class Connexion {
             
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {
-                    tab.put(resultSet.getInt(1), resultSet.getString(2));
+                    tab.put(resultSet.getInt(1), new Genre(resultSet.getInt(1), resultSet.getString(2)));
                 }
                 changeSceneToGenre(event, "View/genre.fxml", DatabaseConfig.getAppName("Genre"), tab);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                DatabaseConnection.closeConnection(connection, ps, null, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
