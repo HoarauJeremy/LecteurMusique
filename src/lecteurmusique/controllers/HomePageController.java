@@ -24,6 +24,8 @@ public class HomePageController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -38,6 +40,10 @@ public class HomePageController implements Initializable {
         btnProfil.setOnAction((ActionEvent event) -> {
             showProfile(event);
         });
+    }
+    
+    public void setUserInformation(String username) {
+        
     }
     
     public void showPlaylist(ActionEvent event) {

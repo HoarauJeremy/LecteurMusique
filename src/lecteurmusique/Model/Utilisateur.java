@@ -5,6 +5,7 @@
 package lecteurmusique.Model;
 
 import com.password4j.Hash;
+import com.password4j.HashUpdate;
 import com.password4j.Password;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -77,7 +78,6 @@ public class Utilisateur extends DatabaseConnection {
         PreparedStatement psInsert = null;
         PreparedStatement psCheckUserExists = null;
         ResultSet resultSet = null;
-        Hash hash = null;
         
         try {
             connection = getConnection();
@@ -91,14 +91,14 @@ public class Utilisateur extends DatabaseConnection {
                 if (user_password.length() < 12) {
                     Connexion.showAlert(Alert.AlertType.ERROR, "Votre mot de passe doit contenir au minimun 12 caractères.");
                 } else {
-                    hash = Password.hash(user_password).withBcrypt();
+                    Hash hash = Password.hash(user_password).withBcrypt();
                     psInsert = connection.prepareStatement("INSERT INTO utilisateur (nom, email, password) VALUES (?, ?, ?)");
                     psInsert.setString(1, user_name);
                     psInsert.setString(2, user_email);
                     psInsert.setString(3, hash.getResult());
                     psInsert.executeUpdate();
 
-                    Connexion.changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), user_name);
+                    Connexion.changeSceneToHome(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), user_name);
                 }
             }
         } catch (SQLException e) {
@@ -154,6 +154,53 @@ public class Utilisateur extends DatabaseConnection {
             } catch (SQLException ex) {
                 Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+    
+    /**
+     * Fonction pour mettre à jour le mot de passe d'un utilisateur
+     *
+     * @param event
+     * @param email saisie par l'utilisateur
+     * @param password saisie par l'utilisateur
+     * @throws SQLException
+     */
+    public static void updatePassword(ActionEvent event, String email, String password) throws SQLException {
+        Connection connection = null;
+        PreparedStatement psCheckPassword = null;
+        PreparedStatement psUpdatePassword = null;
+        ResultSet resultSet = null;
+        
+        try {
+            connection = getConnection();
+            psCheckPassword = connection.prepareStatement("SELECT password FROM utilisateur WHERE email = ?;");
+            psCheckPassword.setString(1, email);
+            resultSet = psCheckPassword.executeQuery();
+            
+            if (resultSet.isBeforeFirst()) {
+                Connexion.showAlert(Alert.AlertType.ERROR, "");
+            } else {
+                if (resultSet.first()) {
+                    String retrievedPassword = resultSet.getString("password");
+                    HashUpdate update = Password.check(password, retrievedPassword).andUpdate().addNewRandomSalt().withBcrypt();
+                    
+                    if (update.isVerified()) {
+                        Hash newHash = update.getHash();
+                        
+                        psUpdatePassword = connection.prepareStatement("UPDATE utilisateur SET password = ? WHERE email = ?");
+                        psUpdatePassword.setString(1, newHash.getResult());
+                        psUpdatePassword.setString(2, email);
+                        psUpdatePassword.executeUpdate();
+                        
+                        Connexion.showProfileUser(event, 0);
+                    }
+                }
+            }
+            
+        } catch (SQLException e) {
+            e.getMessage();
+        } finally {
+            closeConnection(connection, psCheckPassword, psUpdatePassword, resultSet);
         }
     }
     

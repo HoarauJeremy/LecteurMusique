@@ -23,6 +23,7 @@ public class Playlist extends DatabaseConnection {
     public int playlistId, idUser;
     public String nom;
     public Date dateCreation;
+    public int privee;
 
     /**
      *
@@ -30,12 +31,14 @@ public class Playlist extends DatabaseConnection {
      * @param idUser
      * @param nom
      * @param dateCreation
+     * @param privee
      */
-    public Playlist(int playlistId, int idUser, String nom, Date dateCreation) {
+    public Playlist(int playlistId, int idUser, String nom, Date dateCreation, int privee) {
         this.playlistId = playlistId;
         this.idUser = idUser;
         this.nom = nom;
         this.dateCreation = dateCreation;
+        this.privee = privee;
     }
 
     /**
@@ -68,6 +71,23 @@ public class Playlist extends DatabaseConnection {
      */
     public Date getDateCreation() {
         return dateCreation;
+    }
+
+    /**
+     *
+     * @return si la playlist est privée ou non
+     */
+    public int getPrivee() {
+        return privee;
+    }
+
+    /**
+     * Permet de definir le status de la playlist (<i>Privee</i> ou <i>Public</i>)
+     *
+     * @param privee
+     */
+    public void setPrivee(int privee) {
+        this.privee = privee;
     }
     
     /**
@@ -111,10 +131,11 @@ public class Playlist extends DatabaseConnection {
                 alert.setContentText("You cannot use " + nomPlaylist + " .");
                 alert.show();
             } else {
-                psInsert = connection.prepareStatement("INSERT INTO playlist (Nom, dateCreation, idUser) VALUES (?, ?, ?)");
+                psInsert = connection.prepareStatement("INSERT INTO playlist (Nom, dateCreation, idUser, privee) VALUES (?, ?, ?, ?)");
                 psInsert.setString(1, nomPlaylist);
                 psInsert.setDate(2, (java.sql.Date) dateCreation);
                 psInsert.setInt(3, idUser);
+                psInsert.setBoolean(4, true);
                 psInsert.executeUpdate();
             }
             
@@ -163,6 +184,33 @@ public class Playlist extends DatabaseConnection {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }        
+    }
+    
+    /**
+     * Permet de mettre à jour une playlist.
+     *
+     * @param idUser
+     * @param idPlaylist
+     * @throws SQLException
+     */
+    public static void updatePlaylist(int idUser, int idPlaylist) throws SQLException {
+        Connection connection = null;
+        PreparedStatement psUpdatePlaylist = null;
+        ResultSet resultSet = null;
+        
+        try {
+            connection = getConnection();
+            psUpdatePlaylist = connection.prepareStatement("UPDATE playlist SET nom = ?, privee = ? WHERE PlaylistID = ?");
+            psUpdatePlaylist.setString(1, "");
+            psUpdatePlaylist.setInt(2, 0);
+            psUpdatePlaylist.setInt(3, idPlaylist);
+            psUpdatePlaylist.executeUpdate();
+            
+        } catch (SQLException e) {
+            e.getMessage();
+        } finally {
+            closeConnection(connection, psUpdatePlaylist, null, resultSet);
+        }
     }
     
 }

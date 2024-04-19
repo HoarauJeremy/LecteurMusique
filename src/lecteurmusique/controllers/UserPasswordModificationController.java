@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import lecteurmusique.Connexion;
+import lecteurmusique.Model.Utilisateur;
+import lecteurmusique.VerifDonnees;
 
 /**
  * FXML Controller class
@@ -21,7 +23,7 @@ import lecteurmusique.Connexion;
 public class UserPasswordModificationController implements Initializable {
 
     @FXML
-    private Button btnPlaylist, btnGenre, btnRetour;
+    private Button btnPlaylist, btnGenre, btnRetour, btnModification;
     @FXML
     private PasswordField motDePasseField1, motDePasseField2;
 
@@ -43,6 +45,16 @@ public class UserPasswordModificationController implements Initializable {
         btnGenre.setOnAction((ActionEvent event) -> {
            Connexion.showSongGender(event);
         });
-    }    
+        
+        btnModification.setOnAction((ActionEvent event) -> {
+            
+            if (VerifDonnees.verifMotDePasse(motDePasseField1.getText().trim())) {
+                if (motDePasseField1.getText().trim().equals(motDePasseField2.getText().trim())) {
+//                    Utilisateur.updatePassword(event, email, motDePasseField1);
+                }
+            }
+        });
+        
+    }
     
 }

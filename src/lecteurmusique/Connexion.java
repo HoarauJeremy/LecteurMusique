@@ -22,6 +22,7 @@ import lecteurmusique.Model.Genre;
 import lecteurmusique.Model.Musique;
 import lecteurmusique.Model.Playlist;
 import lecteurmusique.controllers.GenreController;
+import lecteurmusique.controllers.HomePageController;
 import lecteurmusique.controllers.LoggedInController;
 import lecteurmusique.controllers.PlaylistController;
 import lecteurmusique.controllers.PlaylistListeController;
@@ -48,6 +49,39 @@ public class Connexion {
                 root = loader.load();
                 LoggedInController loggedInController = loader.getController();
                 loggedInController.setUserInformation(username, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                root = FXMLLoader.load(Connexion.class.getResource(fxmlFile));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    
+    /**
+     *
+     * @param event
+     * @param fxmlFile
+     * @param title
+     * @param username
+     */
+    public static void changeSceneToHome(ActionEvent event, String fxmlFile, String title, String username) {
+        Parent root = null;
+        
+        if (username != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
+                root = loader.load();
+                HomePageController homePageController = loader.getController();
+                homePageController.setUserInformation(username);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -266,7 +300,15 @@ public class Connexion {
             
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {                    
-                    playlists.add(new Playlist(resultSet.getInt("PlaylistID"), resultSet.getInt("idUser"), resultSet.getString("Nom"), resultSet.getTime("dateCreation")));
+                    playlists.add(
+                        new Playlist(
+                            resultSet.getInt("PlaylistID"),
+                            resultSet.getInt("idUser"),
+                            resultSet.getString("Nom"),
+                            resultSet.getTime("dateCreation"),
+                            resultSet.getInt("privee")
+                        )
+                    );
                 }
             } else {
                 message = "Aucune playlist disponible";
@@ -307,7 +349,15 @@ public class Connexion {
             
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {
-                    playlists.add(new Playlist(resultSet.getInt(1), resultSet.getInt(4), resultSet.getString(2), resultSet.getDate(3)));
+                    playlists.add(
+                        new Playlist(
+                            resultSet.getInt(1), 
+                            resultSet.getInt(4), 
+                            resultSet.getString(2), 
+                            resultSet.getDate(3),
+                            resultSet.getInt("privee")
+                        )
+                    );
                     musiques.add(new Musique(resultSet.getInt("idMusique"), resultSet.getString(6), resultSet.getString("lien"), resultSet.getDate("creationDate"), resultSet.getInt("idGenre"), resultSet.getInt("idArtiste")));
                 }
             } else {

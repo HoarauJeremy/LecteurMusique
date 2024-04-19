@@ -25,7 +25,7 @@ public class LecteurMusique extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("View/homePage.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("View/ConnectionPage.fxml"));
             Scene scene = new Scene(root, 900, 600);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Lecteur de musique");

@@ -7,6 +7,7 @@ package lecteurmusique;
 import java.util.regex.Pattern;
 
 /**
+ * Classe de vérification de données saisie par les utilisateurs
  *
  * @author Jérémy Hoarau
  */
@@ -39,6 +40,16 @@ public class VerifDonnees {
         
         if (Pattern.matches("^[a-zA-Zéèêë\\ -]{2,}$", nom) == false) {
             resultat = false;
+        }
+        
+        return resultat;
+    }
+    
+    public static boolean verifMotDePasse(String motDePasse) {
+        boolean resultat = false;
+        
+        if (resultat) {
+            
         }
         
         return resultat;
