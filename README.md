@@ -7,10 +7,10 @@
 
 
 ## à faire
-
-- voir les threads pour le lecteur [ ]
-- finir la partie graphique de chaque scene [ ]
-- renomer certain ficher [ ]
+- Faire la connexion avec la base de donnée [x]
+- Voir les threads pour le lecteur []
+- Finir la partie graphique de chaque scene [ ]
+- Renomer certain ficher [ ]
 
 
 <br><br>
