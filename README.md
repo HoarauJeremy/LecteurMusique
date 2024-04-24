@@ -5,5 +5,15 @@
 
 <br><br>
 
+
+## à faire
+
+- voir les threads pour le lecteur [ ]
+- finir la partie graphique de chaque scene [ ]
+- renomer certain ficher [ ]
+
+
+<br><br>
+
 ### Information : 
 > Cette application est réalisée dans le cadre d'un projet scolaire.
