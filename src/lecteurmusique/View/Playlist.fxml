@@ -104,19 +104,19 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <Label fx:id="messageLabel" alignment="CENTER" layoutX="243.0" layoutY="50.0" prefHeight="53.0" prefWidth="600.0" AnchorPane.bottomAnchor="497.0" AnchorPane.leftAnchor="243.0" AnchorPane.rightAnchor="57.0" AnchorPane.topAnchor="50.0">
+      <Label fx:id="messageLabel" alignment="CENTER" layoutX="243.0" layoutY="50.0" prefHeight="53.0" prefWidth="570.0" AnchorPane.bottomAnchor="497.0" AnchorPane.leftAnchor="243.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0">
          <font>
             <Font name="Noto Sans Regular" size="20.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="225.0" layoutY="25.0" prefHeight="100.0" prefWidth="611.0" AnchorPane.bottomAnchor="475.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="25.0">
+      <AnchorPane layoutX="225.0" layoutY="27.0" prefHeight="100.0" prefWidth="580.0" AnchorPane.bottomAnchor="473.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="95.0" AnchorPane.topAnchor="27.0">
          <children>
             <Label fx:id="nomPlaylist" alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="29.0" prefWidth="621.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Noto Sans Regular" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="datePlaylist" alignment="CENTER" layoutX="304.0" layoutY="50.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+            <Label fx:id="datePlaylist" alignment="CENTER" layoutX="304.0" layoutY="50.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="50.0">
                <font>
                   <Font size="15.0" />
                </font>
@@ -128,5 +128,10 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="316.0" prefWidth="635.0" />
         </content>
       </ScrollPane>
+      <Button fx:id="btnModifierPlaylist" layoutX="786.0" layoutY="65.0" mnemonicParsing="false" text="Modifier" AnchorPane.bottomAnchor="510.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="65.0">
+         <font>
+            <Font name="Noto Sans Regular" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

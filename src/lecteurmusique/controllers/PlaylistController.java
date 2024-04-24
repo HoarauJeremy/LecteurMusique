@@ -6,10 +6,13 @@ package lecteurmusique.controllers;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -24,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Popup;
 import lecteurmusique.Connexion;
 import lecteurmusique.DatabaseConfig;
 import lecteurmusique.Model.Musique;
@@ -39,7 +43,7 @@ public class PlaylistController extends MusicPlayerController implements Initial
     @FXML
     private ProgressBar songProgressBar;
     @FXML
-    private Button btnPlaylist, btnGenre, btnRetour, btnReset, btnPause, btnPlay, btnPrevious, btnNext;
+    private Button btnPlaylist, btnGenre, btnRetour, btnModifierPlaylist, btnReset, btnPause, btnPlay, btnPrevious, btnNext;
     @FXML
     private Slider volumeSlider;
     @FXML
@@ -120,11 +124,11 @@ public class PlaylistController extends MusicPlayerController implements Initial
             this.resetMedia();
         });
         
-                /**
+        /**
          * Retourne sur la page d'accueil.
          */
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);
+            Connexion.changeSceneToHome(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);
         });
         
         /**
@@ -135,7 +139,16 @@ public class PlaylistController extends MusicPlayerController implements Initial
         /**
          * Affiche la page des Playlist de musiques.
          */
-        btnPlaylist.setOnAction(Connexion::showPlaylistList);   
+        btnPlaylist.setOnAction(Connexion::showPlaylistList);
+        
+        btnModifierPlaylist.setOnAction((ActionEvent event) -> {
+//            try {
+//                this.updatePlaylist(4, 2, 1, "a");
+//            } catch (SQLException ex) {
+//                Logger.getLogger(PlaylistController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+
+        });
     }
     
     /**
@@ -178,5 +191,9 @@ public class PlaylistController extends MusicPlayerController implements Initial
      */
     public void setMessageInformation(String message) {
         messageLabel.setText(message);
+    }
+    
+    public void updatePlaylist(int idUser, int idPlaylist, int privee, String nomPlaylist) throws SQLException {
+//        Playlist.updatePlaylist(idUser, idPlaylist, nomPlaylist, privee);
     }
 }

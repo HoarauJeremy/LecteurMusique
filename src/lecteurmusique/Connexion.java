@@ -16,6 +16,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import lecteurmusique.Model.DatabaseConnection;
 import lecteurmusique.Model.Genre;
@@ -67,6 +70,8 @@ public class Connexion {
     }
     
     /**
+     * Fontion qui va rediriger vers la page d'accueil
+     * @hidden à Modifier!!
      *
      * @param event
      * @param fxmlFile
@@ -375,6 +380,10 @@ public class Connexion {
                 Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public static void showUpdatePlaylist(ActionEvent event) {
+        changeScene(event, "View/", DatabaseConfig.getAppName("Modification de la playlist"), null);
     }
     
     /**

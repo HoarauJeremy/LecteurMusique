@@ -189,21 +189,24 @@ public class Playlist extends DatabaseConnection {
     /**
      * Permet de mettre à jour une playlist.
      *
-     * @param idUser
-     * @param idPlaylist
+     * @param idUser Id de l'utilisateur qui à créer la playlist.
+     * @param idPlaylist Id de la playlist.
+     * @param nomPlaylist Definit le nom de la playlist.
+     * @param privee Definit le statut (1 pour <i>Public</i> ou 0 pour <i>Privée</i>) d'une Playlist.
      * @throws SQLException
      */
-    public static void updatePlaylist(int idUser, int idPlaylist) throws SQLException {
+    public static void updatePlaylist(int idUser, int idPlaylist, String nomPlaylist, int privee) throws SQLException {
         Connection connection = null;
         PreparedStatement psUpdatePlaylist = null;
         ResultSet resultSet = null;
         
         try {
             connection = getConnection();
-            psUpdatePlaylist = connection.prepareStatement("UPDATE playlist SET nom = ?, privee = ? WHERE PlaylistID = ?");
-            psUpdatePlaylist.setString(1, "");
-            psUpdatePlaylist.setInt(2, 0);
+            psUpdatePlaylist = connection.prepareStatement("UPDATE playlist SET nom = ?, privee = ? WHERE PlaylistID = ? AND nom = ?");
+            psUpdatePlaylist.setString(1, nomPlaylist);
+            psUpdatePlaylist.setInt(2, privee);
             psUpdatePlaylist.setInt(3, idPlaylist);
+            psUpdatePlaylist.setInt(4, idUser);
             psUpdatePlaylist.executeUpdate();
             
         } catch (SQLException e) {
