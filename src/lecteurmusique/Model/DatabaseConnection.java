@@ -4,13 +4,12 @@
  */
 package lecteurmusique.Model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import lecteurmusique.DatabaseConfig;
 
 /**
- *
+ * Class de connexion à la base de donnée <i><strong>MySQL</strong></i>
+ * 
  * @author Jérémy Hoarau
  */
 public class DatabaseConnection {
@@ -22,7 +21,7 @@ public class DatabaseConnection {
     /**
      * Créer une connexion avec la base de données
      *
-     * @return
+     * @return la connexion à la base de donnée
      * @throws SQLException
      */
     public static Connection getConnection() throws SQLException {
@@ -32,9 +31,28 @@ public class DatabaseConnection {
     /**
      * Ferme la connexion avec la base de données
      *
+     * @param connection
+     * @param preparedStatement
+     * @param preparedStatement1
+     * @param resultset
      * @throws SQLException
      */
-    public  static void closeConnection() throws SQLException {
-        getConnection().close();
+    public  static void closeConnection(Connection connection, PreparedStatement preparedStatement, PreparedStatement preparedStatement1, ResultSet resultset) throws SQLException {
+        try {
+            if (resultset != null) {
+                resultset.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (preparedStatement1 != null) {
+                preparedStatement1.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException sQLException) {
+            sQLException.printStackTrace();
+        }
     }
 }
