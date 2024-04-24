@@ -7,7 +7,9 @@ package lecteurmusique.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import lecteurmusique.Connexion;
 
 /**
@@ -16,13 +18,32 @@ import lecteurmusique.Connexion;
  * @author Jérémy Hoarau
  */
 public class HomePageController implements Initializable {
+    
+    @FXML
+    private Button btnGenre, btnPlaylist, btnProfil; 
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        btnPlaylist.setOnAction((ActionEvent event) -> {
+            this.showPlaylist(event);
+        });
+        
+        btnGenre.setOnAction((ActionEvent event) -> {
+            this.showGender(event);
+        });
+        
+        btnProfil.setOnAction((ActionEvent event) -> {
+            showProfile(event);
+        });
+    }
+    
+    public void setUserInformation(String username) {
+        
     }
     
     public void showPlaylist(ActionEvent event) {

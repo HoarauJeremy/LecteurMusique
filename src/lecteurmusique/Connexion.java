@@ -6,30 +6,35 @@ package lecteurmusique;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import lecteurmusique.Model.DatabaseConnection;
+import lecteurmusique.Model.Genre;
+import lecteurmusique.Model.Musique;
+import lecteurmusique.Model.Playlist;
 import lecteurmusique.controllers.GenreController;
+import lecteurmusique.controllers.HomePageController;
 import lecteurmusique.controllers.LoggedInController;
+import lecteurmusique.controllers.PlaylistController;
 import lecteurmusique.controllers.PlaylistListeController;
 
 /**
- * Class de connexion à une base de donnée <b>MySQL</b>, pour une application
- * d'ecoute de musique.
- *
+ * 
  * @author Jérémy Hoarau
  */
 public class Connexion {
-    
-    private static final String JDBC_URL = DatabaseConfig.getDbUrl();
-    private static final String USER = DatabaseConfig.getDbUser();
-    private static final String PASSWORD = DatabaseConfig.getDbPassword();
     
     /**
      *
@@ -47,6 +52,41 @@ public class Connexion {
                 root = loader.load();
                 LoggedInController loggedInController = loader.getController();
                 loggedInController.setUserInformation(username, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                root = FXMLLoader.load(Connexion.class.getResource(fxmlFile));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    
+    /**
+     * Fontion qui va rediriger vers la page d'accueil
+     * @hidden à Modifier!!
+     *
+     * @param event
+     * @param fxmlFile
+     * @param title
+     * @param username
+     */
+    public static void changeSceneToHome(ActionEvent event, String fxmlFile, String title, String username) {
+        Parent root = null;
+        
+        if (username != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
+                root = loader.load();
+                HomePageController homePageController = loader.getController();
+                homePageController.setUserInformation(username);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -106,21 +146,24 @@ public class Connexion {
      * @param idPlaylist
      * @param nom
      */
-    private static void changeSceneToPlaylist(ActionEvent event, String fxmlFile, String title, int idPlaylist, String nom) {
+    private static void changeSceneToPlaylist(ActionEvent event, String fxmlFile, String title, String message, ArrayList<Playlist> playlists, ArrayList<Musique> musiques) {
         Parent root = null;
         
-        if (nom != null) {
+        if (playlists != null && musiques != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
                 root = loader.load();
-                PlaylistListeController playlistListeController = loader.getController();
-                //PlaylistListeController.setPlaylistInformation(idPlaylist, nom);
+                PlaylistController playlistController = loader.getController();
+                playlistController.setInformationPlaylist(playlists, musiques);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             try {
-                root = FXMLLoader.load(Connexion.class.getResource(fxmlFile));
+                FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
+                root = loader.load();
+                PlaylistController playlistController = loader.getController();
+                playlistController.setMessageInformation(message);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -139,7 +182,7 @@ public class Connexion {
      * @param title
      * @param tabGenre 
      */
-    private static void changeSceneToGenre(ActionEvent event, String fxmlFile, String title, HashMap<Integer, String> tabGenre) {
+    private static void changeSceneToGenre(ActionEvent event, String fxmlFile, String title, HashMap<Integer, Genre> tabGenre) {
         Parent root = null;
 
         if (tabGenre != null) {
@@ -165,7 +208,14 @@ public class Connexion {
         stage.show();
     }
     
-    private static void changeSceneToPlaylisList(ActionEvent event, String fxmlFile, String title, String message) {
+    /**
+     * 
+     * @param event
+     * @param fxmlFile
+     * @param title
+     * @param message 
+     */
+    private static void changeSceneToPlaylisList(ActionEvent event, String fxmlFile, String title, String message, ArrayList<Playlist> arrayListPlaylist) {
         Parent root = null;
         
         if (message != null) {
@@ -173,7 +223,7 @@ public class Connexion {
                 FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
                 root = loader.load();
                 PlaylistListeController playlistListeController = loader.getController();
-                playlistListeController.setInformationMessage(message);
+                playlistListeController.setMessageInformation(message);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -182,7 +232,7 @@ public class Connexion {
                 FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
                 root = loader.load();
                 PlaylistListeController playlistListeController = loader.getController();
-                playlistListeController.setPlaylistList();
+                playlistListeController.setPlaylistList(arrayListPlaylist);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -195,7 +245,8 @@ public class Connexion {
     }
     
     /**
-     *
+     * Fonction qui va récupérer toutes les infotmations d'un utilisateur.
+     * 
      * @param event
      * @param user_id
      */
@@ -208,7 +259,7 @@ public class Connexion {
         String user_name = null;
         
         try {
-            connection = getConnection();
+            connection = DatabaseConnection.getConnection();
             ps = connection.prepareStatement("SELECT * FROM utilisateur WHERE idUser = ?");
             ps.setInt(1, user_id);
             resultSet = ps.executeQuery();
@@ -226,26 +277,10 @@ public class Connexion {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                DatabaseConnection.closeConnection(connection, ps, null, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -260,31 +295,39 @@ public class Connexion {
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         String message = null;
+        ArrayList<Playlist> playlists = new ArrayList<>();
         
         try {
             connection = DatabaseConnection.getConnection();
             ps = connection.prepareStatement("SELECT * FROM playlist;");
+            //ps = connection.prepareStatement("SELECT * FROM playlist WHERE idUser = ?;");
             resultSet = ps.executeQuery();
             
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {                    
-                    
+                    playlists.add(
+                        new Playlist(
+                            resultSet.getInt("PlaylistID"),
+                            resultSet.getInt("idUser"),
+                            resultSet.getString("Nom"),
+                            resultSet.getTime("dateCreation"),
+                            resultSet.getInt("privee")
+                        )
+                    );
                 }
             } else {
-                message = "Aucune playliste disponible";
+                message = "Aucune playlist disponible";
             }
             
-            changeSceneToPlaylisList(event, "View/Playlist-Liste.fxml", DatabaseConfig.getAppName("PLaylist"), message);
+            changeSceneToPlaylisList(event, "View/Playlist-Liste.fxml", DatabaseConfig.getAppName("PLaylist"), message, playlists);
             
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (connection != null) {
-                try {
-                    DatabaseConnection.closeConnection();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                DatabaseConnection.closeConnection(connection, ps, null, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -293,54 +336,54 @@ public class Connexion {
      * Fonction qui va récupérer toutes les données de la table Playlist en fonction de l'id de l'utilisateur et les affichées sur une nouvelle scène.
      * 
      * @param event
-     * @param user_id
+     * @param playlistId
      */
-    public static void showPlaylistUser(ActionEvent event, int user_id) {
+    public static void showPlaylistUser(ActionEvent event, int playlistId) {
         Connection connection = null;
-        PreparedStatement ps = null;
+        PreparedStatement ps = null; 
         ResultSet resultSet = null;
+        String message = null;
+        ArrayList<Playlist> playlists = new ArrayList<>();
+        ArrayList<Musique> musiques = new ArrayList<>();
         
         try {
-            connection = getConnection();
-            ps = connection.prepareStatement("SELECT p.* FROM utilisateur u INNER JOIN playlist p ON u.idUser = p.idUser WHERE u.idUser = ?");
-            ps.setInt(1, user_id);
+            connection = DatabaseConnection.getConnection();
+            ps = connection.prepareStatement("SELECT p.*, m.* FROM playlist p INNER JOIN playlist_chanson pC ON p.PlaylistID = pC.PlaylistID INNER JOIN musique m ON pC.idMusique = m.idMusique WHERE p.PlaylistID = ?");
+            ps.setInt(1, playlistId);
             resultSet = ps.executeQuery();
             
-            if (!resultSet.isBeforeFirst()) {
-                showAlert(Alert.AlertType.ERROR, "msg temporaire");
-            } else {
+            if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {
-                    String idPlaylist = resultSet.getString(1);
-                    String nom = resultSet.getString(2);
+                    playlists.add(
+                        new Playlist(
+                            resultSet.getInt(1), 
+                            resultSet.getInt(4), 
+                            resultSet.getString(2), 
+                            resultSet.getDate(3),
+                            resultSet.getInt("privee")
+                        )
+                    );
+                    musiques.add(new Musique(resultSet.getInt("idMusique"), resultSet.getString(6), resultSet.getString("lien"), resultSet.getDate("creationDate"), resultSet.getInt("idGenre"), resultSet.getInt("idArtiste")));
                 }
-                
-                changeSceneToPlaylist(event, "View/Playlist-Liste.fxml", DatabaseConfig.getAppName("Playlist"), 0, null);
+            } else {
+                message = "Aucune Musique dans cette Playlist";
             }
+            
+            changeSceneToPlaylist(event, "View/Playlist.fxml", DatabaseConfig.getAppName("Playlist"), message, playlists, musiques);
+            
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                DatabaseConnection.closeConnection(connection, ps, null, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public static void showUpdatePlaylist(ActionEvent event) {
+        changeScene(event, "View/", DatabaseConfig.getAppName("Modification de la playlist"), null);
     }
     
     /**
@@ -351,42 +394,26 @@ public class Connexion {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
-        HashMap<Integer, String> tab = new HashMap<>();
+        HashMap<Integer, Genre> tab = new HashMap<>();
 
         try {
-            connection = getConnection();
+            connection = DatabaseConnection.getConnection();
             ps = connection.prepareStatement("SELECT * FROM genre");
             resultSet = ps.executeQuery();
             
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {
-                    tab.put(resultSet.getInt(1), resultSet.getString(2));
+                    tab.put(resultSet.getInt(1), new Genre(resultSet.getInt(1), resultSet.getString(2)));
                 }
                 changeSceneToGenre(event, "View/genre.fxml", DatabaseConfig.getAppName("Genre"), tab);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                DatabaseConnection.closeConnection(connection, ps, null, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
@@ -406,8 +433,4 @@ public class Connexion {
         alert.show();
     }
     
-    
-    private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
-    }
 }

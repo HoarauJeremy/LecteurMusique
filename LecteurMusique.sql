@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Other/SQLTemplate.sql to edit this template
  */
 /**
- * Author:  jerem
+ * Author:  Jérémy Hoarau
  * Created: 6 mars 2024
  */
 
@@ -27,8 +27,8 @@ CREATE TABLE musique (
    idMusique INT AUTO_INCREMENT,
    nom VARCHAR(255) NOT NULL,
    lien VARCHAR(255) NOT NULL,
-   duree INT NOT NULL,
-   creationDate DATE,
+   --duree INT NOT NULL,
+   --creationDate DATE,
    idGenre INT NOT NULL,
    idArtiste INT NOT NULL,
    PRIMARY KEY(idMusique),
@@ -39,18 +39,21 @@ CREATE TABLE musique (
 CREATE TABLE Utilisateur (
    idUser INT AUTO_INCREMENT,
    nom VARCHAR(255) NOT NULL,
+   prenom VARCHAR(255) NOT NULL,
+   pseudo VARCHAR(100) NOT NULL,
    email VARCHAR(255) NOT NULL,
    password VARCHAR(255) NOT NULL,
    PRIMARY KEY(idUser),
-   UNIQUE(email),
-   UNIQUE(nom)
+   UNIQUE(pseudo),
+   UNIQUE(email)
 ) ENGINE=InnoDB CHARSET=utf8;
 
 CREATE TABLE Playlist (
    PlaylistID INT AUTO_INCREMENT,
    Nom VARCHAR(255) NOT NULL,
-   dateCreation DATE,
+   dateCreation DATE DEFAULT NOW(),
    idUser INT,
+   privee BOOL NOT NULL,   
    PRIMARY KEY(PlaylistID),
    FOREIGN KEY(idUser) REFERENCES Utilisateur(idUser)
 ) ENGINE=InnoDB CHARSET=utf8;

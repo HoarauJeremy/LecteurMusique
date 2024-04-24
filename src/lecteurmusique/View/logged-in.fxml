@@ -75,9 +75,14 @@
                   <Font name="Noto Sans Bold" size="17.0" />
                </font>
             </Button>
-            <Button fx:id="btnModifcation" layoutX="15.0" layoutY="524.0" mnemonicParsing="false" onAction="#logout" prefHeight="36.0" prefWidth="215.0" styleClass="update-btn" text="Modifier mes données">
+            <Button fx:id="btnModifcation" layoutX="15.0" layoutY="524.0" mnemonicParsing="false" onAction="#logout" prefHeight="36.0" prefWidth="215.0" styleClass="update-btn" text="Modifier mes données" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
                <font>
                   <Font name="Noto Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnModificationMDP" layoutX="240.0" layoutY="524.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="265.0" styleClass="updatePassword-btn" text="Modifier mon mot de passe" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="200.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
                </font>
             </Button>
          </children>

@@ -31,7 +31,7 @@ import javafx.util.Duration;
 /**
  * FXML Controller class
  *
- * @author jerem
+ * @author Jérémy Hoarau
  */
 public class MusicPlayerController implements Initializable {
     
@@ -183,7 +183,7 @@ public class MusicPlayerController implements Initializable {
     }
     
     /**
-     * Fonction qui va passer à la musique précedente
+     * Fonction qui va revenir à la musique précedente
      */
     public void nextMedia() {
         if (songNumber < songs.size() - 1) {

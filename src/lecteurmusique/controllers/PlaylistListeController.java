@@ -5,14 +5,19 @@
 package lecteurmusique.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
 import lecteurmusique.Connexion;
 import lecteurmusique.DatabaseConfig;
+import lecteurmusique.Model.Playlist;
 
 /**
  * FXML Controller class
@@ -26,6 +31,9 @@ public class PlaylistListeController implements Initializable {
     
     @FXML
     private Label messageLabel;
+    
+    @FXML
+    private ScrollPane scrollPane;
 
     /**
      * Initializes the controller class.
@@ -56,15 +64,40 @@ public class PlaylistListeController implements Initializable {
     }
     
     /**
+     * Affiche un message si la liste des playlist est vide.
      *
-     * @param message
+     * @param message message à afficher
      */
-    public void setInformationMessage(String message) {
+    public void setMessageInformation(String message) {
         messageLabel.setText(message);
     }
     
-    public void setPlaylistList() {
-        
+    /**
+     * Affiche les playlist d'un utilisateur.
+     *
+     * @param playlists Liste de playlist à afficher
+     */
+    public void setPlaylistList(ArrayList<Playlist> playlists) {
+        if (playlists != null) {
+            VBox buttonContainer = new VBox(); // Crée un conteneur vertical pour les boutons
+
+            // Ajoute un bouton pour chaque playlist à la liste
+            for (Playlist playlist : playlists) {
+                Button button = new Button(playlist.getNom()); // Crée un bouton avec le nom de la playlist
+                button.setId(Integer.toString(playlist.getPlaylistId()));
+                button.setOnAction((ActionEvent event) -> {
+                    // Logique à exécuter lorsque le bouton est cliqué
+                    System.out.println("Bouton cliqué: " + playlist.getPlaylistId());
+                    Connexion.showPlaylistUser(event, playlist.getPlaylistId());
+                });
+                buttonContainer.getChildren().add(button); // Ajoute le bouton au conteneur
+            }
+
+            // Ajoute le conteneur de boutons à la ScrollPane
+            scrollPane.setContent(buttonContainer);
+        } else {
+            System.out.println("La liste de playlists est null.");
+        }
     }
     
 }

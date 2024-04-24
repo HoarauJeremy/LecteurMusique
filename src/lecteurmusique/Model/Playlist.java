@@ -8,12 +8,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 /**
- *
+ * Class pour les playlist
+ * 
  * @author Jérémy Hoarau
  */
 public class Playlist extends DatabaseConnection {
@@ -21,32 +23,86 @@ public class Playlist extends DatabaseConnection {
     public int playlistId, idUser;
     public String nom;
     public Date dateCreation;
+    public int privee;
 
-    public Playlist() {
-    }
-
-    public Playlist(int playlistId, int idUser, String nom, Date dateCreation) {
+    /**
+     *
+     * @param playlistId
+     * @param idUser
+     * @param nom
+     * @param dateCreation
+     * @param privee
+     */
+    public Playlist(int playlistId, int idUser, String nom, Date dateCreation, int privee) {
         this.playlistId = playlistId;
         this.idUser = idUser;
         this.nom = nom;
         this.dateCreation = dateCreation;
+        this.privee = privee;
     }
 
+    /**
+     *
+     * @return l'id de la playlist
+     */
     public int getPlaylistId() {
         return playlistId;
     }
 
+    /**
+     *
+     * @return l'id de l'utilisateur qui a créer la playlist
+     */
     public int getIdUser() {
         return idUser;
     }
 
+    /**
+     *
+     * @return le nom de la playlist
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     *
+     * @return la date de creation de la playlist
+     */
     public Date getDateCreation() {
         return dateCreation;
     }
+
+    /**
+     *
+     * @return si la playlist est privée ou non
+     */
+    public int getPrivee() {
+        return privee;
+    }
+
+    /**
+     * Permet de definir le status de la playlist (<i>Privee</i> ou <i>Public</i>)
+     *
+     * @param privee
+     */
+    public void setPrivee(int privee) {
+        this.privee = privee;
+    }
+    
+    /**
+     * Formate la date de creation d'une playlist 
+     *
+     * @param datePlaylist Recuperer la date de creation d'une playlist
+     * @return la date au format <i>JJ/MM/AAAA</i>
+     */
+    public static String formatDate(Date datePlaylist) {
+        String pattern = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(datePlaylist);
+        System.out.println(date);
+        return date;
+  }
     
     /**
      * Fonction pour créer une playlist
@@ -75,14 +131,15 @@ public class Playlist extends DatabaseConnection {
                 alert.setContentText("You cannot use " + nomPlaylist + " .");
                 alert.show();
             } else {
-                psInsert = connection.prepareStatement("INSERT INTO playlist (Nom, dateCreation, idUser) VALUES (?, ?, ?)");
+                psInsert = connection.prepareStatement("INSERT INTO playlist (Nom, dateCreation, idUser, privee) VALUES (?, ?, ?, ?)");
                 psInsert.setString(1, nomPlaylist);
                 psInsert.setDate(2, (java.sql.Date) dateCreation);
                 psInsert.setInt(3, idUser);
+                psInsert.setBoolean(4, true);
                 psInsert.executeUpdate();
             }
             
-            closeConnection();
+            closeConnection(connection, psCheckPlaylistExists, psInsert, resultSet);
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -122,11 +179,41 @@ public class Playlist extends DatabaseConnection {
                 }
             }
             
-            closeConnection();
+            closeConnection(connection, psCheckPlaylist, psDeletePlaylist, resultSet);
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }        
+    }
+    
+    /**
+     * Permet de mettre à jour une playlist.
+     *
+     * @param idUser Id de l'utilisateur qui à créer la playlist.
+     * @param idPlaylist Id de la playlist.
+     * @param nomPlaylist Definit le nom de la playlist.
+     * @param privee Definit le statut (1 pour <i>Public</i> ou 0 pour <i>Privée</i>) d'une Playlist.
+     * @throws SQLException
+     */
+    public static void updatePlaylist(int idUser, int idPlaylist, String nomPlaylist, int privee) throws SQLException {
+        Connection connection = null;
+        PreparedStatement psUpdatePlaylist = null;
+        ResultSet resultSet = null;
+        
+        try {
+            connection = getConnection();
+            psUpdatePlaylist = connection.prepareStatement("UPDATE playlist SET nom = ?, privee = ? WHERE PlaylistID = ? AND nom = ?");
+            psUpdatePlaylist.setString(1, nomPlaylist);
+            psUpdatePlaylist.setInt(2, privee);
+            psUpdatePlaylist.setInt(3, idPlaylist);
+            psUpdatePlaylist.setInt(4, idUser);
+            psUpdatePlaylist.executeUpdate();
+            
+        } catch (SQLException e) {
+            e.getMessage();
+        } finally {
+            closeConnection(connection, psUpdatePlaylist, null, resultSet);
+        }
     }
     
 }

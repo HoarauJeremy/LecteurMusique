@@ -7,15 +7,17 @@ package lecteurmusique;
 import java.util.regex.Pattern;
 
 /**
+ * Classe de vérification de données saisie par les utilisateurs
  *
  * @author Jérémy Hoarau
  */
 public class VerifDonnees {
     
     /**
+     * Verifie si l'addresse mail saisie par l'utilisateur est conforme au <b>Regex</b>.
      *
-     * @param email
-     * @return
+     * @param email Saisie par l'utilisateur
+     * @return <i><b>true</b></i> si l'addresse mail est conforme au <b>ReGex</b>, sinon <i><b>false</b></i>
      */
     public static boolean verifEmail(String email) {
         boolean resultat = true;
@@ -28,15 +30,26 @@ public class VerifDonnees {
     }
     
     /**
-     *
-     * @param nom
-     * @return
+     * Verifie si le nom saisie par l'utilisateur est conforme au <b>Regex</b>.
+     * 
+     * @param nom Saisie par l'utilisateur
+     * @return <i><b>true</b></i> si l'addresse mail est conforme au <b>ReGex</b>, sinon <i><b>false</b></i>
      */
     public static boolean verifNomUtilisateur(String nom) {
         boolean resultat = true;
         
         if (Pattern.matches("^[a-zA-Zéèêë\\ -]{2,}$", nom) == false) {
             resultat = false;
+        }
+        
+        return resultat;
+    }
+    
+    public static boolean verifMotDePasse(String motDePasse) {
+        boolean resultat = false;
+        
+        if (resultat) {
+            
         }
         
         return resultat;

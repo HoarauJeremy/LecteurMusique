@@ -4,41 +4,63 @@
  */
 package lecteurmusique.Model;
 
+import com.password4j.Hash;
+import com.password4j.HashUpdate;
+import com.password4j.Password;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
-import static lecteurmusique.Connexion.changeScene;
-import static lecteurmusique.Connexion.showAlert;
+import lecteurmusique.Connexion;
 import lecteurmusique.DatabaseConfig;
 
 /**
+ * Classe correspondante à la table utilisateur.
  *
  * @author Jérémy Hoarau
  */
 public class Utilisateur extends DatabaseConnection {
     
-    int idUser;
+    public int idUser;
     public String nom, email;    
-
-    public Utilisateur() {}
     
+    /**
+     * Constructeur de la classe Utilisateur
+     *
+     * @param idUser de l'utilisateur
+     * @param nom de l'utilisateur
+     * @param email de l'utilisateur
+     */
     public Utilisateur(int idUser, String nom, String email) {
         this.idUser = idUser;
         this.nom = nom;
         this.email = email;
     }
 
+    /**
+     *
+     * @return l'id de l'utilisateur
+     */
     public int getIdUser() {
         return idUser;
     }
 
+    /**
+     *
+     * @return le nom de l'utilisateur
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     *
+     * @return l'email de l'utilisateur
+     */
     public String getEmail() {
         return email;
     }
@@ -47,9 +69,9 @@ public class Utilisateur extends DatabaseConnection {
      * Fonction pour enregistrer un nouvelle utilisateur
      *
      * @param event
-     * @param user_name
-     * @param user_email
-     * @param user_password
+     * @param user_name nom que l'utilisateur à saisie
+     * @param user_email email que l'utilisateur à saisie
+     * @param user_password mot de passe que l'utilisateur à saisie
      */
     public static void signUp(ActionEvent event, String user_name, String user_email, String user_password) {
         Connection connection = null;
@@ -64,50 +86,28 @@ public class Utilisateur extends DatabaseConnection {
             resultSet = psCheckUserExists.executeQuery();
             
             if (resultSet.isBeforeFirst()) {
-                showAlert(Alert.AlertType.ERROR, "You cannot use this username.");
+                Connexion.showAlert(Alert.AlertType.ERROR, "You cannot use this username.");
             } else {
                 if (user_password.length() < 12) {
-                    showAlert(Alert.AlertType.ERROR, "Votre mot de passe doit contenir au minimun 12 caractères.");
+                    Connexion.showAlert(Alert.AlertType.ERROR, "Votre mot de passe doit contenir au minimun 12 caractères.");
                 } else {
+                    Hash hash = Password.hash(user_password).withBcrypt();
                     psInsert = connection.prepareStatement("INSERT INTO utilisateur (nom, email, password) VALUES (?, ?, ?)");
                     psInsert.setString(1, user_name);
                     psInsert.setString(2, user_email);
-                    psInsert.setString(3, user_password);
+                    psInsert.setString(3, hash.getResult());
                     psInsert.executeUpdate();
 
-                    changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), user_name);
+                    Connexion.changeSceneToHome(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), user_name);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (psCheckUserExists != null) {
-                try {
-                    psCheckUserExists.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (psInsert != null) {
-                try {
-                    psInsert.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                closeConnection(connection, psInsert, psCheckUserExists, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -116,8 +116,8 @@ public class Utilisateur extends DatabaseConnection {
      * Fonction pour se connecter à l'application
      *
      * @param event
-     * @param user_email
-     * @param user_password
+     * @param user_email email que l'utilisateur à saisie
+     * @param user_password mot de passe que l'utilisateur à saisie
      */
     public static void logIn(ActionEvent event, String user_email, String user_password) {
         Connection connection = null;
@@ -132,44 +132,75 @@ public class Utilisateur extends DatabaseConnection {
             
             if (!resultSet.isBeforeFirst()) {
                 System.out.println("User not found !");
-                showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
+                Connexion.showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
             } else {
 
                 while (resultSet.next()) {
                     String retrievedName = resultSet.getString("nom");
                     String retrievedPassword = resultSet.getString("password");
                     
-                    if (retrievedPassword.equals(user_password)) {
-                        changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);   
+                    if (Password.check(user_password, retrievedPassword).withBcrypt()) {
+                        Connexion.changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);   
                     } else {
-                        showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
+                        Connexion.showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
                     }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            try {
+                closeConnection(connection, ps, null, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    /**
+     * Fonction pour mettre à jour le mot de passe d'un utilisateur
+     *
+     * @param event
+     * @param email saisie par l'utilisateur
+     * @param password saisie par l'utilisateur
+     * @throws SQLException
+     */
+    public static void updatePassword(ActionEvent event, String email, String password) throws SQLException {
+        Connection connection = null;
+        PreparedStatement psCheckPassword = null;
+        PreparedStatement psUpdatePassword = null;
+        ResultSet resultSet = null;
+        
+        try {
+            connection = getConnection();
+            psCheckPassword = connection.prepareStatement("SELECT password FROM utilisateur WHERE email = ?;");
+            psCheckPassword.setString(1, email);
+            resultSet = psCheckPassword.executeQuery();
+            
+            if (resultSet.isBeforeFirst()) {
+                Connexion.showAlert(Alert.AlertType.ERROR, "");
+            } else {
+                if (resultSet.first()) {
+                    String retrievedPassword = resultSet.getString("password");
+                    HashUpdate update = Password.check(password, retrievedPassword).andUpdate().addNewRandomSalt().withBcrypt();
+                    
+                    if (update.isVerified()) {
+                        Hash newHash = update.getHash();
+                        
+                        psUpdatePassword = connection.prepareStatement("UPDATE utilisateur SET password = ? WHERE email = ?");
+                        psUpdatePassword.setString(1, newHash.getResult());
+                        psUpdatePassword.setString(2, email);
+                        psUpdatePassword.executeUpdate();
+                        
+                        Connexion.showProfileUser(event, 0);
+                    }
                 }
             }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            
+        } catch (SQLException e) {
+            e.getMessage();
+        } finally {
+            closeConnection(connection, psCheckPassword, psUpdatePassword, resultSet);
         }
     }
     

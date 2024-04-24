@@ -26,7 +26,7 @@
     -fx-cursor: hand;
 }
 
-.update-btn {
+.update-btn, .updatePassword-btn {
     -fx-background-color: #22ff22;
 }
 

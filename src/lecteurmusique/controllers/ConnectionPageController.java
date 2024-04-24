@@ -43,14 +43,10 @@ public class ConnectionPageController implements Initializable {
                 if (VerifDonnees.verifEmail(tf_userEmail.getText().trim()) != false) {
                     Utilisateur.logIn(event, tf_userEmail.getText(), pf_password.getText());
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Veuiller saisire toutes les informations valide et necessaire pour vous connecter.");
-                    alert.show();
+                    Connexion.showAlert(Alert.AlertType.ERROR, "Veuiller saisire toutes les informations valide et necessaire pour vous connecter.");
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Veuiller saisire toutes les information necessaire pour vous connecter.");
-                alert.show();
+                Connexion.showAlert(Alert.AlertType.ERROR, "Veuiller saisire toutes les information necessaire pour vous connecter.");
             }
         });
         
