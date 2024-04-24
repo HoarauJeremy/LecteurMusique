@@ -13,7 +13,7 @@ import lecteurmusique.DatabaseConfig;
  *
  * @author Jérémy Hoarau
  */
-public class databaseConnection {
+public class DatabaseConnection {
     
     private static final String JDBC_URL = DatabaseConfig.getDbUrl();
     private static final String USER = DatabaseConfig.getDbUser();
