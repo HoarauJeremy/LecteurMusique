@@ -12,7 +12,7 @@ import javafx.fxml.Initializable;
 /**
  * FXML Controller class
  *
- * @author jerem
+ * @author Jérémy Hoarau
  * Created: 24 avr. 2024
  */
 public class UpdatePlaylistController implements Initializable {

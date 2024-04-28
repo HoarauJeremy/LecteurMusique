@@ -11,12 +11,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
+import lecteurmusique.AppUtils;
 import lecteurmusique.Connexion;
-import lecteurmusique.DatabaseConfig;
 
 /**
  * Classe correspondante à la table utilisateur.
@@ -98,7 +100,7 @@ public class Utilisateur extends DatabaseConnection {
                     psInsert.setString(3, hash.getResult());
                     psInsert.executeUpdate();
 
-                    Connexion.changeSceneToHome(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), user_name);
+                    Connexion.changeSceneToHome(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), user_name);
                 }
             }
         } catch (SQLException e) {
@@ -140,7 +142,8 @@ public class Utilisateur extends DatabaseConnection {
                     String retrievedPassword = resultSet.getString("password");
                     
                     if (Password.check(user_password, retrievedPassword).withBcrypt()) {
-                        Connexion.changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);   
+//                        AppUtils.setInformation(user_email, "", Date.from(Instant.now()));
+                        Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);   
                     } else {
                         Connexion.showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
                     }
@@ -202,6 +205,10 @@ public class Utilisateur extends DatabaseConnection {
         } finally {
             closeConnection(connection, psCheckPassword, psUpdatePassword, resultSet);
         }
+    }
+    
+    public static void deconnecterUtilisateur(ActionEvent event) {
+        Connexion.changeScene(event, "View/ConnectionPage.fxml", AppUtils.getAppNameWithAction("Connexion"), null);
     }
     
 }

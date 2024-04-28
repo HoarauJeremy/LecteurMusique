@@ -12,7 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import lecteurmusique.Connexion;
-import lecteurmusique.DatabaseConfig;
+import lecteurmusique.AppUtils;
+import lecteurmusique.Model.Utilisateur;
 
 /**
  * FXML Controller class
@@ -44,19 +45,19 @@ public class LoggedInController implements Initializable {
         });
         
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);
+            Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);
         });
         
         btnModifcation.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/UserInfoModification.fxml", DatabaseConfig.getAppName("Modification"), null);
+            Connexion.changeScene(event, "View/UserInfoModification.fxml", AppUtils.getAppNameWithAction("Modification"), null);
         });
         
         btnModificationMDP.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/UserPasswordModification.fxml", DatabaseConfig.getAppName("Modification"), null);
+            Connexion.changeScene(event, "View/UserPasswordModification.fxml", AppUtils.getAppNameWithAction("Modification"), null);
         });
         
         btnLogout.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/ConnectionPage.fxml", "Log in!", null);
+            Utilisateur.deconnecterUtilisateur(event);
         });
     }   
     

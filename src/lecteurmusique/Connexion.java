@@ -16,9 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import lecteurmusique.Model.DatabaseConnection;
 import lecteurmusique.Model.Genre;
@@ -272,7 +269,7 @@ public class Connexion {
                     user_email = resultSet.getString("email");
                 }
                 
-                changeSceneToProfile(event, "View/logged-in.fxml", DatabaseConfig.getAppName("Profile de " + user_name), user_name, user_email);
+                changeSceneToProfile(event, "View/logged-in.fxml", AppUtils.getAppNameWithAction("Profile de " + user_name), user_name, user_email);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -319,7 +316,7 @@ public class Connexion {
                 message = "Aucune playlist disponible";
             }
             
-            changeSceneToPlaylisList(event, "View/Playlist-Liste.fxml", DatabaseConfig.getAppName("PLaylist"), message, playlists);
+            changeSceneToPlaylisList(event, "View/Playlist-Liste.fxml", AppUtils.getAppNameWithAction("PLaylist"), message, playlists);
             
         } catch (SQLException e) {
             e.printStackTrace();
@@ -369,7 +366,7 @@ public class Connexion {
                 message = "Aucune Musique dans cette Playlist";
             }
             
-            changeSceneToPlaylist(event, "View/Playlist.fxml", DatabaseConfig.getAppName("Playlist"), message, playlists, musiques);
+            changeSceneToPlaylist(event, "View/Playlist.fxml", AppUtils.getAppNameWithAction("Playlist"), message, playlists, musiques);
             
         } catch (SQLException e) {
             e.printStackTrace();
@@ -383,7 +380,7 @@ public class Connexion {
     }
     
     public static void showUpdatePlaylist(ActionEvent event) {
-        changeScene(event, "View/", DatabaseConfig.getAppName("Modification de la playlist"), null);
+        changeScene(event, "View/", AppUtils.getAppNameWithAction("Modification de la playlist"), null);
     }
     
     /**
@@ -405,7 +402,7 @@ public class Connexion {
                 while (resultSet.next()) {
                     tab.put(resultSet.getInt(1), new Genre(resultSet.getInt(1), resultSet.getString(2)));
                 }
-                changeSceneToGenre(event, "View/genre.fxml", DatabaseConfig.getAppName("Genre"), tab);
+                changeSceneToGenre(event, "View/genre.fxml", AppUtils.getAppNameWithAction("Genre"), tab);
             }
         } catch (SQLException e) {
             e.printStackTrace();

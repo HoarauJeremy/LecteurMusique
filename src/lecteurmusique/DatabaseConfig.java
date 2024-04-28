@@ -42,22 +42,4 @@ public class DatabaseConfig {
     public static String getDbPassword() {
         return properties.getProperty("db.password");
     }
-    
-    /**
-     *
-     * @param action nom de l'action ou de la scene à afficher
-     * @return le nom de l'application avec l'action ou le nom de la scene
-     */
-    public static String getAppName(String action) {
-        return properties.getProperty("APP.Name").concat(" - " + action);
-    }
-    
-    /**
-     *
-     * @return la version de l'application.
-     */
-    public static String getAppVersion() {
-        return properties.getProperty("APP.Version");
-    }
-    
 }
