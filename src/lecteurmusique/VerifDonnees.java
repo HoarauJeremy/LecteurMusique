@@ -48,8 +48,26 @@ public class VerifDonnees {
     public static boolean verifMotDePasse(String motDePasse) {
         boolean resultat = false;
         
-        if (resultat) {
-            
+        int testLettreMinuscule = 0;
+        int testLettreMajuscule = 0;
+        int testChiffre = 0;
+        int testCaractereSpe = 0;
+        
+        for (int i = 0; i < motDePasse.length(); i++) {
+            char c = motDePasse.charAt(i);
+            if (Character.isLowerCase(c)) {
+                testLettreMinuscule++;
+            } else if (Character.isUpperCase(c)) {
+                testLettreMajuscule++;
+            } else if (Character.isDigit(c)) {
+                testChiffre++;
+            } else if (c >= 33 && c <= 46 ||c == 64) {
+                testCaractereSpe++;
+            }
+        }
+        
+        if (motDePasse.length() >= 12 && testLettreMinuscule >= 1 && testLettreMajuscule >= 1 && testChiffre >= 1 && testCaractereSpe >= 1) {
+            resultat = true;
         }
         
         return resultat;

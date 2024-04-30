@@ -8,7 +8,7 @@
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="23.0" prefWidth="900.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root id="AnchorPane" prefHeight="23.0" prefWidth="900.0" styleClass="mainFxmlClass" type="AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lecteurmusique.controllers.MenuBarController">
     <stylesheets>
         <URL value="@/lecteurmusique/resources/css/menubar.css" />
     </stylesheets>
@@ -17,12 +17,12 @@
         <menus>
           <Menu mnemonicParsing="false" text="Ficher">
             <items>
-              <MenuItem fx:id="menuItemFermer" mnemonicParsing="false" text="Fermer">
+              <MenuItem fx:id="menuItemFermer" mnemonicParsing="false" onAction="#fermerApplication" text="Fermer">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="menuItemDeconnexion" mnemonicParsing="false" text="Se déconnecter" />
+                  <MenuItem fx:id="menuItemDeconnexion" mnemonicParsing="false" onAction="#deconnexionApplication" text="Se déconnecter" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Lecture">
@@ -61,7 +61,7 @@
           <Menu mnemonicParsing="false" text="Aide">
             <items>
                   <MenuItem fx:id="menuItemVersion" mnemonicParsing="false" text="Version" />
-              <MenuItem fx:id="menuItemAPropos" mnemonicParsing="false" text="À propos" />
+              <MenuItem fx:id="menuItemAPropos" mnemonicParsing="false" onAction="#ouvrirPageWeb" text="À propos" />
             </items>
                <accelerator>
                   <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP" shift="UP" shortcut="UP" />
@@ -70,4 +70,4 @@
         </menus>
       </MenuBar>
    </children>
-</AnchorPane>
+</fx:root>

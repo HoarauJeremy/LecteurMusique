@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import lecteurmusique.AppUtils;
 import lecteurmusique.Connexion;
+import lecteurmusique.VerifDonnees;
 
 /**
  * Classe correspondante à la table utilisateur.
@@ -92,7 +93,7 @@ public class Utilisateur extends DatabaseConnection {
             } else {
                 if (user_password.length() < 12) {
                     Connexion.showAlert(Alert.AlertType.ERROR, "Votre mot de passe doit contenir au minimun 12 caractères.");
-                } else {
+                } else if (VerifDonnees.verifMotDePasse(user_password)) {
                     Hash hash = Password.hash(user_password).withBcrypt();
                     psInsert = connection.prepareStatement("INSERT INTO utilisateur (nom, email, password) VALUES (?, ?, ?)");
                     psInsert.setString(1, user_name);
@@ -101,6 +102,8 @@ public class Utilisateur extends DatabaseConnection {
                     psInsert.executeUpdate();
 
                     Connexion.changeSceneToHome(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), user_name);
+                } else {
+                    Connexion.showAlert(Alert.AlertType.ERROR, "Le mot de passe ne correspond pas au demande exiger");
                 }
             }
         } catch (SQLException e) {
@@ -133,8 +136,7 @@ public class Utilisateur extends DatabaseConnection {
             resultSet = ps.executeQuery();
             
             if (!resultSet.isBeforeFirst()) {
-                System.out.println("User not found !");
-                Connexion.showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
+                Connexion.showAlert(Alert.AlertType.ERROR, "Email ou Mot de passe incorecte.");
             } else {
 
                 while (resultSet.next()) {
@@ -145,7 +147,6 @@ public class Utilisateur extends DatabaseConnection {
 //                        AppUtils.setInformation(user_email, "", Date.from(Instant.now()));
                         Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);   
                     } else {
-                        Connexion.showAlert(Alert.AlertType.ERROR, "L'utilisateur n'a pas été trouver. Email ou Mot de passe incorecte.");
                     }
                 }
             }

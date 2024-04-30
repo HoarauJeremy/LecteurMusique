@@ -26,7 +26,8 @@ public class HomePageController implements Initializable {
     private Button btnGenre, btnPlaylist, btnProfil;
     
     @FXML
-    private MenuItem menuItemFermer, menuItemDeconnexion, menuItemLecture, menuItemPrecedent, menuItemSuivant, menuItemVolumePlus, menuItemVolumeMoins, menuItemVersion, menuItemAPropos;
+    private MenuBarController MenuBarControlle;
+//    private MenuItem menuItemFermer, menuItemDeconnexion, menuItemLecture, menuItemPrecedent, menuItemSuivant, menuItemVolumePlus, menuItemVolumeMoins, menuItemVersion, menuItemAPropos;
 
 
     /**
@@ -48,19 +49,19 @@ public class HomePageController implements Initializable {
             this.showProfile(event);
         });
         
-        menuItemFermer.setOnAction(event -> {
-            MenuBar.fermerApplication();
-        });
-        
-        menuItemDeconnexion.setOnAction(event -> {
-            MenuBar.deconnexionApplication(event);
-        });
-        
-        menuItemVersion.setText(AppUtils.getAppName() + " - " + AppUtils.getAppVersion());
-        
-        menuItemAPropos.setOnAction(event -> {
-            MenuBar.ouvrirPageWeb();
-        });
+//        menuItemFermer.setOnAction(event -> {
+//            MenuBar.fermerApplication();
+//        });
+//        
+//        menuItemDeconnexion.setOnAction(event -> {
+//            MenuBar.deconnexionApplication(event);
+//        });
+//        
+//        menuItemVersion.setText(AppUtils.getAppName() + " - " + AppUtils.getAppVersion());
+//        
+//        menuItemAPropos.setOnAction(event -> {
+//            MenuBar.ouvrirPageWeb();
+//        });
     }
     
     public void setUserInformation(String username) {
