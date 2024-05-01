@@ -262,7 +262,7 @@ public class Connexion {
             resultSet = ps.executeQuery();
             
             if (!resultSet.isBeforeFirst()) {
-                showAlert(Alert.AlertType.ERROR, "msg temporaire");
+                afficherAlerte(Alert.AlertType.ERROR, "msg temporaire");
             } else {
                 while (resultSet.next()) {
                     user_name = resultSet.getString("nom");
@@ -419,11 +419,11 @@ public class Connexion {
     /**
      * Function pour afficher des alertes.
      * 
-     * @param alertType Definit le type de l'alerte (<i><strong>CONFIRMATION, ERROR, INFORMATION, NONE, WARNING</strong></i>).
+     * @param typeAlerte Definit le type de l'alerte (<i><strong>CONFIRMATION, ERROR, INFORMATION, NONE, WARNING</strong></i>).
      * @param message Affiche un message sur l'alerte.
      */
-    public static void showAlert(Alert.AlertType alertType, String message) {
-        Alert alert = new Alert(alertType);
+    public static void afficherAlerte(Alert.AlertType typeAlerte, String message) {
+        Alert alert = new Alert(typeAlerte);
         //alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

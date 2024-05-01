@@ -19,7 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import lecteurmusique.AppUtils;
 import lecteurmusique.Connexion;
-import lecteurmusique.VerifDonnees;
+import lecteurmusique.VerifierDonnees;
 
 /**
  * Classe correspondante à la table utilisateur.
@@ -72,11 +72,11 @@ public class Utilisateur extends DatabaseConnection {
      * Fonction pour enregistrer un nouvelle utilisateur
      *
      * @param event
-     * @param user_name nom que l'utilisateur à saisie
-     * @param user_email email que l'utilisateur à saisie
-     * @param user_password mot de passe que l'utilisateur à saisie
+     * @param nom nom que l'utilisateur à saisie
+     * @param courriel email que l'utilisateur à saisie
+     * @param motDePasse mot de passe que l'utilisateur à saisie
      */
-    public static void signUp(ActionEvent event, String user_name, String user_email, String user_password) {
+    public static void inscriptionUtilisateur(ActionEvent event, String nom, String courriel, String motDePasse) {
         Connection connection = null;
         PreparedStatement psInsert = null;
         PreparedStatement psCheckUserExists = null;
@@ -85,25 +85,25 @@ public class Utilisateur extends DatabaseConnection {
         try {
             connection = getConnection();
             psCheckUserExists = connection.prepareStatement("SELECT * FROM utilisateur WHERE nom = ?");
-            psCheckUserExists.setString(1, user_name);
+            psCheckUserExists.setString(1, nom);
             resultSet = psCheckUserExists.executeQuery();
             
             if (resultSet.isBeforeFirst()) {
-                Connexion.showAlert(Alert.AlertType.ERROR, "You cannot use this username.");
+                Connexion.afficherAlerte(Alert.AlertType.ERROR, "You cannot use this username.");
             } else {
-                if (user_password.length() < 12) {
-                    Connexion.showAlert(Alert.AlertType.ERROR, "Votre mot de passe doit contenir au minimun 12 caractères.");
-                } else if (VerifDonnees.verifMotDePasse(user_password)) {
-                    Hash hash = Password.hash(user_password).withBcrypt();
+                if (motDePasse.length() < 12) {
+                    Connexion.afficherAlerte(Alert.AlertType.ERROR, "Votre mot de passe doit contenir au minimun 12 caractères.");
+                } else if (VerifierDonnees.verifierMotDePasse(motDePasse)) {
+                    Hash hash = Password.hash(motDePasse).withBcrypt();
                     psInsert = connection.prepareStatement("INSERT INTO utilisateur (nom, email, password) VALUES (?, ?, ?)");
-                    psInsert.setString(1, user_name);
-                    psInsert.setString(2, user_email);
+                    psInsert.setString(1, nom);
+                    psInsert.setString(2, courriel);
                     psInsert.setString(3, hash.getResult());
                     psInsert.executeUpdate();
 
-                    Connexion.changeSceneToHome(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), user_name);
+                    Connexion.changeSceneToHome(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), nom);
                 } else {
-                    Connexion.showAlert(Alert.AlertType.ERROR, "Le mot de passe ne correspond pas au demande exiger");
+                    Connexion.afficherAlerte(Alert.AlertType.ERROR, "Le mot de passe ne correspond pas au demande exiger");
                 }
             }
         } catch (SQLException e) {
@@ -121,40 +121,47 @@ public class Utilisateur extends DatabaseConnection {
      * Fonction pour se connecter à l'application
      *
      * @param event
-     * @param user_email email que l'utilisateur à saisie
-     * @param user_password mot de passe que l'utilisateur à saisie
+     * @param courriel email que l'utilisateur à saisie
+     * @param motDePasse mot de passe que l'utilisateur à saisie
      */
-    public static void logIn(ActionEvent event, String user_email, String user_password) {
+    public static void connecterUtilisateur(ActionEvent event, String courriel, String motDePasse) {
         Connection connection = null;
-        PreparedStatement ps = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        String messageErreur = "L'adresse e-mail ou le mot de passe saisi est invalide.";
         
         try {
             connection = getConnection();
-            ps = connection.prepareStatement("SELECT * FROM utilisateur WHERE email = ?");
-            ps.setString(1, user_email);
-            resultSet = ps.executeQuery();
+            preparedStatement = connection.prepareStatement("SELECT * FROM utilisateur WHERE email = ?");
+            preparedStatement.setString(1, courriel);
+            resultSet = preparedStatement.executeQuery();
             
             if (!resultSet.isBeforeFirst()) {
-                Connexion.showAlert(Alert.AlertType.ERROR, "Email ou Mot de passe incorecte.");
+                Connexion.afficherAlerte(Alert.AlertType.ERROR, messageErreur);
             } else {
 
                 while (resultSet.next()) {
-                    String retrievedName = resultSet.getString("nom");
-                    String retrievedPassword = resultSet.getString("password");
+                    String nomRetrouver = resultSet.getString("nom");
+                    String motDePasseRetrouver = resultSet.getString("password");
                     
-                    if (Password.check(user_password, retrievedPassword).withBcrypt()) {
-//                        AppUtils.setInformation(user_email, "", Date.from(Instant.now()));
-                        Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);   
+                    if (VerifierDonnees.verifierMotDePasse(motDePasse)) {
+                        if (Password.check(motDePasse, motDePasseRetrouver).withBcrypt()) {
+//                          AppUtils.setInformation(courriel, "", Date.from(Instant.now()));
+                            Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);   
+                        } else {
+                            Connexion.afficherAlerte(Alert.AlertType.ERROR, messageErreur);
+                        }
                     } else {
+                        Connexion.afficherAlerte(Alert.AlertType.ERROR, messageErreur);
                     }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            e.getMessage();
         } finally {
             try {
-                closeConnection(connection, ps, null, resultSet);
+                closeConnection(connection, preparedStatement, null, resultSet);
             } catch (SQLException ex) {
                 Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -169,7 +176,7 @@ public class Utilisateur extends DatabaseConnection {
      * @param password saisie par l'utilisateur
      * @throws SQLException
      */
-    public static void updatePassword(ActionEvent event, String email, String password) throws SQLException {
+    public static void modifierMotDePasseUtilisateur(ActionEvent event, String email, String password) throws SQLException {
         Connection connection = null;
         PreparedStatement psCheckPassword = null;
         PreparedStatement psUpdatePassword = null;
@@ -182,7 +189,7 @@ public class Utilisateur extends DatabaseConnection {
             resultSet = psCheckPassword.executeQuery();
             
             if (resultSet.isBeforeFirst()) {
-                Connexion.showAlert(Alert.AlertType.ERROR, "");
+                Connexion.afficherAlerte(Alert.AlertType.ERROR, "");
             } else {
                 if (resultSet.first()) {
                     String retrievedPassword = resultSet.getString("password");
@@ -205,6 +212,26 @@ public class Utilisateur extends DatabaseConnection {
             e.getMessage();
         } finally {
             closeConnection(connection, psCheckPassword, psUpdatePassword, resultSet);
+        }
+    }
+    
+    public static void modifierInformationUtilisateur(String nom, String courriel) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        
+        try {
+            
+            if (VerifierDonnees.verifierEmail(courriel) && VerifierDonnees.verifierNomUtilisateur(nom)) {
+                
+            }
+            connection = getConnection();
+            ps = connection.prepareStatement("UPDATE utilisateur SET nom = ? WHERE email = ?");
+            ps.setString(1, "");
+            ps.setString(2, courriel);
+            ps.executeQuery();
+            
+        } catch (Exception e) {
+        } finally {
         }
     }
     

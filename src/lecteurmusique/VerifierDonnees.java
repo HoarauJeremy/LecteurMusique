@@ -11,18 +11,18 @@ import java.util.regex.Pattern;
  *
  * @author Jérémy Hoarau
  */
-public class VerifDonnees {
+public class VerifierDonnees {
     
     /**
      * Verifie si l'addresse mail saisie par l'utilisateur est conforme au <b>Regex</b>.
      *
-     * @param email Saisie par l'utilisateur
+     * @param courriel Saisie par l'utilisateur
      * @return <i><b>true</b></i> si l'addresse mail est conforme au <b>ReGex</b>, sinon <i><b>false</b></i>
      */
-    public static boolean verifEmail(String email) {
+    public static boolean verifierEmail(String courriel) {
         boolean resultat = true;
         
-        if (Pattern.matches("^[\\w\\.=-]+@[\\w\\.-]+\\.[\\w]{2,3}$", email) == false) {
+        if (Pattern.matches("^[\\w\\.=-]+@[\\w\\.-]+\\.[\\w]{2,3}$", courriel) == false) {
             resultat = false;
         }
         
@@ -35,7 +35,7 @@ public class VerifDonnees {
      * @param nom Saisie par l'utilisateur
      * @return <i><b>true</b></i> si l'addresse mail est conforme au <b>ReGex</b>, sinon <i><b>false</b></i>
      */
-    public static boolean verifNomUtilisateur(String nom) {
+    public static boolean verifierNomUtilisateur(String nom) {
         boolean resultat = true;
         
         if (Pattern.matches("^[a-zA-Zéèêë\\ -]{2,}$", nom) == false) {
@@ -45,7 +45,7 @@ public class VerifDonnees {
         return resultat;
     }
     
-    public static boolean verifMotDePasse(String motDePasse) {
+    public static boolean verifierMotDePasse(String motDePasse) {
         boolean resultat = false;
         
         int testLettreMinuscule = 0;
