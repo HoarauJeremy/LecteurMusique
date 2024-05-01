@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -27,6 +28,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import lecteurmusique.Model.Musique;
 
 /**
  * FXML Controller class
@@ -66,18 +68,16 @@ public class MusicPlayerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        songs = new ArrayList<File>();
+        ArrayList<Musique> musiques = Musique.recuperMusique();
         
-        directory = new File("music");
+        songs = new ArrayList<>();
         
-        files = directory.listFiles();
-        
-        if (files != null) {
-            
-            for(File file : files) {
-                
-                songs.add(file);
+        if (musiques != null) {
+            for (Musique musique : musiques) {
+                songs.add(new File(musique.getLien()));
             }
+        } else {
+            System.out.println("Musiques est null");
         }
             
         try {           
@@ -96,6 +96,8 @@ public class MusicPlayerController implements Initializable {
         });
         
         songProgressBar.setStyle("-fx-accent: #00ff00");
+        
+//        btnNext.setGraphic(new ImageView("lecteurmusique/resources/icons/arrow-right-336-svgrepo-com.png"));
         
         btnPlay.setOnAction((ActionEvent event) -> {
             this.playMedia();

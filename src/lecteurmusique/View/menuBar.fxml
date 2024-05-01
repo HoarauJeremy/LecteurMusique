@@ -1,73 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.input.KeyCodeCombination?>
-<?import javafx.scene.layout.AnchorPane?>
 
-<fx:root id="AnchorPane" prefHeight="23.0" prefWidth="900.0" styleClass="mainFxmlClass" type="AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lecteurmusique.controllers.MenuBarController">
-    <stylesheets>
-        <URL value="@/lecteurmusique/resources/css/menubar.css" />
-    </stylesheets>
-   <children>
-      <MenuBar layoutX="6.0" layoutY="14.0" prefHeight="30.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Ficher">
-            <items>
-              <MenuItem fx:id="menuItemFermer" mnemonicParsing="false" onAction="#fermerApplication" text="Fermer">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="menuItemDeconnexion" mnemonicParsing="false" onAction="#deconnexionApplication" text="Se déconnecter" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Lecture">
-              <items>
-                <MenuItem fx:id="menuItemLecture" mnemonicParsing="false" text="Lecture / Pause">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="SPACE" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                  <MenuItem fx:id="menuItemPrecedent" mnemonicParsing="false" text="Précédent">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="LEFT" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                  <MenuItem fx:id="menuItemSuivant" mnemonicParsing="false" text="Suivant">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="RIGHT" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="menuItemVolumePlus" mnemonicParsing="false" text="Augmenter le volume">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="UP" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                  <MenuItem fx:id="menuItemVolumeMoins" mnemonicParsing="false" text="Baisser le volume">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="DOWN" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-              </items>
+<MenuBar prefHeight="23.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lecteurmusique.controllers.MenuBarController">
+   <menus>
+      <Menu mnemonicParsing="false" text="Ficher">
+         <items>
+            <MenuItem fx:id="menuItemFermer" mnemonicParsing="false" text="Fermer">
                <accelerator>
-                  <KeyCodeCombination alt="DOWN" code="L" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                  <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                </accelerator>
-            </Menu>
-          <Menu mnemonicParsing="false" text="Aide">
-            <items>
-                  <MenuItem fx:id="menuItemVersion" mnemonicParsing="false" text="Version" />
-              <MenuItem fx:id="menuItemAPropos" mnemonicParsing="false" onAction="#ouvrirPageWeb" text="À propos" />
-            </items>
+            </MenuItem>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="menuItemDeconnexion" mnemonicParsing="false" text="Se déconnecter" />
+         </items>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Lecture">
+         <items>
+            <MenuItem fx:id="menuItemLecture" mnemonicParsing="false" text="Lecture / Pause">
                <accelerator>
-                  <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                  <KeyCodeCombination alt="UP" code="SPACE" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                </accelerator>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </children>
-</fx:root>
+            </MenuItem>
+            <MenuItem fx:id="menuItemPrecedent" mnemonicParsing="false" text="Précédent">
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="LEFT" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
+            </MenuItem>
+            <MenuItem fx:id="menuItemSuivant" mnemonicParsing="false" text="Suivant">
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="RIGHT" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
+            </MenuItem>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="menuItemVolumePlus" mnemonicParsing="false" text="Augmenter le volume">
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="UP" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
+            </MenuItem>
+            <MenuItem fx:id="menuItemVolumeMoins" mnemonicParsing="false" text="Baisser le volume">
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="DOWN" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
+            </MenuItem>
+         </items>
+         <accelerator>
+            <KeyCodeCombination alt="DOWN" code="L" control="UP" meta="UP" shift="UP" shortcut="UP" />
+         </accelerator>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Aide">
+         <items>
+            <MenuItem fx:id="menuItemVersion" mnemonicParsing="false" text="Version" />
+            <MenuItem fx:id="menuItemAPropos" mnemonicParsing="false" text="À propos" />
+         </items>
+         <accelerator>
+            <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP" shift="UP" shortcut="UP" />
+         </accelerator>
+      </Menu>
+   </menus>
+</MenuBar>

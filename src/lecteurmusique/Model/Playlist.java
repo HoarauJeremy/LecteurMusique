@@ -111,14 +111,14 @@ public class Playlist extends DatabaseConnection {
      * @param dateCreation
      * @param idUser
      */
-    public void createPlaylist(String nomPlaylist, Date dateCreation, int idUser) {
+    public void creerPlaylist(String nomPlaylist, Date dateCreation, int idUser) {
         Connection connection = null;
         PreparedStatement psInsert = null;
         PreparedStatement psCheckPlaylistExists = null;
         ResultSet resultSet = null;
         
         try {
-            connection = getConnection();
+            connection = creerConnexion();
             psCheckPlaylistExists = connection.prepareStatement("SELECT * FROM playlist WHERE nom = ? AND idUser = ?");
             psCheckPlaylistExists.setString(1, nomPlaylist);
             psCheckPlaylistExists.setInt(1, idUser);
@@ -139,7 +139,7 @@ public class Playlist extends DatabaseConnection {
                 psInsert.executeUpdate();
             }
             
-            closeConnection(connection, psCheckPlaylistExists, psInsert, resultSet);
+            fermerConnexion(connection, psCheckPlaylistExists, psInsert, resultSet);
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -152,14 +152,14 @@ public class Playlist extends DatabaseConnection {
      * @param idUser
      * @param idPlaylist
      */
-    public static void deletePlaylist(int idUser, int idPlaylist) {
+    public static void supprimerPlaylist(int idUser, int idPlaylist) {
         Connection connection = null;
         PreparedStatement psCheckPlaylist = null;
         PreparedStatement psDeletePlaylist = null;
         ResultSet resultSet = null;
         
         try {
-            connection = getConnection();
+            connection = creerConnexion();
             psCheckPlaylist = connection.prepareStatement("SELECT * FROM playlist WHERE PlaylistID = ? AND idUser = ?");
             psCheckPlaylist.setInt(1, idPlaylist);
             psCheckPlaylist.setInt(2, idUser);
@@ -179,7 +179,7 @@ public class Playlist extends DatabaseConnection {
                 }
             }
             
-            closeConnection(connection, psCheckPlaylist, psDeletePlaylist, resultSet);
+            fermerConnexion(connection, psCheckPlaylist, psDeletePlaylist, resultSet);
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -201,7 +201,7 @@ public class Playlist extends DatabaseConnection {
         ResultSet resultSet = null;
         
         try {
-            connection = getConnection();
+            connection = creerConnexion();
             psUpdatePlaylist = connection.prepareStatement("UPDATE playlist SET nom = ?, privee = ? WHERE PlaylistID = ? AND nom = ?");
             psUpdatePlaylist.setString(1, nomPlaylist);
             psUpdatePlaylist.setInt(2, privee);
@@ -212,7 +212,7 @@ public class Playlist extends DatabaseConnection {
         } catch (SQLException e) {
             e.getMessage();
         } finally {
-            closeConnection(connection, psUpdatePlaylist, null, resultSet);
+            fermerConnexion(connection, psUpdatePlaylist, null, resultSet);
         }
     }
     

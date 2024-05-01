@@ -256,7 +256,7 @@ public class Connexion {
         String user_name = null;
         
         try {
-            connection = DatabaseConnection.getConnection();
+            connection = DatabaseConnection.creerConnexion();
             ps = connection.prepareStatement("SELECT * FROM utilisateur WHERE idUser = ?");
             ps.setInt(1, user_id);
             resultSet = ps.executeQuery();
@@ -275,7 +275,7 @@ public class Connexion {
             e.printStackTrace();
         } finally {
             try {
-                DatabaseConnection.closeConnection(connection, ps, null, resultSet);
+                DatabaseConnection.fermerConnexion(connection, ps, null, resultSet);
             } catch (SQLException ex) {
                 Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -295,7 +295,7 @@ public class Connexion {
         ArrayList<Playlist> playlists = new ArrayList<>();
         
         try {
-            connection = DatabaseConnection.getConnection();
+            connection = DatabaseConnection.creerConnexion();
             ps = connection.prepareStatement("SELECT * FROM playlist;");
             //ps = connection.prepareStatement("SELECT * FROM playlist WHERE idUser = ?;");
             resultSet = ps.executeQuery();
@@ -322,7 +322,7 @@ public class Connexion {
             e.printStackTrace();
         } finally {
             try {
-                DatabaseConnection.closeConnection(connection, ps, null, resultSet);
+                DatabaseConnection.fermerConnexion(connection, ps, null, resultSet);
             } catch (SQLException ex) {
                 Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -344,7 +344,7 @@ public class Connexion {
         ArrayList<Musique> musiques = new ArrayList<>();
         
         try {
-            connection = DatabaseConnection.getConnection();
+            connection = DatabaseConnection.creerConnexion();
             ps = connection.prepareStatement("SELECT p.*, m.* FROM playlist p INNER JOIN playlist_chanson pC ON p.PlaylistID = pC.PlaylistID INNER JOIN musique m ON pC.idMusique = m.idMusique WHERE p.PlaylistID = ?");
             ps.setInt(1, playlistId);
             resultSet = ps.executeQuery();
@@ -372,7 +372,7 @@ public class Connexion {
             e.printStackTrace();
         } finally {
             try {
-                DatabaseConnection.closeConnection(connection, ps, null, resultSet);
+                DatabaseConnection.fermerConnexion(connection, ps, null, resultSet);
             } catch (SQLException ex) {
                 Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -394,7 +394,7 @@ public class Connexion {
         HashMap<Integer, Genre> tab = new HashMap<>();
 
         try {
-            connection = DatabaseConnection.getConnection();
+            connection = DatabaseConnection.creerConnexion();
             ps = connection.prepareStatement("SELECT * FROM genre");
             resultSet = ps.executeQuery();
             
@@ -408,7 +408,7 @@ public class Connexion {
             e.printStackTrace();
         } finally {
             try {
-                DatabaseConnection.closeConnection(connection, ps, null, resultSet);
+                DatabaseConnection.fermerConnexion(connection, ps, null, resultSet);
             } catch (SQLException ex) {
                 Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -10,10 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import lecteurmusique.AppUtils;
 import lecteurmusique.Connexion;
-import lecteurmusique.Model.MenuBar;
 
 /**
  * FXML Controller class
@@ -49,19 +46,6 @@ public class HomePageController implements Initializable {
             this.showProfile(event);
         });
         
-//        menuItemFermer.setOnAction(event -> {
-//            MenuBar.fermerApplication();
-//        });
-//        
-//        menuItemDeconnexion.setOnAction(event -> {
-//            MenuBar.deconnexionApplication(event);
-//        });
-//        
-//        menuItemVersion.setText(AppUtils.getAppName() + " - " + AppUtils.getAppVersion());
-//        
-//        menuItemAPropos.setOnAction(event -> {
-//            MenuBar.ouvrirPageWeb();
-//        });
     }
     
     public void setUserInformation(String username) {
