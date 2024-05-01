@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -27,9 +25,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Popup;
 import lecteurmusique.Connexion;
-import lecteurmusique.DatabaseConfig;
+import lecteurmusique.AppUtils;
 import lecteurmusique.Model.Musique;
 import lecteurmusique.Model.Playlist;
 
@@ -128,7 +125,7 @@ public class PlaylistController extends MusicPlayerController implements Initial
          * Retourne sur la page d'accueil.
          */
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.changeSceneToHome(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);
+            Connexion.changeSceneToHome(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);
         });
         
         /**

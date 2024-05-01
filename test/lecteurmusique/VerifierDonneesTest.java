@@ -15,9 +15,9 @@ import static org.junit.Assert.*;
  *
  * @author jerem
  */
-public class VerifDonneesTest {
+public class VerifierDonneesTest {
     
-    public VerifDonneesTest() {
+    public VerifierDonneesTest() {
     }
     
     @BeforeClass
@@ -37,50 +37,50 @@ public class VerifDonneesTest {
     }
 
     /**
-     * Test of verifEmail method, of class VerifDonnees.
+     * Test of verifierEmail method, of class VerifierDonnees.
      */
     @Test
     public void testVerifEmailValide() {
         System.out.println("verifEmail Valide");
         String email = "exem-ple.Ex3@example.com";
         boolean expResult = true;
-        boolean result = VerifDonnees.verifEmail(email);
+        boolean result = VerifierDonnees.verifierEmail(email);
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of verifEmail method, of class VerifDonnees.
+     * Test of verifierEmail method, of class VerifierDonnees.
      */
     @Test
     public void testVerifEmailInvalide() {
         System.out.println("verifEmail Invalide");
         String email = "fedvsvs4=56@kofdpb.c25om";
         boolean expResult = false;
-        boolean result = VerifDonnees.verifEmail(email);
+        boolean result = VerifierDonnees.verifierEmail(email);
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of valid verifNomUtilisateur method, of class VerifDonnees.
+     * Test of valid verifierNomUtilisateur method, of class VerifierDonnees.
      */
     @Test
     public void testVerifNomUtilisateurValide() {
         System.out.println("verifNomUtilisateur Valide");
         String nom = "jean-Pierre";
         boolean expResult = true;
-        boolean result = VerifDonnees.verifNomUtilisateur(nom);
+        boolean result = VerifierDonnees.verifierNomUtilisateur(nom);
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of an invalid verifNomUtilisateur method, of class VerifDonnees.
+     * Test of an invalid verifierNomUtilisateur method, of class VerifierDonnees.
      */
     @Test
     public void testVerifNomUtilisateurInvalid() {
         System.out.println("verifNomUtilisateur Invalide");
         String nom = "John-Doe35";
         boolean expResult = false;
-        boolean result = VerifDonnees.verifNomUtilisateur(nom);
+        boolean result = VerifierDonnees.verifierNomUtilisateur(nom);
         assertEquals(expResult, result);
     }
     

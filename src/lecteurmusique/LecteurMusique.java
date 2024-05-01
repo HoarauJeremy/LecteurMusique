@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -28,7 +29,8 @@ public class LecteurMusique extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("View/homePage.fxml"));
             Scene scene = new Scene(root, 900, 600);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Lecteur de musique");
+            primaryStage.setTitle(AppUtils.getAppName());
+            primaryStage.getIcons().add(new Image(AppUtils.getAppLogo()));
             primaryStage.show();
             
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

@@ -16,7 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import lecteurmusique.Connexion;
-import lecteurmusique.DatabaseConfig;
+import lecteurmusique.AppUtils;
 import lecteurmusique.Model.Playlist;
 
 /**
@@ -47,7 +47,7 @@ public class PlaylistListeController implements Initializable {
          * Retourne sur la page d'accueil.
          */
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);
+            Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);
         });
         
         /**
@@ -59,7 +59,7 @@ public class PlaylistListeController implements Initializable {
          * Affiche la page de création de playlist
          */
         btnAjoutPlaylist.setOnAction((ActionEvent event) -> {
-            //Connexion.changeScene(event, "View/", DatabaseConfig.getAppName("Playlist"), null);
+            //Connexion.changeScene(event, "View/", AppUtils.getAppNameWithAction("Playlist"), null);
         });        
     }
     

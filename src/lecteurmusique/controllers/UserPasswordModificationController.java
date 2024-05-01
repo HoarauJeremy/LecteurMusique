@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import lecteurmusique.Connexion;
 import lecteurmusique.Model.Utilisateur;
-import lecteurmusique.VerifDonnees;
+import lecteurmusique.VerifierDonnees;
 
 /**
  * FXML Controller class
@@ -48,7 +48,7 @@ public class UserPasswordModificationController implements Initializable {
         
         btnModification.setOnAction((ActionEvent event) -> {
             
-            if (VerifDonnees.verifMotDePasse(motDePasseField1.getText().trim())) {
+            if (VerifierDonnees.verifierMotDePasse(motDePasseField1.getText().trim())) {
                 if (motDePasseField1.getText().trim().equals(motDePasseField2.getText().trim())) {
 //                    Utilisateur.updatePassword(event, email, motDePasseField1);
                 }

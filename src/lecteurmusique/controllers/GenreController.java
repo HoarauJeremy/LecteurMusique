@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import lecteurmusique.AppUtils;
 import lecteurmusique.Connexion;
 import lecteurmusique.DatabaseConfig;
 import lecteurmusique.Model.Genre;
@@ -40,7 +41,7 @@ public class GenreController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //gridPane.add(new Button("NOM DU GENRE"), 0, 0);
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/homePage.fxml", DatabaseConfig.getAppName("Accueil"), null);
+            Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);
         });
         
         btnPlaylist.setOnAction((ActionEvent event) -> {

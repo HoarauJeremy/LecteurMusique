@@ -10,7 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
+import lecteurmusique.AppUtils;
 import lecteurmusique.Connexion;
+import lecteurmusique.Model.MenuBar;
 
 /**
  * FXML Controller class
@@ -20,7 +23,12 @@ import lecteurmusique.Connexion;
 public class HomePageController implements Initializable {
     
     @FXML
-    private Button btnGenre, btnPlaylist, btnProfil; 
+    private Button btnGenre, btnPlaylist, btnProfil;
+    
+    @FXML
+    private MenuBarController MenuBarControlle;
+//    private MenuItem menuItemFermer, menuItemDeconnexion, menuItemLecture, menuItemPrecedent, menuItemSuivant, menuItemVolumePlus, menuItemVolumeMoins, menuItemVersion, menuItemAPropos;
+
 
     /**
      * Initializes the controller class.
@@ -38,8 +46,22 @@ public class HomePageController implements Initializable {
         });
         
         btnProfil.setOnAction((ActionEvent event) -> {
-            showProfile(event);
+            this.showProfile(event);
         });
+        
+//        menuItemFermer.setOnAction(event -> {
+//            MenuBar.fermerApplication();
+//        });
+//        
+//        menuItemDeconnexion.setOnAction(event -> {
+//            MenuBar.deconnexionApplication(event);
+//        });
+//        
+//        menuItemVersion.setText(AppUtils.getAppName() + " - " + AppUtils.getAppVersion());
+//        
+//        menuItemAPropos.setOnAction(event -> {
+//            MenuBar.ouvrirPageWeb();
+//        });
     }
     
     public void setUserInformation(String username) {

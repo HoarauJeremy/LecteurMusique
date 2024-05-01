@@ -11,18 +11,18 @@ import java.util.regex.Pattern;
  *
  * @author Jérémy Hoarau
  */
-public class VerifDonnees {
+public class VerifierDonnees {
     
     /**
      * Verifie si l'addresse mail saisie par l'utilisateur est conforme au <b>Regex</b>.
      *
-     * @param email Saisie par l'utilisateur
+     * @param courriel Saisie par l'utilisateur
      * @return <i><b>true</b></i> si l'addresse mail est conforme au <b>ReGex</b>, sinon <i><b>false</b></i>
      */
-    public static boolean verifEmail(String email) {
+    public static boolean verifierEmail(String courriel) {
         boolean resultat = true;
         
-        if (Pattern.matches("^[\\w\\.=-]+@[\\w\\.-]+\\.[\\w]{2,3}$", email) == false) {
+        if (Pattern.matches("^[\\w\\.=-]+@[\\w\\.-]+\\.[\\w]{2,3}$", courriel) == false) {
             resultat = false;
         }
         
@@ -35,7 +35,7 @@ public class VerifDonnees {
      * @param nom Saisie par l'utilisateur
      * @return <i><b>true</b></i> si l'addresse mail est conforme au <b>ReGex</b>, sinon <i><b>false</b></i>
      */
-    public static boolean verifNomUtilisateur(String nom) {
+    public static boolean verifierNomUtilisateur(String nom) {
         boolean resultat = true;
         
         if (Pattern.matches("^[a-zA-Zéèêë\\ -]{2,}$", nom) == false) {
@@ -45,11 +45,29 @@ public class VerifDonnees {
         return resultat;
     }
     
-    public static boolean verifMotDePasse(String motDePasse) {
+    public static boolean verifierMotDePasse(String motDePasse) {
         boolean resultat = false;
         
-        if (resultat) {
-            
+        int testLettreMinuscule = 0;
+        int testLettreMajuscule = 0;
+        int testChiffre = 0;
+        int testCaractereSpe = 0;
+        
+        for (int i = 0; i < motDePasse.length(); i++) {
+            char c = motDePasse.charAt(i);
+            if (Character.isLowerCase(c)) {
+                testLettreMinuscule++;
+            } else if (Character.isUpperCase(c)) {
+                testLettreMajuscule++;
+            } else if (Character.isDigit(c)) {
+                testChiffre++;
+            } else if (c >= 33 && c <= 46 ||c == 64) {
+                testCaractereSpe++;
+            }
+        }
+        
+        if (motDePasse.length() >= 12 && testLettreMinuscule >= 1 && testLettreMajuscule >= 1 && testChiffre >= 1 && testCaractereSpe >= 1) {
+            resultat = true;
         }
         
         return resultat;
