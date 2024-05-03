@@ -21,11 +21,6 @@ public class HomePageController implements Initializable {
     
     @FXML
     private Button btnGenre, btnPlaylist, btnProfil;
-    
-    @FXML
-    private MenuBarController MenuBarControlle;
-//    private MenuItem menuItemFermer, menuItemDeconnexion, menuItemLecture, menuItemPrecedent, menuItemSuivant, menuItemVolumePlus, menuItemVolumeMoins, menuItemVersion, menuItemAPropos;
-
 
     /**
      * Initializes the controller class.

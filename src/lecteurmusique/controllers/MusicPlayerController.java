@@ -48,9 +48,6 @@ public class MusicPlayerController implements Initializable {
 
     private Media media;
     private MediaPlayer mediaPlayer;
-
-    private File directory;
-    private File[] files;
     
     private ArrayList<File> songs;
     
@@ -76,8 +73,6 @@ public class MusicPlayerController implements Initializable {
             for (Musique musique : musiques) {
                 songs.add(new File(musique.getLien()));
             }
-        } else {
-            System.out.println("Musiques est null");
         }
             
         try {           

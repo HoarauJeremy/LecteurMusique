@@ -44,9 +44,10 @@ public class MenuBarController implements Initializable {
         
         menuItemVersion.setText(AppUtils.getAppName() + " - " + AppUtils.getAppVersion());
         
-        /*menuItemLecture.setOnAction(event -> {
-            MusicPlayerController
-        });*/
+//        menuItemLecture.setOnAction(event -> {
+//            MusicPlayerController controller = new MusicPlayerController();
+//            controller.playMedia();
+//        });
         
     }
 
