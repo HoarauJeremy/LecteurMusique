@@ -101,6 +101,7 @@ public class Utilisateur extends DatabaseConnection {
                     psInsert.setString(3, hash.getResult());
                     psInsert.executeUpdate();
 
+                    AppUtils.setInformation(courriel, "", Date.from(Instant.now()), resultSet.getInt("idUser"));
                     Connexion.changeSceneToHome(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), nom);
                 } else {
                     Connexion.afficherAlerte(Alert.AlertType.ERROR, "Le mot de passe ne correspond pas au demande exiger");
@@ -146,7 +147,7 @@ public class Utilisateur extends DatabaseConnection {
                     
                     if (VerifierDonnees.verifierMotDePasse(motDePasse)) {
                         if (Password.check(motDePasse, motDePasseRetrouver).withBcrypt()) {
-//                          AppUtils.setInformation(courriel, "", Date.from(Instant.now()));
+                            AppUtils.setInformation(courriel, "", Date.from(Instant.now()), resultSet.getInt("idUser"));
                             Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);   
                         } else {
                             Connexion.afficherAlerte(Alert.AlertType.ERROR, messageErreur);

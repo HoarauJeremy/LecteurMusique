@@ -69,18 +69,52 @@ public class AppUtils {
     }
     
     /**
+     *
+     * @return
+     */
+    public static String getUtilisateurConnecter() {
+        return properties.getProperty("USER.connection");
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public static String getAppareilUtilisateur() {
+        return properties.getProperty("USER.device");
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public static String getDateConnecter() {
+        return properties.getProperty("USER.date");
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public static String getIdUtilisateur() {
+        return properties.getProperty("USER.id");
+    }
+    
+    /**
      * Definit les informations permetant de savoir si un utilisateur est connecter
      *
      * @param connection
      * @param device
      * @param date
+     * @param idUtilisateur
      */
-    public static void setInformation(String connection, String device, Date date) {
+    public static void setInformation(String connection, String device, Date date, int idUtilisateur) {
         try (OutputStream output = new FileOutputStream("lecteurmusique/application.properties")) {
             Properties prop = new Properties();
             prop.setProperty("USER.connection", connection);
             prop.setProperty("USER.device", device);
             prop.setProperty("USER.date", date.toString());
+            prop.setProperty("USER.id", Integer.toString(idUtilisateur));
             prop.store(output, null);
         } catch (IOException ioe) {
             ioe.printStackTrace();

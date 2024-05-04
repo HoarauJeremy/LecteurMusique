@@ -26,7 +26,17 @@ public class LecteurMusique extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+            
+            String fxmlFile;
+            
+            if (!AppUtils.getUtilisateurConnecter().isEmpty()) {
+                fxmlFile = "View/homePage.fxml";
+            } else {
+                fxmlFile = "View/";
+            }
+            
             Parent root = FXMLLoader.load(getClass().getResource("View/homePage.fxml"));
+//            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
             Scene scene = new Scene(root, 900, 600);
             primaryStage.setScene(scene);
             primaryStage.setTitle(AppUtils.getAppName());
