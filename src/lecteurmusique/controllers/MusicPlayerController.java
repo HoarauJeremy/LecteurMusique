@@ -71,12 +71,14 @@ public class MusicPlayerController implements Initializable {
         
         if (musiques != null) {
             for (Musique musique : musiques) {
+                System.out.println(musique.getLien());
                 songs.add(new File(musique.getLien()));
             }
         }
             
         try {           
-            media = new Media(songs.get(songNumber).toURI().toString());
+            System.out.println("http://LecteurMusique/" + songs.get(songNumber));
+            media = new Media("http://LecteurMusique/" + songs.get(songNumber).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
             songName.setText(songs.get(songNumber).getName());
         } catch (MediaException me) {

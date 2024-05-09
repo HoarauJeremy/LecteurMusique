@@ -22,7 +22,7 @@ public class Musique extends DatabaseConnection {
 
     private int idMusique;
     private String nom, lien, nomArtiste;
-    private Date creationDate;
+    private Date dateCreation;
     private int idGenre, idArtiste;
 
     public Musique(int idMusique, String nom, String nomArtiste, String lien) {
@@ -45,7 +45,7 @@ public class Musique extends DatabaseConnection {
         this.idMusique = idMusique;
         this.nom = nom;
         this.lien = lien;
-        this.creationDate = creationDate;
+        this.dateCreation = creationDate;
         this.idGenre = idGenre;
         this.idArtiste = idArtiste;
     }
@@ -86,8 +86,8 @@ public class Musique extends DatabaseConnection {
      *
      * @return la date de creation de la musique
      */
-    public Date getCreationDate() {
-        return creationDate;
+    public Date getDateCreation() {
+        return dateCreation;
     }
 
     /**

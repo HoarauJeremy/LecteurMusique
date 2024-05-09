@@ -54,6 +54,8 @@
       </Menu>
       <Menu mnemonicParsing="false" text="Aide">
          <items>
+            <MenuItem fx:id="menuItemMusiques" mnemonicParsing="false" text="Les musiques" />
+            <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="menuItemVersion" mnemonicParsing="false" text="Version" />
             <MenuItem fx:id="menuItemAPropos" mnemonicParsing="false" text="À propos" />
          </items>

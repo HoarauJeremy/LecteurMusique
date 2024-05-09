@@ -5,15 +5,11 @@
 
 package lecteurmusique.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.AnchorPane;
 import lecteurmusique.AppUtils;
 import lecteurmusique.Model.MenuBar;
 
@@ -26,7 +22,7 @@ import lecteurmusique.Model.MenuBar;
 public class MenuBarController implements Initializable {
     
     @FXML
-    private MenuItem menuItemFermer, menuItemDeconnexion, menuItemLecture, menuItemPrecedent, menuItemSuivant, menuItemVolumePlus, menuItemVolumeMoins, menuItemVersion, menuItemAPropos;
+    private MenuItem menuItemFermer, menuItemDeconnexion, menuItemLecture, menuItemPrecedent, menuItemSuivant, menuItemVolumePlus, menuItemVolumeMoins, menuItemVersion, menuItemAPropos, menuItemMusiques;
        
     /**
      * Initializes the controller class.
@@ -40,7 +36,9 @@ public class MenuBarController implements Initializable {
         
         menuItemDeconnexion.setOnAction(event -> MenuBar.deconnexionApplication(event));
         
-        menuItemAPropos.setOnAction(event -> MenuBar.ouvrirPageWeb());
+        menuItemAPropos.setOnAction(event -> MenuBar.ouvrirPageWeb(null));
+        
+        menuItemMusiques.setOnAction(event -> MenuBar.ouvrirPageWeb("musique.php"));
         
         menuItemVersion.setText(AppUtils.getAppName() + " - " + AppUtils.getAppVersion());
         

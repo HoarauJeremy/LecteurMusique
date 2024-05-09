@@ -6,3 +6,4 @@
 /Model/DatabaseConnection.java
 config.properties
 application.properties
+HttpRequest.java
