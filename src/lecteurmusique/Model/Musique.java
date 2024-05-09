@@ -5,19 +5,33 @@
 
 package lecteurmusique.Model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Jérémy Hoarau
  */
-public class Musique {
+public class Musique extends DatabaseConnection {
 
-    public int idMusique;
-    public String nom, lien;
-    public Date creationDate;
-    public int idGenre, idArtiste;
+    private int idMusique;
+    private String nom, lien, nomArtiste;
+    private Date dateCreation;
+    private int idGenre, idArtiste;
 
+    public Musique(int idMusique, String nom, String nomArtiste, String lien) {
+        this.idMusique = idMusique;
+        this.nom = nom;
+        this.nomArtiste = nomArtiste;
+        this.lien = lien;
+    }
+    
     /**
      *
      * @param idMusique
@@ -31,7 +45,7 @@ public class Musique {
         this.idMusique = idMusique;
         this.nom = nom;
         this.lien = lien;
-        this.creationDate = creationDate;
+        this.dateCreation = creationDate;
         this.idGenre = idGenre;
         this.idArtiste = idArtiste;
     }
@@ -54,6 +68,14 @@ public class Musique {
 
     /**
      *
+     * @return le nom de l'artiste
+     */
+    public String getNomArtiste() {
+        return nomArtiste;
+    }
+
+    /**
+     *
      * @return le lien de la musique
      */
     public String getLien() {
@@ -64,8 +86,8 @@ public class Musique {
      *
      * @return la date de creation de la musique
      */
-    public Date getCreationDate() {
-        return creationDate;
+    public Date getDateCreation() {
+        return dateCreation;
     }
 
     /**
@@ -84,4 +106,32 @@ public class Musique {
         return idArtiste;
     }
     
+    public static ArrayList<Musique> recuperMusique() {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        ArrayList<Musique> musiques = new ArrayList<>();
+
+        try {
+            connection = creerConnexion();
+            ps = connection.prepareStatement("SELECT m.idMusique, m.nom, m.lien, a.nom as artiste FROM musique m INNER JOIN artistes a ON m.idArtiste = a.idArtiste");
+            resultSet = ps.executeQuery();
+            
+            if (resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    musiques.add(new Musique(resultSet.getInt("idMusique"), resultSet.getString("nom"), resultSet.getString("artiste"), resultSet.getString("lien")));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fermerConnexion(connection, ps, null, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Musique.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return musiques;
+    }
 }

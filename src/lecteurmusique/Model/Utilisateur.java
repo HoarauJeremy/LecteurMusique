@@ -83,7 +83,7 @@ public class Utilisateur extends DatabaseConnection {
         ResultSet resultSet = null;
         
         try {
-            connection = getConnection();
+            connection = creerConnexion();
             psCheckUserExists = connection.prepareStatement("SELECT * FROM utilisateur WHERE nom = ?");
             psCheckUserExists.setString(1, nom);
             resultSet = psCheckUserExists.executeQuery();
@@ -101,6 +101,7 @@ public class Utilisateur extends DatabaseConnection {
                     psInsert.setString(3, hash.getResult());
                     psInsert.executeUpdate();
 
+                    AppUtils.setInformation(courriel, "", Date.from(Instant.now()), resultSet.getInt("idUser"));
                     Connexion.changeSceneToHome(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), nom);
                 } else {
                     Connexion.afficherAlerte(Alert.AlertType.ERROR, "Le mot de passe ne correspond pas au demande exiger");
@@ -110,7 +111,7 @@ public class Utilisateur extends DatabaseConnection {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection(connection, psInsert, psCheckUserExists, resultSet);
+                fermerConnexion(connection, psInsert, psCheckUserExists, resultSet);
             } catch (SQLException ex) {
                 Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -131,7 +132,7 @@ public class Utilisateur extends DatabaseConnection {
         String messageErreur = "L'adresse e-mail ou le mot de passe saisi est invalide.";
         
         try {
-            connection = getConnection();
+            connection = creerConnexion();
             preparedStatement = connection.prepareStatement("SELECT * FROM utilisateur WHERE email = ?");
             preparedStatement.setString(1, courriel);
             resultSet = preparedStatement.executeQuery();
@@ -146,7 +147,7 @@ public class Utilisateur extends DatabaseConnection {
                     
                     if (VerifierDonnees.verifierMotDePasse(motDePasse)) {
                         if (Password.check(motDePasse, motDePasseRetrouver).withBcrypt()) {
-//                          AppUtils.setInformation(courriel, "", Date.from(Instant.now()));
+                            AppUtils.setInformation(courriel, "", Date.from(Instant.now()), resultSet.getInt("idUser"));
                             Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);   
                         } else {
                             Connexion.afficherAlerte(Alert.AlertType.ERROR, messageErreur);
@@ -161,7 +162,7 @@ public class Utilisateur extends DatabaseConnection {
             e.getMessage();
         } finally {
             try {
-                closeConnection(connection, preparedStatement, null, resultSet);
+                fermerConnexion(connection, preparedStatement, null, resultSet);
             } catch (SQLException ex) {
                 Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -183,7 +184,7 @@ public class Utilisateur extends DatabaseConnection {
         ResultSet resultSet = null;
         
         try {
-            connection = getConnection();
+            connection = creerConnexion();
             psCheckPassword = connection.prepareStatement("SELECT password FROM utilisateur WHERE email = ?;");
             psCheckPassword.setString(1, email);
             resultSet = psCheckPassword.executeQuery();
@@ -211,7 +212,7 @@ public class Utilisateur extends DatabaseConnection {
         } catch (SQLException e) {
             e.getMessage();
         } finally {
-            closeConnection(connection, psCheckPassword, psUpdatePassword, resultSet);
+            fermerConnexion(connection, psCheckPassword, psUpdatePassword, resultSet);
         }
     }
     
@@ -224,7 +225,7 @@ public class Utilisateur extends DatabaseConnection {
             if (VerifierDonnees.verifierEmail(courriel) && VerifierDonnees.verifierNomUtilisateur(nom)) {
                 
             }
-            connection = getConnection();
+            connection = creerConnexion();
             ps = connection.prepareStatement("UPDATE utilisateur SET nom = ? WHERE email = ?");
             ps.setString(1, "");
             ps.setString(2, courriel);

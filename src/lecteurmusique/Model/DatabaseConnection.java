@@ -24,7 +24,7 @@ public class DatabaseConnection {
      * @return la connexion à la base de donnée
      * @throws SQLException
      */
-    public static Connection getConnection() throws SQLException {
+    public static Connection creerConnexion() throws SQLException {
         return DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
     }
     
@@ -37,7 +37,7 @@ public class DatabaseConnection {
      * @param resultset
      * @throws SQLException
      */
-    public  static void closeConnection(Connection connection, PreparedStatement preparedStatement, PreparedStatement preparedStatement1, ResultSet resultset) throws SQLException {
+    public  static void fermerConnexion(Connection connection, PreparedStatement preparedStatement, PreparedStatement preparedStatement1, ResultSet resultset) throws SQLException {
         try {
             if (resultset != null) {
                 resultset.close();

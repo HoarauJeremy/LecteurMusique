@@ -5,11 +5,11 @@
 
 package lecteurmusique.controllers;
 
-import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.AnchorPane;
 import lecteurmusique.AppUtils;
 import lecteurmusique.Model.MenuBar;
 
@@ -19,56 +19,34 @@ import lecteurmusique.Model.MenuBar;
  * @author jerem
  * Created: 29 avr. 2024
  */
-public class MenuBarController extends AnchorPane {
+public class MenuBarController implements Initializable {
     
     @FXML
-    private MenuItem menuItemFermer;
-    @FXML
-    private MenuItem menuItemDeconnexion;
-    @FXML
-    private MenuItem menuItemLecture;
-    @FXML
-    private MenuItem menuItemPrecedent;
-    @FXML
-    private MenuItem menuItemSuivant;
-    @FXML
-    private MenuItem menuItemVolumePlus;
-    @FXML
-    private MenuItem menuItemVolumeMoins;
-    @FXML
-    private MenuItem menuItemVersion;
-    @FXML
-    private MenuItem menuItemAPropos;
-    @FXML
-    private AnchorPane AnchorPane;
-   
-    public MenuBarController() {
-        FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("View/menuBar.fxml"));
-        fXMLLoader.setRoot(this);
-        fXMLLoader.setController(this);
+    private MenuItem menuItemFermer, menuItemDeconnexion, menuItemLecture, menuItemPrecedent, menuItemSuivant, menuItemVolumePlus, menuItemVolumeMoins, menuItemVersion, menuItemAPropos, menuItemMusiques;
+       
+    /**
+     * Initializes the controller class.
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         
-        try {
-            fXMLLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-        setupElement();
-    }
-    
-    private void setupElement() {
-        menuItemFermer.setOnAction(event -> {
-            MenuBar.fermerApplication();
-        });
+        menuItemFermer.setOnAction(event -> MenuBar.fermerApplication());
         
-        menuItemDeconnexion.setOnAction(event -> {
-            MenuBar.deconnexionApplication(event);
-        });
+        menuItemDeconnexion.setOnAction(event -> MenuBar.deconnexionApplication(event));
+        
+        menuItemAPropos.setOnAction(event -> MenuBar.ouvrirPageWeb(null));
+        
+        menuItemMusiques.setOnAction(event -> MenuBar.ouvrirPageWeb("musique.php"));
         
         menuItemVersion.setText(AppUtils.getAppName() + " - " + AppUtils.getAppVersion());
         
-        menuItemAPropos.setOnAction(event -> {
-            MenuBar.ouvrirPageWeb();
-        });
+//        menuItemLecture.setOnAction(event -> {
+//            MusicPlayerController controller = new MusicPlayerController();
+//            controller.playMedia();
+//        });
+        
     }
 
 }

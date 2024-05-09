@@ -41,10 +41,17 @@ public class MenuBar {
     /**
      * Fonction pour ouvrir une page web dans le navigateur par défaut
      * 
+     * @param page
      */
-    public static void ouvrirPageWeb() {
+    public static void ouvrirPageWeb(String page) {
+        String lien;
         try {
-            Desktop.getDesktop().browse(new URI("https://lecteurmusique.alwaysdata.net"));
+            if (page != null) {
+                lien = "https://lecteurmusique.alwaysdata.net/" + page;
+            } else {
+                lien = "https://lecteurmusique.alwaysdata.net";
+            }
+            Desktop.getDesktop().browse(new URI(lien));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
