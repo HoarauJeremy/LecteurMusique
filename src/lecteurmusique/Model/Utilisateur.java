@@ -73,10 +73,12 @@ public class Utilisateur extends DatabaseConnection {
      *
      * @param event
      * @param nom nom que l'utilisateur à saisie
+     * @param prenom
+     * @param pseudo
      * @param courriel email que l'utilisateur à saisie
      * @param motDePasse mot de passe que l'utilisateur à saisie
      */
-    public static void inscriptionUtilisateur(ActionEvent event, String nom, String courriel, String motDePasse) {
+    public static void inscriptionUtilisateur(ActionEvent event, String nom, String prenom, String pseudo, String courriel, String motDePasse) {
         Connection connection = null;
         PreparedStatement psInsert = null;
         PreparedStatement psCheckUserExists = null;
@@ -84,21 +86,23 @@ public class Utilisateur extends DatabaseConnection {
         
         try {
             connection = creerConnexion();
-            psCheckUserExists = connection.prepareStatement("SELECT * FROM utilisateur WHERE nom = ?");
+            psCheckUserExists = connection.prepareStatement("SELECT * FROM utilisateur WHERE pseudo = ?");
             psCheckUserExists.setString(1, nom);
             resultSet = psCheckUserExists.executeQuery();
             
             if (resultSet.isBeforeFirst()) {
-                Connexion.afficherAlerte(Alert.AlertType.ERROR, "You cannot use this username.");
+                Connexion.afficherAlerte(Alert.AlertType.ERROR, "Nom d'utilisateur indisponible");
             } else {
                 if (motDePasse.length() < 12) {
                     Connexion.afficherAlerte(Alert.AlertType.ERROR, "Votre mot de passe doit contenir au minimun 12 caractères.");
                 } else if (VerifierDonnees.verifierMotDePasse(motDePasse)) {
                     Hash hash = Password.hash(motDePasse).withBcrypt();
-                    psInsert = connection.prepareStatement("INSERT INTO utilisateur (nom, email, password) VALUES (?, ?, ?)");
+                    psInsert = connection.prepareStatement("INSERT INTO utilisateur (nom, prenom, pseudo, email, motDePasse) VALUES (?, ?, ?, ?, ?)");
                     psInsert.setString(1, nom);
-                    psInsert.setString(2, courriel);
-                    psInsert.setString(3, hash.getResult());
+                    psInsert.setString(2, prenom);
+                    psInsert.setString(3, pseudo);
+                    psInsert.setString(4, courriel);
+                    psInsert.setString(5, hash.getResult());
                     psInsert.executeUpdate();
 
                     AppUtils.setInformation(courriel, "", Date.from(Instant.now()), resultSet.getInt("idUser"));
@@ -143,7 +147,7 @@ public class Utilisateur extends DatabaseConnection {
 
                 while (resultSet.next()) {
                     String nomRetrouver = resultSet.getString("nom");
-                    String motDePasseRetrouver = resultSet.getString("password");
+                    String motDePasseRetrouver = resultSet.getString("motDePasse");
                     
                     if (VerifierDonnees.verifierMotDePasse(motDePasse)) {
                         if (Password.check(motDePasse, motDePasseRetrouver).withBcrypt()) {
@@ -174,10 +178,10 @@ public class Utilisateur extends DatabaseConnection {
      *
      * @param event
      * @param email saisie par l'utilisateur
-     * @param password saisie par l'utilisateur
+     * @param motDePasse saisie par l'utilisateur
      * @throws SQLException
      */
-    public static void modifierMotDePasseUtilisateur(ActionEvent event, String email, String password) throws SQLException {
+    public static void modifierMotDePasseUtilisateur(ActionEvent event, String email, String motDePasse) throws SQLException {
         Connection connection = null;
         PreparedStatement psCheckPassword = null;
         PreparedStatement psUpdatePassword = null;
@@ -185,7 +189,7 @@ public class Utilisateur extends DatabaseConnection {
         
         try {
             connection = creerConnexion();
-            psCheckPassword = connection.prepareStatement("SELECT password FROM utilisateur WHERE email = ?;");
+            psCheckPassword = connection.prepareStatement("SELECT motDePasse FROM utilisateur WHERE email = ?;");
             psCheckPassword.setString(1, email);
             resultSet = psCheckPassword.executeQuery();
             
@@ -193,13 +197,13 @@ public class Utilisateur extends DatabaseConnection {
                 Connexion.afficherAlerte(Alert.AlertType.ERROR, "");
             } else {
                 if (resultSet.first()) {
-                    String retrievedPassword = resultSet.getString("password");
-                    HashUpdate update = Password.check(password, retrievedPassword).andUpdate().addNewRandomSalt().withBcrypt();
+                    String retrievedPassword = resultSet.getString("motDePasse");
+                    HashUpdate update = Password.check(motDePasse, retrievedPassword).andUpdate().addNewRandomSalt().withBcrypt();
                     
                     if (update.isVerified()) {
                         Hash newHash = update.getHash();
                         
-                        psUpdatePassword = connection.prepareStatement("UPDATE utilisateur SET password = ? WHERE email = ?");
+                        psUpdatePassword = connection.prepareStatement("UPDATE utilisateur SET motDePasse = ? WHERE email = ?");
                         psUpdatePassword.setString(1, newHash.getResult());
                         psUpdatePassword.setString(2, email);
                         psUpdatePassword.executeUpdate();
@@ -226,7 +230,7 @@ public class Utilisateur extends DatabaseConnection {
                 
             }
             connection = creerConnexion();
-            ps = connection.prepareStatement("UPDATE utilisateur SET nom = ? WHERE email = ?");
+            ps = connection.prepareStatement("UPDATE utilisateur SET nom = ?, email = ? WHERE idUser = ?");
             ps.setString(1, "");
             ps.setString(2, courriel);
             ps.executeQuery();
@@ -237,6 +241,7 @@ public class Utilisateur extends DatabaseConnection {
     }
     
     public static void deconnecterUtilisateur(ActionEvent event) {
+        AppUtils.setInformation("", "", null, 0);
         Connexion.changeScene(event, "View/ConnectionPage.fxml", AppUtils.getAppNameWithAction("Connexion"), null);
     }
     

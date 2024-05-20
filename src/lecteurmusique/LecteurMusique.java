@@ -39,6 +39,7 @@ public class LecteurMusique extends Application {
 //            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
             Scene scene = new Scene(root, 900, 600);
             primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
             primaryStage.setTitle(AppUtils.getAppName());
             primaryStage.getIcons().add(new Image(AppUtils.getAppLogo()));
             primaryStage.show();

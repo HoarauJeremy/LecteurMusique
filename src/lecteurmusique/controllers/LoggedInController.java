@@ -26,7 +26,7 @@ public class LoggedInController implements Initializable {
     private Button btnRetour, btnPlaylist, btnGenre, btnModifcation, btnModificationMDP, btnLogout;
 
     @FXML
-    private Label name_label, Fname_label;
+    private Label name_label, Fname_label, courrielLabel, pseudoLabel;
     
     /**
      * Initializes the controller class.

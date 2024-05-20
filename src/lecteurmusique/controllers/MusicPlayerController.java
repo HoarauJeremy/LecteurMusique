@@ -5,6 +5,7 @@
 package lecteurmusique.controllers;
 
 import java.io.File;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -49,7 +50,8 @@ public class MusicPlayerController implements Initializable {
     private Media media;
     private MediaPlayer mediaPlayer;
     
-    private ArrayList<File> songs;
+    private ArrayList<String> songs, songsNames;
+//    private ArrayList<File> songs;
     
     private int songNumber;
 
@@ -68,19 +70,23 @@ public class MusicPlayerController implements Initializable {
         ArrayList<Musique> musiques = Musique.recuperMusique();
         
         songs = new ArrayList<>();
+        songsNames = new ArrayList<>();
         
         if (musiques != null) {
             for (Musique musique : musiques) {
-                System.out.println(musique.getLien());
-                songs.add(new File(musique.getLien()));
+                System.out.println(musique.getLien() + " : " + musique.getNom() + " - " + musique.getNomArtiste());
+                songs.add("http://LecteurMusique/" + musique.getLien());
+                songsNames.add(musique.getNomArtiste()+ " - " + musique.getNom());
+//                songs.add(new File(musique.getLien()));
             }
         }
             
         try {           
-            System.out.println("http://LecteurMusique/" + songs.get(songNumber));
-            media = new Media("http://LecteurMusique/" + songs.get(songNumber).toURI().toString());
+            System.out.println(songs.get(songNumber));
+            media = new Media(songs.get(songNumber));
             mediaPlayer = new MediaPlayer(media);
-            songName.setText(songs.get(songNumber).getName());
+//            songName.setText(songs.get(songNumber).getName());
+            songName.setText(songsNames.get(songNumber));
         } catch (MediaException me) {
             me.getStackTrace();
         }
@@ -90,6 +96,10 @@ public class MusicPlayerController implements Initializable {
             public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {    
                 mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
             }
+        });
+        
+        mediaPlayer.setOnEndOfMedia(() -> {
+            nextMedia();
         });
         
         songProgressBar.setStyle("-fx-accent: #00ff00");
@@ -143,7 +153,7 @@ public class MusicPlayerController implements Initializable {
         songProgressBar.setProgress(0);
         mediaPlayer.seek(Duration.ZERO);
     }
-    
+
     /**
      * Fonction qui va passer à la musique suivante
      */
@@ -157,10 +167,11 @@ public class MusicPlayerController implements Initializable {
                 cancelTimer();
             }
             
-            media = new Media(songs.get(songNumber).toURI().toString());
+            media = new Media(songs.get(songNumber));
             mediaPlayer = new MediaPlayer(media);
             
-            songName.setText(songs.get(songNumber).getName());
+//            songName.setText(songs.get(songNumber).getName());
+            songName.setText(songsNames.get(songNumber));
             
             playMedia();
         } else {
@@ -172,13 +183,15 @@ public class MusicPlayerController implements Initializable {
                 cancelTimer();
             }
             
-            media = new Media(songs.get(songNumber).toURI().toString());
+            media = new Media(songs.get(songNumber));
             mediaPlayer = new MediaPlayer(media);
             
-            songName.setText(songs.get(songNumber).getName());
+//            songName.setText(songs.get(songNumber).getName());
+            songName.setText(songsNames.get(songNumber));
             
             playMedia();
         }
+        System.out.println(songs.get(songNumber));
     }
     
     /**
@@ -194,10 +207,11 @@ public class MusicPlayerController implements Initializable {
                 cancelTimer();
             }
             
-            media = new Media(songs.get(songNumber).toURI().toString());
+            media = new Media(songs.get(songNumber));
             mediaPlayer = new MediaPlayer(media);
             
-            songName.setText(songs.get(songNumber).getName());
+//            songName.setText(songs.get(songNumber).getName());
+            songName.setText(songsNames.get(songNumber));
             
             playMedia();
         } else {
@@ -209,13 +223,15 @@ public class MusicPlayerController implements Initializable {
                 cancelTimer();
             }
             
-            media = new Media(songs.get(songNumber).toURI().toString());
+            media = new Media(songs.get(songNumber));
             mediaPlayer = new MediaPlayer(media);
             
-            songName.setText(songs.get(songNumber).getName());
+//            songName.setText(songs.get(songNumber).getName());
+            songName.setText(songsNames.get(songNumber));
             
             playMedia();
         }
+        System.out.println(songs.get(songNumber));
     }
     
     /**

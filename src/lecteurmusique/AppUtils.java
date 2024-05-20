@@ -96,8 +96,8 @@ public class AppUtils {
      *
      * @return
      */
-    public static String getIdUtilisateur() {
-        return properties.getProperty("USER.id");
+    public static int getIdUtilisateur() {
+        return Integer.parseInt(properties.getProperty("USER.id"));
     }
     
     /**

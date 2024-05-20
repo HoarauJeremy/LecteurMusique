@@ -391,7 +391,7 @@ public class Connexion {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
-        HashMap<Integer, Genre> tab = new HashMap<>();
+        HashMap<Integer, Genre> genres = new HashMap<>();
 
         try {
             connection = DatabaseConnection.creerConnexion();
@@ -400,9 +400,9 @@ public class Connexion {
             
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {
-                    tab.put(resultSet.getInt(1), new Genre(resultSet.getInt(1), resultSet.getString(2)));
+                    genres.put(resultSet.getInt(1), new Genre(resultSet.getInt(1), resultSet.getString(2)));
                 }
-                changeSceneToGenre(event, "View/genre.fxml", AppUtils.getAppNameWithAction("Genre"), tab);
+                changeSceneToGenre(event, "View/genre.fxml", AppUtils.getAppNameWithAction("Genre"), genres);
             }
         } catch (SQLException e) {
             e.printStackTrace();

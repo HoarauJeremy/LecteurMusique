@@ -7,9 +7,9 @@
  * Created: 6 mars 2024
  */
 
-DROP DATABASE IF EXISTS `LecteurMusique`;
-CREATE DATABASE `LecteurMusique`;
-USE `LecteurMusique`;
+DROP DATABASE IF EXISTS `lecteurmusique_db`;
+CREATE DATABASE `lecteurmusique_db`;
+USE `lecteurmusique_db`;
 
 CREATE TABLE Artistes (
    idArtiste INT AUTO_INCREMENT,
