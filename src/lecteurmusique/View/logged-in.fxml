@@ -39,12 +39,17 @@
                   <Font name="Noto Sans Regular" size="40.0" />
                </font>
             </Label>
-            <Label fx:id="name_label" alignment="CENTER" layoutX="14.0" layoutY="72.0" prefHeight="35.0" prefWidth="450.0" text="Name" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="75.0">
+            <Label fx:id="nomLabel" alignment="CENTER" layoutX="14.0" layoutY="72.0" prefHeight="35.0" prefWidth="450.0" text="nom" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="75.0">
                <font>
                   <Font name="Noto Sans Regular" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="Fname_label" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="115.0" prefHeight="35.0" prefWidth="450.0" text="Fname" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="115.0">
+            <Label fx:id="prenomLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="115.0" prefHeight="35.0" prefWidth="450.0" text="prenom" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="115.0">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="pseudoLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="125.0" layoutY="157.0" prefHeight="35.0" prefWidth="450.0" text="pseudo" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="155.0">
                <font>
                   <Font name="Arial" size="24.0" />
                </font>
@@ -61,9 +66,14 @@
             </Button>
             <Button fx:id="btnModificationMDP" layoutX="240.0" layoutY="524.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="265.0" styleClass="updatePassword-btn" text="Modifier mon mot de passe" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="195.0">
                <font>
-                  <Font name="Noto Sans Regular" size="17.0" />
+                  <Font name="Noto Sans Bold" size="17.0" />
                </font>
             </Button>
+            <Label fx:id="emailLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="135.0" layoutY="167.0" prefHeight="35.0" prefWidth="450.0" text="email" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="195.0">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

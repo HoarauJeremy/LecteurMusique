@@ -74,18 +74,18 @@ public class PlaylistController implements Initializable {
          * Retourne sur la page d'accueil.
          */
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.changeSceneToHome(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);
+            Connexion.changerScenePourAccueil(event, null);
         });
         
         /**
          * Affiche la page des genres de musiques.
          */
-        btnGenre.setOnAction(Connexion::showSongGender);   
+        btnGenre.setOnAction(Connexion::afficherGenreMusique);   
         
         /**
          * Affiche la page des Playlist de musiques.
          */
-        btnPlaylist.setOnAction(Connexion::showPlaylistList);
+        btnPlaylist.setOnAction(Connexion::afficherPlaylistList);
         
         btnModifierPlaylist.setOnAction((ActionEvent event) -> {
 //            try {

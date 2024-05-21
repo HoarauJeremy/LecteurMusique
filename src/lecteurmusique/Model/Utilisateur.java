@@ -86,12 +86,13 @@ public class Utilisateur extends DatabaseConnection {
         
         try {
             connection = creerConnexion();
-            psCheckUserExists = connection.prepareStatement("SELECT * FROM utilisateur WHERE pseudo = ?");
+            psCheckUserExists = connection.prepareStatement("SELECT * FROM utilisateur WHERE pseudo = ? AND email = ?");
             psCheckUserExists.setString(1, nom);
+            psCheckUserExists.setString(2, courriel);
             resultSet = psCheckUserExists.executeQuery();
             
             if (resultSet.isBeforeFirst()) {
-                Connexion.afficherAlerte(Alert.AlertType.ERROR, "Nom d'utilisateur indisponible");
+                Connexion.afficherAlerte(Alert.AlertType.ERROR, "Nom d'utilisateur ou adresse email indisponible");
             } else {
                 if (motDePasse.length() < 12) {
                     Connexion.afficherAlerte(Alert.AlertType.ERROR, "Votre mot de passe doit contenir au minimun 12 caractères.");
@@ -105,10 +106,10 @@ public class Utilisateur extends DatabaseConnection {
                     psInsert.setString(5, hash.getResult());
                     psInsert.executeUpdate();
 
-                    AppUtils.setInformation(courriel, "", Date.from(Instant.now()), resultSet.getInt("idUser"));
-                    Connexion.changeSceneToHome(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), nom);
+                    AppUtils.setInformation(resultSet.getString("pseudo"), Date.from(Instant.now()), resultSet.getInt("idUser"));
+                    Connexion.changerScenePourAccueil(event, resultSet.getString("pseudo"));
                 } else {
-                    Connexion.afficherAlerte(Alert.AlertType.ERROR, "Le mot de passe ne correspond pas au demande exiger");
+                    Connexion.afficherAlerte(Alert.AlertType.ERROR, "Le mot de passe ne remplit pas les conditions nécessaires.");
                 }
             }
         } catch (SQLException e) {
@@ -126,19 +127,19 @@ public class Utilisateur extends DatabaseConnection {
      * Fonction pour se connecter à l'application
      *
      * @param event
-     * @param courriel email que l'utilisateur à saisie
+     * @param pseudo pseudo que l'utilisateur à saisie
      * @param motDePasse mot de passe que l'utilisateur à saisie
      */
-    public static void connecterUtilisateur(ActionEvent event, String courriel, String motDePasse) {
+    public static void connecterUtilisateur(ActionEvent event, String pseudo, String motDePasse) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String messageErreur = "L'adresse e-mail ou le mot de passe saisi est invalide.";
+        String messageErreur = "Le pseudo ou le mot de passe saisi est invalide.";
         
         try {
             connection = creerConnexion();
-            preparedStatement = connection.prepareStatement("SELECT * FROM utilisateur WHERE email = ?");
-            preparedStatement.setString(1, courriel);
+            preparedStatement = connection.prepareStatement("SELECT * FROM utilisateur WHERE pseudo = ?");
+            preparedStatement.setString(1, pseudo);
             resultSet = preparedStatement.executeQuery();
             
             if (!resultSet.isBeforeFirst()) {
@@ -146,13 +147,12 @@ public class Utilisateur extends DatabaseConnection {
             } else {
 
                 while (resultSet.next()) {
-                    String nomRetrouver = resultSet.getString("nom");
                     String motDePasseRetrouver = resultSet.getString("motDePasse");
                     
                     if (VerifierDonnees.verifierMotDePasse(motDePasse)) {
                         if (Password.check(motDePasse, motDePasseRetrouver).withBcrypt()) {
-                            AppUtils.setInformation(courriel, "", Date.from(Instant.now()), resultSet.getInt("idUser"));
-                            Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);   
+                            AppUtils.setInformation(resultSet.getString("pseudo"), Date.from(Instant.now()), resultSet.getInt("idUser"));
+                            Connexion.changerScenePourAccueil(event, resultSet.getString("pseudo"));
                         } else {
                             Connexion.afficherAlerte(Alert.AlertType.ERROR, messageErreur);
                         }
@@ -208,7 +208,9 @@ public class Utilisateur extends DatabaseConnection {
                         psUpdatePassword.setString(2, email);
                         psUpdatePassword.executeUpdate();
                         
-                        Connexion.showProfileUser(event, 0);
+                        Connexion.afficherProfileUtilisateur(event, 0);
+                        //            Connexion.afficherProfileUtilisateur(event, AppUtils.getIdUtilisateur());
+
                     }
                 }
             }
@@ -220,29 +222,44 @@ public class Utilisateur extends DatabaseConnection {
         }
     }
     
-    public static void modifierInformationUtilisateur(String nom, String courriel) {
+    public static void modifierInformationUtilisateur(String nom, String prenom, String pseudo, String courriel, int idUtilisateur) {
         Connection connection = null;
-        PreparedStatement ps = null;
+        PreparedStatement psVerifierInformation = null;
+        PreparedStatement psModifierInformationUtilisateur = null;
+        ResultSet resultSet = null;
         
         try {
-            
-            if (VerifierDonnees.verifierEmail(courriel) && VerifierDonnees.verifierNomUtilisateur(nom)) {
-                
-            }
             connection = creerConnexion();
-            ps = connection.prepareStatement("UPDATE utilisateur SET nom = ?, email = ? WHERE idUser = ?");
-            ps.setString(1, "");
-            ps.setString(2, courriel);
-            ps.executeQuery();
+            psVerifierInformation = connection.prepareStatement("SELECT * FROM utilisateur WHERE idUser = ?;");
+            psVerifierInformation.setInt(1, idUtilisateur);
+            resultSet = psVerifierInformation.executeQuery();
             
-        } catch (Exception e) {
+            if (resultSet.first()) {            
+                if (VerifierDonnees.verifierEmail(courriel) && VerifierDonnees.verifierNomUtilisateur(nom)) {
+                    psModifierInformationUtilisateur = connection.prepareStatement("UPDATE utilisateur SET nom = ?, prenom = ?, psModifierInformationUtilisateureudo = ?, email = ? WHERE idUser = ?");
+                    psModifierInformationUtilisateur.setString(1, nom);
+                    psModifierInformationUtilisateur.setString(2, prenom);
+                    psModifierInformationUtilisateur.setString(3, pseudo);
+                    psModifierInformationUtilisateur.setString(4, courriel);
+                    psModifierInformationUtilisateur.setString(5, "");
+                    psModifierInformationUtilisateur.executeQuery();
+                }
+            }
+            
+        } catch (SQLException e) {
+            e.getMessage();
         } finally {
+            try {
+                fermerConnexion(connection, psVerifierInformation, psModifierInformationUtilisateur, null);
+            } catch (SQLException ex) {
+                Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
     public static void deconnecterUtilisateur(ActionEvent event) {
-        AppUtils.setInformation("", "", null, 0);
-        Connexion.changeScene(event, "View/ConnectionPage.fxml", AppUtils.getAppNameWithAction("Connexion"), null);
+        AppUtils.detruitInformation();
+        Connexion.changerScene(event, "View/ConnectionPage.fxml", AppUtils.getAppNameWithAction("Connexion"));
     }
     
 }

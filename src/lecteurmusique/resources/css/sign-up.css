@@ -5,3 +5,7 @@
 .background {
     -fx-background-color: #4f4f4f;
 }
+
+.leftPane {
+    -fx-background-color: #3f3f3f;
+}

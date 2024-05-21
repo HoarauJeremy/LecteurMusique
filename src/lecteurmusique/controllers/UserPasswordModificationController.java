@@ -12,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import lecteurmusique.Connexion;
-import lecteurmusique.Model.Utilisateur;
 import lecteurmusique.VerifierDonnees;
 
 /**
@@ -35,15 +34,16 @@ public class UserPasswordModificationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.showProfileUser(event, 1);
+            Connexion.afficherProfileUtilisateur(event, 1);
+            // Connexion.afficherProfileUtilisateur(event, AppUtils.getIdUtilisateur());
         });
         
         btnPlaylist.setOnAction((ActionEvent event) -> {
-            Connexion.showPlaylistList(event);
+            Connexion.afficherPlaylistList(event);
         });
         
         btnGenre.setOnAction((ActionEvent event) -> {
-           Connexion.showSongGender(event);
+           Connexion.afficherGenreMusique(event);
         });
         
         btnModification.setOnAction((ActionEvent event) -> {

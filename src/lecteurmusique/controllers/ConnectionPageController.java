@@ -27,9 +27,11 @@ public class ConnectionPageController implements Initializable {
     @FXML
     private Button loginButton, signUpButton;
     @FXML
-    private TextField tf_userEmail;
+    private TextField pseudo;
     @FXML
-    private PasswordField pf_password;
+    private PasswordField motDePasse;
+    
+    private String message;
 
     /**
      * Initializes the controller class.
@@ -39,19 +41,20 @@ public class ConnectionPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loginButton.setOnAction((ActionEvent event) -> {
-            if (!tf_userEmail.getText().trim().isEmpty() && !pf_password.getText().trim().isEmpty()) {
-                if (VerifierDonnees.verifierEmail(tf_userEmail.getText().trim()) != false) {
-                    Utilisateur.connecterUtilisateur(event, tf_userEmail.getText(), pf_password.getText());
+            message = "Veuillez saisir toutes les informations nécessaires pour vous connecter.";
+            if (!pseudo.getText().trim().isEmpty() && !motDePasse.getText().trim().isEmpty()) {
+                if (VerifierDonnees.verifierNomUtilisateur(pseudo.getText().trim()) && VerifierDonnees.verifierMotDePasse(motDePasse.getText().trim())) {
+                    Utilisateur.connecterUtilisateur(event, pseudo.getText(), motDePasse.getText());
                 } else {
-                    Connexion.afficherAlerte(Alert.AlertType.ERROR, "Veuiller saisire toutes les informations valide et necessaire pour vous connecter.");
+                    Connexion.afficherAlerte(Alert.AlertType.ERROR, message);
                 }
             } else {
-                Connexion.afficherAlerte(Alert.AlertType.ERROR, "Veuiller saisire toutes les information necessaire pour vous connecter.");
+                Connexion.afficherAlerte(Alert.AlertType.ERROR, message);
             }
         });
         
         signUpButton.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/sign-up.fxml", "Signup", null);
+            Connexion.changerScene(event, "View/sign-up.fxml", "Signup");
         });
     }
 }

@@ -41,11 +41,11 @@ public class GenreController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //gridPane.add(new Button("NOM DU GENRE"), 0, 0);
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);
+            Connexion.changerScenePourAccueil(event, null);
         });
         
         btnPlaylist.setOnAction((ActionEvent event) -> {
-            Connexion.showPlaylistList(event);
+            Connexion.afficherPlaylistList(event);
         });
     }
     

@@ -134,4 +134,37 @@ public class Musique extends DatabaseConnection {
         
         return musiques;
     }
+    
+    public static ArrayList<Musique> recuperMusique(int playlistId) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        ArrayList<Musique> musiques = new ArrayList<>();
+
+        try {
+            connection = creerConnexion();
+            // Revoir la requete
+            ps = connection.prepareStatement("SELECT m.idMusique, m.nom, m.lien, a.nom as artiste FROM musique m "
+                    + "INNER JOIN artistes a ON m.idArtiste = a.idArtiste "
+                    + "INNER JOIN Playlist_Chanson pc ON m.idMusique = pc.idMusique "
+                    + "WHERE pc.idPlaylist = ?");
+            resultSet = ps.executeQuery();
+            
+            if (resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    musiques.add(new Musique(resultSet.getInt("idMusique"), resultSet.getString("nom"), resultSet.getString("artiste"), resultSet.getString("lien")));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fermerConnexion(connection, ps, null, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Musique.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return musiques;
+    }
 }

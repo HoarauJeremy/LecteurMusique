@@ -35,7 +35,7 @@
       </AnchorPane>
       <AnchorPane layoutX="200.0" layoutY="23.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="310.0" layoutY="440.0" mnemonicParsing="false" styleClass="btn-Enregistrer" text="Enregistrer" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="290.0" AnchorPane.rightAnchor="290.0">
+            <Button fx:id="btnEnregistrement" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="502.0" mnemonicParsing="false" styleClass="btn-Enregistrer" text="Enregistrer" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="290.0" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="501.0">
                <font>
                   <Font name="Noto Sans Regular" size="17.0" />
                </font>
@@ -45,17 +45,37 @@
                   <Font name="Noto Sans Regular" size="17.0" />
                </font>
             </TextField>
-            <TextField fx:id="emailField" layoutX="240.0" layoutY="205.0" AnchorPane.bottomAnchor="336.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="205.0">
+            <TextField fx:id="prenomField" layoutX="240.0" layoutY="205.0" AnchorPane.bottomAnchor="336.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="205.0">
                <font>
                   <Font name="Noto Sans Regular" size="17.0" />
                </font>
             </TextField>
-            <Label layoutX="200.0" layoutY="181.0" text="Email :" textFill="WHITE" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="334.0">
+            <Label layoutX="200.0" layoutY="181.0" text="Prenom :" textFill="WHITE" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="334.0">
                <font>
                   <Font name="Noto Sans Regular" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="200.0" layoutY="97.0" text="Nom de l'utilisateur :" textFill="WHITE" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="334.0">
+            <Label layoutX="200.0" layoutY="97.0" text="Nom :" textFill="WHITE" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="334.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="emailField" layoutX="200.0" layoutY="374.0" AnchorPane.bottomAnchor="167.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="374.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </TextField>
+            <Label layoutX="187.0" layoutY="271.0" text="Pseudo :" textFill="WHITE" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="334.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="pseudoField" layoutX="200.0" layoutY="295.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </TextField>
+            <Label layoutX="200.0" layoutY="350.0" text="Email :" textFill="WHITE" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="334.0">
                <font>
                   <Font name="Noto Sans Regular" size="17.0" />
                </font>

@@ -32,7 +32,7 @@ public class LecteurMusique extends Application {
 //            if (!AppUtils.getUtilisateurConnecter().isEmpty()) {
 //                fxmlFile = "View/homePage.fxml";
 //            } else {
-//                fxmlFile = "View/";
+//                fxmlFile = "View/ConnectionPage.fxml";
 //            }
             
             Parent root = FXMLLoader.load(getClass().getResource("View/homePage.fxml"));

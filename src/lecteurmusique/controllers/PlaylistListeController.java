@@ -8,7 +8,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -47,19 +46,20 @@ public class PlaylistListeController implements Initializable {
          * Retourne sur la page d'accueil.
          */
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);
+//            Connexion.changerScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"));
+            Connexion.changerScenePourAccueil(event, null);
         });
         
         /**
          * Affiche la page des genres de musiques.
          */
-        btnGenre.setOnAction(Connexion::showSongGender);
+        btnGenre.setOnAction(Connexion::afficherGenreMusique);
         
         /**
          * Affiche la page de création de playlist
          */
         btnAjoutPlaylist.setOnAction((ActionEvent event) -> {
-            //Connexion.changeScene(event, "View/", AppUtils.getAppNameWithAction("Playlist"), null);
+            //Connexion.changerScene(event, "View/", AppUtils.getAppNameWithAction("Playlist"), null);
         });        
     }
     
@@ -88,7 +88,7 @@ public class PlaylistListeController implements Initializable {
                 button.setOnAction((ActionEvent event) -> {
                     // Logique à exécuter lorsque le bouton est cliqué
                     System.out.println("Bouton cliqué: " + playlist.getPlaylistId());
-                    Connexion.showPlaylistUser(event, playlist.getPlaylistId());
+                    Connexion.afficherPlaylistUtilisateur(event, playlist.getPlaylistId());
                 });
                 buttonContainer.getChildren().add(button); // Ajoute le bouton au conteneur
             }
