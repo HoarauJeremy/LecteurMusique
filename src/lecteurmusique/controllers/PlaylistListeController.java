@@ -59,7 +59,7 @@ public class PlaylistListeController implements Initializable {
          * Affiche la page de création de playlist
          */
         btnAjoutPlaylist.setOnAction((ActionEvent event) -> {
-            //Connexion.changerScene(event, "View/", AppUtils.getAppNameWithAction("Playlist"), null);
+            Connexion.changerScene(event, "View/ajoutPlaylist.fxml", AppUtils.getAppNameWithAction("Playlist"));
         });        
     }
     

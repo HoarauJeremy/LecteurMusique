@@ -119,22 +119,84 @@ INSERT INTO `genre` (`Genre`) VALUES
     ('Trap'),
     ('UKG');
 
-INSERT INTO `Artiste` (idArtiste, nom) VALUES
-    (),
-    ();
+INSERT INTO `Artistes` (nom) VALUES
+    ("SUMU"),
+    ("Dosi & Aisake"),
+    ("Intouch"),
+    ("yanvince"),
+    ("Diamond Eyes"),
+    ("M.I.M.E, Shiah Maisel, Clarx"),
+    ("Zeli"),
+    ("Christopher Damas"), -- 8
+    ("Crushed Candy"),
+    ("Emin Nilsen"),
+--     ("DYNAMIS, HXDES");
 
-INSERT INTO `musique` (idMusique, nom, lien, dateCreation, idGenre, idArtiste) VALUES
-    (),
-    ();
+INSERT INTO `musique` (nom, lien, dateCreation, idGenre, idArtiste) VALUES
+    ("Apart", "sumu_-_apart.mp3", "2024-02-27", 32, 1),
+    ("Cruising", "Dosi_&_Aisake_-_Cruising.mp3", "2024-03-26", 32, 2),
+    ("Heart My Heart", "intouch_-_Heart_My_Heart.mp3", "2023-12-12", 18, 3),
+    ("Triple no", "yanvince_-_triple_no.mp3", "2023-12-14", 18, 4),
+    ("Flutter", "Diamond_Eyes_-_Flutter.mp3", "2018-10-17", 5, 5),
+    ("Pull Me In", "Clarx_&_Shiah_Maisel_-_Pull_Me_In_(feat._M.I.M.E).mp3", "2024-1-19", 1, 6),
+    ("Only The Fallen", "Zeli_-_Only_The_Fallen.mp3", "2024-05-07", 40, 7),
+    ("KHARMA", "Christopher_Damas_-_KHARMA.mp3", "2024-05-27", 41, 8),
+    ("Oh My Gawd", "Crushed_Candy_-_Oh_My_Gawd.mp3", "2024-02-06", 41, 9),
+    ("BANE", "Emin_Nilsen_-_BANE.mp3", "2024-05-16", 7, 10),
+--     ("VIDA NOVA", "Emin_Nilsen_-_VIDA_NOVA.mp3", "2024-04-25", 7, 10),
+--     ("Kapoeira Phonk", "HXDES_&_DYNAMIS_-_Kapoeira Phonk.mp3", "2024-04-26", 7, 11);
+
+/* 
+Rajouter une table entre musique et genre permettre de régler le probleme si une musique a plusieur genre et idem pour les musiques qui ont plusieurs artistes
+*/
 
 INSERT INTO `Copyright` (idCopyright, lienNCS, lienYTB, idMusique) VALUES
-    (),
-    ();
+    (1, "http://ncs.io/apart", "http://ncs.lnk.to/apartAT/youtube", 1),
+    (2, "http://ncs.io/Cruising", "http://ncs.lnk.to/CruisingAT/youtube", 2),
+    (3, "http://ncs.io/heartmyheart", "http://ncs.io/heartmyheartAT/youtube", 3),
+    (4, "http://ncs.io/tripleno", "http://ncs.io/tripleno", 4),
+    (5, "http://ncs.io/Flutter", "http://youtu.be/lEHM9HZf0IA", 5),
+    (6, "http://ncs.io/PullMeIn", "http://ncs.lnk.to/PullMeInAT/youtube", 6),
+    (7, "http://ncs.io/OnlyTheFallen", "http://ncs.lnk.to/OnlyTheFallenAT/youtube", 7),
+    (8, "http://ncs.io/KHARMA", "http://ncs.lnk.to/KHARMAAT/youtube", 8),
+    (9, "http://ncs.io/CC_OMG", "http://ncs.lnk.to/CC_OMGAT/youtube", 9),
+    (10, "http://ncs.io/BANE", "http://ncs.lnk.to/BANEAT/youtube", 10),
+--     (11, "http://ncs.io/VIDANOVA", "http://ncs.lnk.to/VIDANOVAAT/youtube", 11),
+--     (12, "http://ncs.io/KapoeiraPhonk", "http://ncs.lnk.to/KapoeiraPhonkAT/youtube", 12);
 
--- Song: intouch - Heart My Heart [NCS Release]
+
+
+-- Song: HXDES, DYNAMIS - Kapoeira Phonk [NCS Release]
 -- Music provided by NoCopyrightSounds
--- Free Download/Stream: http://ncs.io/heartmyheart
--- Watch: http://ncs.io/heartmyheartAT/youtube
+-- Free Download/Stream: http://ncs.io/KapoeiraPhonk
+-- Watch: http://ncs.lnk.to/KapoeiraPhonkAT/youtube
+
+-- Song: Emin Nilsen - VIDA NOVA [NCS Release]
+-- Music provided by NoCopyrightSounds
+-- Free Download/Stream: http://ncs.io/VIDANOVA
+-- Watch: http://ncs.lnk.to/VIDANOVAAT/youtube
+
+-------
+
+-- Song: Emin Nilsen - BANE [NCS Release]
+-- Music provided by NoCopyrightSounds
+-- Free Download/Stream: http://ncs.io/BANE
+-- Watch: http://ncs.lnk.to/BANEAT/youtube
+
+-- Song: Crushed Candy - Oh My Gawd [NCS Release]
+-- Music provided by NoCopyrightSounds
+-- Free Download/Stream: http://ncs.io/CC_OMG
+-- Watch: http://ncs.lnk.to/CC_OMGAT/youtube
+
+-- Song: Christopher Damas - KHARMA [Arcade Release]
+-- Music provided by NoCopyrightSounds
+-- Free Download/Stream: http://ncs.io/KHARMA
+-- Watch: http://ncs.lnk.to/KHARMAAT/youtube
+
+-- Song: Zeli - Only The Fallen [NCS Release]
+-- Music provided by NoCopyrightSounds
+-- Free Download/Stream: http://ncs.io/OnlyTheFallen
+-- Watch: http://ncs.lnk.to/OnlyTheFallenAT/youtube
 
 -- Song: Clarx & Shiah Maisel - Pull Me In (feat. M.I.M.E) [NCS Release]
 -- Music provided by NoCopyrightSounds
@@ -146,7 +208,17 @@ INSERT INTO `Copyright` (idCopyright, lienNCS, lienYTB, idMusique) VALUES
 -- Free Download/Stream: http://ncs.io/Flutter
 -- Watch: http://youtu.be/lEHM9HZf0IA
 
+-- Song: yanvince - triple no [NCS Release]
+-- Music provided by NoCopyrightSounds
+-- Free Download/Stream: http://ncs.io/tripleno
+-- Watch:
+
+-- Song: intouch - Heart My Heart [NCS Release]
+-- Music provided by NoCopyrightSounds
+-- Free Download/Stream: http://ncs.io/heartmyheart
+-- Watch: http://ncs.io/heartmyheartAT/youtube
 -- Song: Dosi & Aisake - Cruising [NCS Release]
+
 -- Music provided by NoCopyrightSounds
 -- Free Download/Stream: http://ncs.io/Cruising
 -- Watch: http://ncs.lnk.to/CruisingAT/youtube
@@ -155,9 +227,3 @@ INSERT INTO `Copyright` (idCopyright, lienNCS, lienYTB, idMusique) VALUES
 -- Music provided by NoCopyrightSounds
 -- Free Download/Stream: http://ncs.io/apart
 -- Watch: http://ncs.lnk.to/apartAT/youtube
-
--- Song: yanvince - triple no [NCS Release]
--- Music provided by NoCopyrightSounds
--- Free Download/Stream: http://ncs.io/tripleno
--- Watch:
-

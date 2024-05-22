@@ -114,7 +114,8 @@ public class Musique extends DatabaseConnection {
 
         try {
             connection = creerConnexion();
-            ps = connection.prepareStatement("SELECT m.idMusique, m.nom, m.lien, a.nom as artiste FROM musique m INNER JOIN artistes a ON m.idArtiste = a.idArtiste");
+            ps = connection.prepareStatement("SELECT m.idMusique, m.nom, m.lien, a.nom as artiste FROM musique m "
+                    + "INNER JOIN Artistes a ON m.idArtiste = a.idArtiste");
             resultSet = ps.executeQuery();
             
             if (resultSet.isBeforeFirst()) {
@@ -135,7 +136,7 @@ public class Musique extends DatabaseConnection {
         return musiques;
     }
     
-    public static ArrayList<Musique> recuperMusique(int playlistId) {
+    public static ArrayList<Musique> recuperMusiqueParPlaylistID(int playlistId) {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
@@ -167,4 +168,42 @@ public class Musique extends DatabaseConnection {
         
         return musiques;
     }
+    
+    /**
+     *
+     * @param idGenre
+     * @return les musiques par rapport à un genre.
+     */
+    public static ArrayList<Musique> recuperMusiqueParGenre(int idGenre) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        ArrayList<Musique> musiques = new ArrayList<>();
+        
+        try {
+            connection = creerConnexion();
+            ps = connection.prepareStatement("SELECT m.idMusique, m.nom, m.lien, a.nom as artiste, g.Nom FROM musique m "
+                    + "INNER JOIN Artistes a ON m.idArtiste = a.idArtiste "
+                    + "INNER JOIN Genre g ON m.idGenre = g.idGenre "
+                    + "WHERE g.idGenre = ?;");
+            ps.setInt(1, idGenre);
+            resultSet = ps.executeQuery();
+            
+            if (resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {                    
+                    musiques.add(new Musique(resultSet.getInt("idMusique"), resultSet.getString("nom"), resultSet.getString("artiste"), resultSet.getString("lien")));
+                }
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        } finally {
+            try {
+                fermerConnexion(connection, ps, null, resultSet);
+            } catch (SQLException ex) {
+                Logger.getLogger(Musique.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return musiques;
+    }
+    
 }

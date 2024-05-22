@@ -51,7 +51,6 @@ public class MusicPlayerController implements Initializable {
     private MediaPlayer mediaPlayer;
     
     private ArrayList<String> songs, songsNames;
-//    private ArrayList<File> songs;
     
     private int songNumber;
 
@@ -75,9 +74,8 @@ public class MusicPlayerController implements Initializable {
         if (musiques != null) {
             for (Musique musique : musiques) {
                 System.out.println(musique.getLien() + " : " + musique.getNom() + " - " + musique.getNomArtiste());
-                songs.add("http://LecteurMusique/" + musique.getLien());
+                songs.add("https://lecteurmusique.alwaysdata.net/musique/" + musique.getLien());
                 songsNames.add(musique.getNomArtiste()+ " - " + musique.getNom());
-//                songs.add(new File(musique.getLien()));
             }
         }
             
@@ -85,7 +83,6 @@ public class MusicPlayerController implements Initializable {
             System.out.println(songs.get(songNumber));
             media = new Media(songs.get(songNumber));
             mediaPlayer = new MediaPlayer(media);
-//            songName.setText(songs.get(songNumber).getName());
             songName.setText(songsNames.get(songNumber));
         } catch (MediaException me) {
             me.getStackTrace();
@@ -103,8 +100,6 @@ public class MusicPlayerController implements Initializable {
         });
         
         songProgressBar.setStyle("-fx-accent: #00ff00");
-        
-//        btnNext.setGraphic(new ImageView("lecteurmusique/resources/icons/arrow-right-336-svgrepo-com.png"));
         
         btnPlay.setOnAction((ActionEvent event) -> {
             this.playMedia();
@@ -140,7 +135,6 @@ public class MusicPlayerController implements Initializable {
      * Fonction qui va mettre la musique sur pause
      */
     public void pauseMedia() {
-        
         cancelTimer();
         mediaPlayer.pause();
     }
@@ -149,7 +143,6 @@ public class MusicPlayerController implements Initializable {
      * Fonction qui va redémarer la musique
      */
     public void resetMedia() {
-        
         songProgressBar.setProgress(0);
         mediaPlayer.seek(Duration.ZERO);
     }
@@ -170,7 +163,6 @@ public class MusicPlayerController implements Initializable {
             media = new Media(songs.get(songNumber));
             mediaPlayer = new MediaPlayer(media);
             
-//            songName.setText(songs.get(songNumber).getName());
             songName.setText(songsNames.get(songNumber));
             
             playMedia();
@@ -186,7 +178,6 @@ public class MusicPlayerController implements Initializable {
             media = new Media(songs.get(songNumber));
             mediaPlayer = new MediaPlayer(media);
             
-//            songName.setText(songs.get(songNumber).getName());
             songName.setText(songsNames.get(songNumber));
             
             playMedia();
@@ -210,7 +201,6 @@ public class MusicPlayerController implements Initializable {
             media = new Media(songs.get(songNumber));
             mediaPlayer = new MediaPlayer(media);
             
-//            songName.setText(songs.get(songNumber).getName());
             songName.setText(songsNames.get(songNumber));
             
             playMedia();
@@ -226,7 +216,6 @@ public class MusicPlayerController implements Initializable {
             media = new Media(songs.get(songNumber));
             mediaPlayer = new MediaPlayer(media);
             
-//            songName.setText(songs.get(songNumber).getName());
             songName.setText(songsNames.get(songNumber));
             
             playMedia();

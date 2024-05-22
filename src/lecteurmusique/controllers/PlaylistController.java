@@ -38,29 +38,11 @@ import lecteurmusique.Model.Playlist;
 public class PlaylistController implements Initializable {
 
     @FXML
-    private ProgressBar songProgressBar;
+    private Button btnPlaylist, btnGenre, btnRetour, btnModifierPlaylist;
     @FXML
-    private Button btnPlaylist, btnGenre, btnRetour, btnModifierPlaylist, btnReset, btnPause, btnPlay, btnPrevious, btnNext;
-    @FXML
-    private Slider volumeSlider;
-    @FXML
-    private Label songName, messageLabel, nomPlaylist, datePlaylist;
+    private Label messageLabel, nomPlaylist, datePlaylist;
     @FXML
     private ScrollPane scrollPane;
-
-    private Media media;
-    private MediaPlayer mediaPlayer;
-
-    private File directory;
-    private File[] files;
-    
-    private ArrayList<File> songs;
-    
-    private int songNumber;
-
-    private Timer timer;
-    private TimerTask task;
-    private boolean running;
 
     /**
      * Initializes the controller class.
