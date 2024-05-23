@@ -45,6 +45,11 @@ public class VerifierDonnees {
         return resultat;
     }
     
+    /**
+     *
+     * @param motDePasse
+     * @return
+     */
     public static boolean verifierMotDePasse(String motDePasse) {
         boolean resultat = false;
         

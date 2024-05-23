@@ -111,7 +111,7 @@ public class Playlist extends DatabaseConnection {
      * @param dateCreation
      * @param idUser
      */
-    public void creerPlaylist(String nomPlaylist, Date dateCreation, int idUser) {
+    public static void creerPlaylist(String nomPlaylist, Date dateCreation, int idUser) {
         Connection connection = null;
         PreparedStatement psInsert = null;
         PreparedStatement psCheckPlaylistExists = null;
@@ -193,9 +193,8 @@ public class Playlist extends DatabaseConnection {
      * @param idPlaylist Id de la playlist.
      * @param nomPlaylist Definit le nom de la playlist.
      * @param privee Definit le statut (1 pour <i>Public</i> ou 0 pour <i>Privée</i>) d'une Playlist.
-     * @throws SQLException
      */
-    public static void updatePlaylist(int idUser, int idPlaylist, String nomPlaylist, int privee) throws SQLException {
+    public static void updatePlaylist(int idUser, int idPlaylist, String nomPlaylist, int privee) {
         Connection connection = null;
         PreparedStatement psUpdatePlaylist = null;
         ResultSet resultSet = null;
@@ -209,10 +208,9 @@ public class Playlist extends DatabaseConnection {
             psUpdatePlaylist.setInt(4, idUser);
             psUpdatePlaylist.executeUpdate();
             
+            fermerConnexion(connection, psUpdatePlaylist, null, resultSet);
         } catch (SQLException e) {
             e.getMessage();
-        } finally {
-            fermerConnexion(connection, psUpdatePlaylist, null, resultSet);
         }
     }
     

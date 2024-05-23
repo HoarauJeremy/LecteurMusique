@@ -26,7 +26,7 @@ public class LoggedInController implements Initializable {
     private Button btnRetour, btnPlaylist, btnGenre, btnModifcation, btnModificationMDP, btnLogout;
 
     @FXML
-    private Label name_label, Fname_label;
+    private Label nomLabel, prenomLabel, pseudoLabel, emailLabel;
     
     /**
      * Initializes the controller class.
@@ -37,23 +37,23 @@ public class LoggedInController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         btnPlaylist.setOnAction((ActionEvent event) -> {
-            Connexion.showPlaylistList(event);
+            Connexion.afficherPlaylistList(event);
         });
         
         btnGenre.setOnAction((ActionEvent event) -> {
-            Connexion.showSongGender(event);
+            Connexion.afficherGenreMusique(event);
         });
         
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);
+            Connexion.changerScenePourAccueil(event, null);
         });
         
         btnModifcation.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/UserInfoModification.fxml", AppUtils.getAppNameWithAction("Modification"), null);
+            Connexion.changerScene(event, "View/UserInfoModification.fxml", AppUtils.getAppNameWithAction("Modification"));
         });
         
         btnModificationMDP.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/UserPasswordModification.fxml", AppUtils.getAppNameWithAction("Modification"), null);
+            Connexion.changerScene(event, "View/UserPasswordModification.fxml", AppUtils.getAppNameWithAction("Modification"));
         });
         
         btnLogout.setOnAction((ActionEvent event) -> {
@@ -63,12 +63,16 @@ public class LoggedInController implements Initializable {
     
     /**
      *
-     * @param username
-     * @param Fname
+     * @param nom
+     * @param prenom
+     * @param pseudo
+     * @param email
      */
-    public void setUserInformation(String username, String Fname) {
-        name_label.setText(username);
-        Fname_label.setText(Fname);
+    public void setUserInformation(String nom, String prenom, String pseudo, String email) {
+        nomLabel.setText(nom);
+        prenomLabel.setText(prenom);
+        pseudoLabel.setText(pseudo);
+        emailLabel.setText(email);
     }
     
 }

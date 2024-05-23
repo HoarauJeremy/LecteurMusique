@@ -32,13 +32,14 @@ public class LecteurMusique extends Application {
 //            if (!AppUtils.getUtilisateurConnecter().isEmpty()) {
 //                fxmlFile = "View/homePage.fxml";
 //            } else {
-//                fxmlFile = "View/";
+//                fxmlFile = "View/ConnectionPage.fxml";
 //            }
             
             Parent root = FXMLLoader.load(getClass().getResource("View/homePage.fxml"));
 //            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
             Scene scene = new Scene(root, 900, 600);
             primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
             primaryStage.setTitle(AppUtils.getAppName());
             primaryStage.getIcons().add(new Image(AppUtils.getAppLogo()));
             primaryStage.show();

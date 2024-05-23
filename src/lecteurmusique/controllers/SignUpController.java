@@ -28,10 +28,10 @@ public class SignUpController implements Initializable {
     private Button signupButton, LoginButton;
     
     @FXML
-    private TextField tf_username, tf_email;
+    private TextField nom, prenom, pseudo, email;
     
     @FXML
-    private PasswordField pf_password;
+    private PasswordField motDePasse;
 
     /**
      * Initializes the controller class.
@@ -41,9 +41,9 @@ public class SignUpController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         signupButton.setOnAction((ActionEvent event) -> {
-            if (!tf_email.getText().trim().isEmpty() && !tf_username.getText().trim().isEmpty() && !pf_password.getText().trim().isEmpty()) {
-                if (VerifierDonnees.verifierEmail(tf_email.getText().trim()) != false && VerifierDonnees.verifierNomUtilisateur(tf_username.getText().trim()) != false) {
-                    Utilisateur.inscriptionUtilisateur(event, tf_username.getText(), tf_email.getText(), pf_password.getText());                
+            if (!email.getText().trim().isEmpty() && !pseudo.getText().trim().isEmpty() && !motDePasse.getText().trim().isEmpty()) {
+                if (VerifierDonnees.verifierEmail(email.getText().trim()) && VerifierDonnees.verifierNomUtilisateur(pseudo.getText().trim())) {      
+                    Utilisateur.inscriptionUtilisateur(event, nom.getText(), prenom.getText(), pseudo.getText(), email.getText(), motDePasse.getText());                
                 } else {
                     Connexion.afficherAlerte(Alert.AlertType.ERROR, "Veuiller saisire toutes les informations valide et necessaire pour vous connecter.");
                 }
@@ -53,7 +53,7 @@ public class SignUpController implements Initializable {
         });
         
         LoginButton.setOnAction((ActionEvent event) -> {
-            Connexion.changeScene(event, "View/ConnectionPage.fxml", "Login", null);
+            Connexion.changerScene(event, "View/ConnectionPage.fxml", "Login");
         });
     }    
     

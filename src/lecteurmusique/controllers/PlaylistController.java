@@ -35,32 +35,14 @@ import lecteurmusique.Model.Playlist;
  *
  * @author Jérémy Hoarau
  */
-public class PlaylistController extends MusicPlayerController implements Initializable {
+public class PlaylistController implements Initializable {
 
     @FXML
-    private ProgressBar songProgressBar;
+    private Button btnPlaylist, btnGenre, btnRetour, btnModifierPlaylist;
     @FXML
-    private Button btnPlaylist, btnGenre, btnRetour, btnModifierPlaylist, btnReset, btnPause, btnPlay, btnPrevious, btnNext;
-    @FXML
-    private Slider volumeSlider;
-    @FXML
-    private Label songName, messageLabel, nomPlaylist, datePlaylist;
+    private Label messageLabel, nomPlaylist, datePlaylist;
     @FXML
     private ScrollPane scrollPane;
-
-    private Media media;
-    private MediaPlayer mediaPlayer;
-
-    private File directory;
-    private File[] files;
-    
-    private ArrayList<File> songs;
-    
-    private int songNumber;
-
-    private Timer timer;
-    private TimerTask task;
-    private boolean running;
 
     /**
      * Initializes the controller class.
@@ -70,73 +52,22 @@ public class PlaylistController extends MusicPlayerController implements Initial
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        songs = new ArrayList<File>();
-        
-        directory = new File("music");
-        
-        files = directory.listFiles();
-        
-        if (files != null) {
-            
-            for(File file : files) {
-                
-                songs.add(file);
-            }
-        }
-            
-        try {           
-            media = new Media(songs.get(songNumber).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-            songName.setText(songs.get(songNumber).getName());
-        } catch (MediaException me) {
-            me.getStackTrace();
-        }
-        
-        volumeSlider.valueProperty().addListener(new ChangeListener<Number> () {
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {    
-                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
-            }
-        });
-        
-        songProgressBar.setStyle("-fx-accent: #00ff00");
-        
-        btnPlay.setOnAction((ActionEvent event) -> {
-            this.playMedia();
-        });
-        
-        btnPause.setOnAction((ActionEvent event) -> {
-            this.pauseMedia();
-        });
-        
-        btnPrevious.setOnAction((ActionEvent event) -> {
-            this.previousMedia();
-        });
-        
-        btnNext.setOnAction((ActionEvent event) -> {
-            this.nextMedia();
-        });
-        
-        btnReset.setOnAction((ActionEvent event) -> {
-            this.resetMedia();
-        });
-        
         /**
          * Retourne sur la page d'accueil.
          */
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.changeSceneToHome(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"), null);
+            Connexion.changerScenePourAccueil(event, null);
         });
         
         /**
          * Affiche la page des genres de musiques.
          */
-        btnGenre.setOnAction(Connexion::showSongGender);   
+        btnGenre.setOnAction(Connexion::afficherGenreMusique);   
         
         /**
          * Affiche la page des Playlist de musiques.
          */
-        btnPlaylist.setOnAction(Connexion::showPlaylistList);
+        btnPlaylist.setOnAction(Connexion::afficherPlaylistList);
         
         btnModifierPlaylist.setOnAction((ActionEvent event) -> {
 //            try {
@@ -151,6 +82,8 @@ public class PlaylistController extends MusicPlayerController implements Initial
     /**
      * Affiche les informations de la playlist (nom et date de creation)
      * et affiche une liste des musiques avec des boutton.
+     * 
+     * @hidden Modifier la liste de bouton pour une liste de nom et mettre un bouton en haut de la playlist pour jouer la musique
      *
      * @param playlists liste d'objet de type <b>Playlist</b> {@link lecteurmusique.Model.Playlist}
      * @param musiques liste d'objet de type <b>Musique</b> {@link lecteurmusique.Model.Musique}
@@ -168,7 +101,7 @@ public class PlaylistController extends MusicPlayerController implements Initial
                 button.setOnAction((ActionEvent event) -> {
                     // Logique à exécuter lorsque le bouton est cliqué
                     System.out.println("Bouton cliqué: " + musique.getIdMusique());
-                    this.playMedia();
+//                    this.playMedia();
                 });
                 buttonContainer.getChildren().add(button); // Ajoute le bouton au conteneur
                 System.out.println(musique.getNom());

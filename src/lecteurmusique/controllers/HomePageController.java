@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import lecteurmusique.Connexion;
 
 /**
@@ -21,6 +22,9 @@ public class HomePageController implements Initializable {
     
     @FXML
     private Button btnGenre, btnPlaylist, btnProfil;
+    
+    @FXML
+    private Label pseudoLabel;
 
     /**
      * Initializes the controller class.
@@ -43,23 +47,24 @@ public class HomePageController implements Initializable {
         
     }
     
-    public void setUserInformation(String username) {
-        
+    public void setUserInformation(String pseudo) {
+        pseudoLabel.setText("Bonjour, " + pseudo);
     }
     
     public void showPlaylist(ActionEvent event) {
         System.out.println("PLAYLIST");
-        Connexion.showPlaylistList(event);
+        Connexion.afficherPlaylistList(event);
     }
     
     public void showGender(ActionEvent event) {
         System.out.println("GENRE");
-        Connexion.showSongGender(event);
+        Connexion.afficherGenreMusique(event);
     }
     
     public void showProfile(ActionEvent event) {
         System.out.println("PROFILE");
-        Connexion.showProfileUser(event, 1);
+        Connexion.afficherProfileUtilisateur(event, 1);
+        // Connexion.afficherProfileUtilisateur(event, AppUtils.getIdUtilisateur());
     }
     
 }

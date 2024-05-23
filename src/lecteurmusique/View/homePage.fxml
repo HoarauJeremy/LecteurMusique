@@ -33,5 +33,14 @@
          </children>
       </AnchorPane>
     <fx:include source="MusicPlayer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" />
+      <AnchorPane layoutX="200.0" layoutY="25.0" prefHeight="70.0" prefWidth="700.0" AnchorPane.bottomAnchor="505.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <Label fx:id="pseudo" alignment="CENTER" layoutX="336.0" layoutY="17.0" text="Label" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="15.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

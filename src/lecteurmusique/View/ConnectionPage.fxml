@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -11,32 +13,73 @@
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="400.0" styleClass="leftPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane layoutX="100.0" layoutY="20.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="50.0" />
+            <AnchorPane layoutX="100.0" layoutY="20.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="50.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="350.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="15.0">
+                     <image>
+                        <Image url="@../resources/icons/music-1005-svgrepo-com.png" />
+                     </image>
+                  </ImageView>
+                  <AnchorPane prefHeight="270.0" prefWidth="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="230.0">
+                     <children>
+                        <Label layoutX="11.0" layoutY="14.0" prefHeight="17.0" prefWidth="328.0" text="Le mot de passe doit contenir : " AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                           <font>
+                              <Font name="Noto Sans Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="11.0" layoutY="52.0" prefHeight="17.0" prefWidth="328.0" text="- Au moins 12 caractères " AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                           <font>
+                              <Font name="Noto Sans Regular" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="11.0" layoutY="91.0" prefHeight="17.0" prefWidth="328.0" text="- Une minuscule">
+                           <font>
+                              <Font name="Noto Sans Regular" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="11.0" layoutY="129.0" prefHeight="17.0" prefWidth="328.0" text="- Une majuscule">
+                           <font>
+                              <Font name="Noto Sans Regular" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="11.0" layoutY="171.0" prefHeight="17.0" prefWidth="328.0" text="- Un chiffre">
+                           <font>
+                              <Font name="Noto Sans Regular" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="11.0" layoutY="209.0" prefHeight="17.0" prefWidth="328.0" text="- Un caractère spécial">
+                           <font>
+                              <Font name="Noto Sans Regular" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="400.0" prefHeight="600.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="100.0" layoutY="173.0" prefHeight="40.0" prefWidth="120.0" text="Email : " textFill="WHITE" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="280.0">
+            <Label layoutX="14.0" layoutY="115.0" prefHeight="40.0" prefWidth="92.0" text="Pseudo :" textFill="WHITE" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="400.0">
                <font>
-                  <Font name="Arial" size="20.0" />
+                  <Font name="Noto Sans Regular" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="100.0" layoutY="291.0" prefHeight="40.0" prefWidth="120.0" text="Password :" textFill="WHITE" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="280.0">
+            <Label layoutX="14.0" layoutY="215.0" prefHeight="40.0" prefWidth="132.0" text="Mot de passe :" textFill="WHITE" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="360.0">
                <font>
-                  <Font name="Noto Sans Regular" size="20.0" />
+                  <Font name="Noto Sans Regular" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="tf_userEmail" layoutX="100.0" layoutY="213.0" prefHeight="25.0" prefWidth="300.0" promptText="Email" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+            <TextField fx:id="pseudo" layoutX="134.0" layoutY="117.0" prefHeight="25.0" prefWidth="300.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="35.0">
                <font>
                   <Font name="Noto Sans Regular" size="18.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="pf_password" layoutX="100.0" layoutY="331.0" prefHeight="25.0" prefWidth="300.0" promptText="Password" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+            <PasswordField fx:id="motDePasse" layoutX="165.0" layoutY="217.0" prefHeight="25.0" prefWidth="300.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="35.0">
                <font>
                   <Font name="Noto Sans Regular" size="18.0" />
                </font>
             </PasswordField>
-            <Button fx:id="loginButton" layoutX="199.0" layoutY="445.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="103.0" text="Connexion" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="175.0">
+            <Button fx:id="loginButton" layoutX="199.0" layoutY="445.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="103.0" text="Se connecter" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="175.0">
                <font>
                   <Font name="Noto Sans Regular" size="20.0" />
                </font>
