@@ -1,9 +1,7 @@
 /build/
 
-/music/
-*/*.mp3
-*.mp3
 /Model/DatabaseConnection.java
 config.properties
 application.properties
 HttpRequest.java
+/dist/
