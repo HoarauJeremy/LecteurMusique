@@ -12,6 +12,8 @@ import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +21,8 @@ public class LecteurMusique extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-            /*
+
+            String fxmlFile = "com/example/lecteurmusique/Views/ConnectionPage.fxml";
             // Initialiser le fichier de configuration si nécessaire
             XmlUtils.initializeConfigFile();
 
@@ -29,27 +32,17 @@ public class LecteurMusique extends Application {
             // Récupérer les informations de l'utilisateur
             XmlUtils.UserInfo userInfo = XmlUtils.getInformation();
             if (userInfo != null) {
-                System.out.println("Connection: " + userInfo.getConnection());
-                System.out.println("Date: " + userInfo.getDate());
-                System.out.println("User ID: " + userInfo.getUserId());
+                if (userInfo.getConnection().equals("connected")) {
+                    fxmlFile = "com/example/lecteurmusique/Views/homePage.fxml";
+                } else {
+                    fxmlFile = "com/example/lecteurmusique/Views/ConnectionPage.fxml";
+                }
             } else {
                 System.out.println("Aucune information utilisateur trouvée.");
-            }*/
+            }
 
-//            String fxmlFile;
-//
-//            if (!AppUtils.getUtilisateurConnecter().isEmpty()) {
-//                fxmlFile = "View/homePage.fxml";
-//            } else {
-//                fxmlFile = "View/ConnectionPage.fxml";
-//            }
-
-            /*File file = new File("");
-            if (file.exists()) System.out.println(file.getName());
-            else System.out.println("fichier existe pas");*/
-
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/lecteurmusique/Views/homePage.fxml"));
-//            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+            //Parent root = FXMLLoader.load(getClass().getResource("/com/example/lecteurmusique/Views/homePage.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
             Scene scene = new Scene(root, 900, 600);
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
