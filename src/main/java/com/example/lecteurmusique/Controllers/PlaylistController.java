@@ -12,7 +12,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -50,14 +49,14 @@ public class PlaylistController implements Initializable {
          */
         btnPlaylist.setOnAction(Connexion::afficherPlaylistList);
 
-        btnModifierPlaylist.setOnAction((ActionEvent event) -> {
-//            try {
-//                this.updatePlaylist(4, 2, 1, "a");
-//            } catch (SQLException ex) {
-//                Logger.getLogger(PlaylistController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+        /*btnModifierPlaylist.setOnAction((ActionEvent event) -> {
+            try {
+                this.updatePlaylist(4, 2, 1, "a");
+            } catch (SQLException ex) {
+                Logger.getLogger(PlaylistController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-        });
+        });*/
     }
 
     /**
@@ -66,8 +65,8 @@ public class PlaylistController implements Initializable {
      *
      * @hidden Modifier la liste de bouton pour une liste de nom et mettre un bouton en haut de la playlist pour jouer la musique
      *
-     * @param playlists liste d'objet de type <b>Playlist</b> {@link Playlist}
-     * @param musiques liste d'objet de type <b>Musique</b> {@link Musique}
+     * @param playlists liste d'objet de type <b>{@link Playlist}</b>
+     * @param musiques liste d'objet de type <b>{@link Musique}</b>
      */
     public void setInformationPlaylist(ArrayList<Playlist> playlists, ArrayList<Musique> musiques) {
         nomPlaylist.setText(playlists.getFirst().getNom());
@@ -81,7 +80,7 @@ public class PlaylistController implements Initializable {
                 button.setId(Integer.toString(musique.getIdMusique()));
                 button.setOnAction((ActionEvent event) -> {
                     // Logique à exécuter lorsque le bouton est cliqué
-                    System.out.println("Bouton cliqué: " + musique.getIdMusique());
+
 //                    this.playMedia();
                 });
                 buttonContainer.getChildren().add(button); // Ajoute le bouton au conteneur
@@ -104,7 +103,7 @@ public class PlaylistController implements Initializable {
         messageLabel.setText(message);
     }
 
-    public void updatePlaylist(int idUser, int idPlaylist, int privee, String nomPlaylist) throws SQLException {
-//        Playlist.updatePlaylist(idUser, idPlaylist, nomPlaylist, privee);
-    }
+    /*public void updatePlaylist(int idUser, int idPlaylist, int privee, String nomPlaylist) throws SQLException {
+        Playlist.updatePlaylist(idUser, idPlaylist, nomPlaylist, privee);
+    }*/
 }

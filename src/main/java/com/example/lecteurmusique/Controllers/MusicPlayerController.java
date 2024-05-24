@@ -58,14 +58,14 @@ public class MusicPlayerController implements Initializable {
 
         if (musiques != null) {
             for (Musique musique : musiques) {
-                System.out.println(musique.getLien() + " : " + musique.getNom() + " - " + musique.getNomArtiste());
+                //System.out.println(musique.getLien() + " : " + musique.getNom() + " - " + musique.getNomArtiste());
                 songs.add("https://lecteurmusique.alwaysdata.net/musique/" + musique.getLien());
                 songsNames.add(musique.getNomArtiste()+ " - " + musique.getNom());
             }
         }
 
         try {
-            System.out.println(songs.get(songNumber));
+            //System.out.println(songs.get(songNumber));
             media = new Media(songs.get(songNumber));
             mediaPlayer = new MediaPlayer(media);
             songName.setText(songsNames.get(songNumber));

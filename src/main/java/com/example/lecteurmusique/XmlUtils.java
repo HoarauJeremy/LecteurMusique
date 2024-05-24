@@ -60,6 +60,11 @@ public class XmlUtils {
         }
     }
 
+    /**
+     * @param connection
+     * @param date
+     * @param userId
+     */
     public static void setInformation(String connection, Date date, int userId) {
         UserInfo userInfo = new UserInfo(connection, date, userId);
         try {

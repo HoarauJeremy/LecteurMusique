@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static com.example.lecteurmusique.Connexion.cheminVue;
+
 public class PlaylistListeController implements Initializable {
 
     @FXML
@@ -38,7 +40,6 @@ public class PlaylistListeController implements Initializable {
          * Retourne sur la page d'accueil.
          */
         btnRetour.setOnAction((ActionEvent event) -> {
-//            Connexion.changerScene(event, "View/homePage.fxml", AppUtils.getAppNameWithAction("Accueil"));
             Connexion.changerScenePourAccueil(event, null);
         });
 
@@ -48,17 +49,18 @@ public class PlaylistListeController implements Initializable {
         btnGenre.setOnAction(Connexion::afficherGenreMusique);
 
         /**
-         * Affiche la page de crÃ©ation de playlist
+         *
+         * Affiche la page de création de playlist
          */
         btnAjoutPlaylist.setOnAction((ActionEvent event) -> {
-            Connexion.changerScene(event, "View/ajoutPlaylist.fxml", AppUtils.getAppNameWithAction("Playlist"));
+            Connexion.changerScene(event, cheminVue("ajoutPlaylist.fxml"), AppUtils.getAppNameWithAction("Playlist"));
         });
     }
 
     /**
      * Affiche un message si la liste des playlist est vide.
      *
-     * @param message message Ã  afficher
+     * @param message message à afficher
      */
     public void setMessageInformation(String message) {
         messageLabel.setText(message);
@@ -78,8 +80,6 @@ public class PlaylistListeController implements Initializable {
                 Button button = new Button(playlist.getNom()); // CrÃ©e un bouton avec le nom de la playlist
                 button.setId(Integer.toString(playlist.getPlaylistId()));
                 button.setOnAction((ActionEvent event) -> {
-                    // Logique Ã  exÃ©cuter lorsque le bouton est cliquÃ©
-                    System.out.println("Bouton cliquÃ©: " + playlist.getPlaylistId());
                     Connexion.afficherPlaylistUtilisateur(event, playlist.getPlaylistId());
                 });
                 buttonContainer.getChildren().add(button); // Ajoute le bouton au conteneur

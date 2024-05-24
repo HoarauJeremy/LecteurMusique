@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" styleClass="background" stylesheets="@../resources/css/genre.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lecteurmusique.controllers.GenreController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" styleClass="background" stylesheets="@../css/genre.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lecteurmusique.Controllers.GenreController">
    <children>
        <fx:include source="menuBar.fxml" />
       <AnchorPane layoutX="38.0" layoutY="19.0" maxWidth="200.0" prefHeight="577.0" prefWidth="200.0" style="-fx-max-width: 200; -fx-min-width: 200; -fx-pref-width: 200;" styleClass="menu-nav" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">

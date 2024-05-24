@@ -3,6 +3,7 @@ package com.example.lecteurmusique.Models;
 import com.example.lecteurmusique.AppUtils;
 import com.example.lecteurmusique.Connexion;
 import com.example.lecteurmusique.VerifierDonnees;
+import com.example.lecteurmusique.XmlUtils;
 import com.password4j.Hash;
 import com.password4j.HashUpdate;
 import com.password4j.Password;
@@ -18,9 +19,11 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.example.lecteurmusique.Connexion.cheminVue;
+
 public class Utilisateur extends DatabaseConnection {
     public int idUser;
-    public String nom, email;
+    public String nom, prenom, pseudo, email;
 
     /**
      * Constructeur de la classe Utilisateur
@@ -32,6 +35,13 @@ public class Utilisateur extends DatabaseConnection {
     public Utilisateur(int idUser, String nom, String email) {
         this.idUser = idUser;
         this.nom = nom;
+        this.email = email;
+    }
+
+    public Utilisateur(String nom, String prenom, String pseudo, String email) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.pseudo = pseudo;
         this.email = email;
     }
 
@@ -52,6 +62,20 @@ public class Utilisateur extends DatabaseConnection {
     }
 
     /**
+     * @return le prenom de l'utilisateur
+     */
+    public String getPrenom() {
+        return prenom;
+    }
+
+    /**
+     * @return le pseudo de l'utilisateur
+     */
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    /**
      *
      * @return l'email de l'utilisateur
      */
@@ -63,11 +87,11 @@ public class Utilisateur extends DatabaseConnection {
      * Fonction pour enregistrer un nouvelle utilisateur
      *
      * @param event
-     * @param nom nom que l'utilisateur Ã  saisie
+     * @param nom nom que l'utilisateur a saisie
      * @param prenom
      * @param pseudo
-     * @param courriel email que l'utilisateur Ã  saisie
-     * @param motDePasse mot de passe que l'utilisateur Ã  saisie
+     * @param courriel email que l'utilisateur a saisie
+     * @param motDePasse mot de passe que l'utilisateur a saisie
      */
     public static void inscriptionUtilisateur(ActionEvent event, String nom, String prenom, String pseudo, String courriel, String motDePasse) {
         Connection connection = null;
@@ -81,7 +105,7 @@ public class Utilisateur extends DatabaseConnection {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            psCheckUserExists = connection.prepareStatement("SELECT * FROM utilisateur WHERE pseudo = ? AND email = ?");
+            psCheckUserExists = connection.prepareStatement("SELECT * FROM Utilisateur WHERE pseudo = ? AND email = ?");
             psCheckUserExists.setString(1, nom);
             psCheckUserExists.setString(2, courriel);
             resultSet = psCheckUserExists.executeQuery();
@@ -93,7 +117,7 @@ public class Utilisateur extends DatabaseConnection {
                     Connexion.afficherAlerte(Alert.AlertType.ERROR, "Votre mot de passe doit contenir au minimun 12 caractÃ¨res.");
                 } else if (VerifierDonnees.verifierMotDePasse(motDePasse)) {
                     Hash hash = Password.hash(motDePasse).withBcrypt();
-                    psInsert = connection.prepareStatement("INSERT INTO utilisateur (nom, prenom, pseudo, email, motDePasse) VALUES (?, ?, ?, ?, ?)");
+                    psInsert = connection.prepareStatement("INSERT INTO Utilisateur (nom, prenom, pseudo, email, motDePasse) VALUES (?, ?, ?, ?, ?)");
                     psInsert.setString(1, nom);
                     psInsert.setString(2, prenom);
                     psInsert.setString(3, pseudo);
@@ -102,9 +126,10 @@ public class Utilisateur extends DatabaseConnection {
                     psInsert.executeUpdate();
 
                     //AppUtils.setInformation(resultSet.getString("pseudo"), Date.from(Instant.now()), resultSet.getInt("idUser"));
+                    XmlUtils.setInformation("connected", new Date(), resultSet.getInt("idUser"));
                     Connexion.changerScenePourAccueil(event, resultSet.getString("pseudo"));
                 } else {
-                    Connexion.afficherAlerte(Alert.AlertType.ERROR, "Le mot de passe ne remplit pas les conditions nÃ©cessaires.");
+                    Connexion.afficherAlerte(Alert.AlertType.ERROR, "Le mot de passe ne remplit pas les conditions nécessaires.");
                 }
             }
         } catch (SQLException e) {
@@ -137,7 +162,7 @@ public class Utilisateur extends DatabaseConnection {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            preparedStatement = connection.prepareStatement("SELECT * FROM utilisateur WHERE pseudo = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM Utilisateur WHERE pseudo = ?");
             preparedStatement.setString(1, pseudo);
             resultSet = preparedStatement.executeQuery();
 
@@ -150,7 +175,7 @@ public class Utilisateur extends DatabaseConnection {
 
                     if (VerifierDonnees.verifierMotDePasse(motDePasse)) {
                         if (Password.check(motDePasse, motDePasseRetrouver).withBcrypt()) {
-                            //AppUtils.setInformation(resultSet.getString("pseudo"), Date.from(Instant.now()), resultSet.getInt("idUser"));
+                            XmlUtils.setInformation("connected", new Date(), resultSet.getInt("idUser"));
                             Connexion.changerScenePourAccueil(event, resultSet.getString("pseudo"));
                         } else {
                             Connexion.afficherAlerte(Alert.AlertType.ERROR, messageErreur);
@@ -192,7 +217,7 @@ public class Utilisateur extends DatabaseConnection {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            psCheckPassword = connection.prepareStatement("SELECT motDePasse FROM utilisateur WHERE email = ?;");
+            psCheckPassword = connection.prepareStatement("SELECT motDePasse FROM Utilisateur WHERE email = ?;");
             psCheckPassword.setString(1, email);
             resultSet = psCheckPassword.executeQuery();
 
@@ -206,7 +231,7 @@ public class Utilisateur extends DatabaseConnection {
                     if (update.isVerified()) {
                         Hash newHash = update.getHash();
 
-                        psUpdatePassword = connection.prepareStatement("UPDATE utilisateur SET motDePasse = ? WHERE email = ?");
+                        psUpdatePassword = connection.prepareStatement("UPDATE Utilisateur SET motDePasse = ? WHERE email = ?");
                         psUpdatePassword.setString(1, newHash.getResult());
                         psUpdatePassword.setString(2, email);
                         psUpdatePassword.executeUpdate();
@@ -237,18 +262,18 @@ public class Utilisateur extends DatabaseConnection {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            psVerifierInformation = connection.prepareStatement("SELECT * FROM utilisateur WHERE idUser = ?;");
+            psVerifierInformation = connection.prepareStatement("SELECT * FROM Utilisateur WHERE idUser = ?;");
             psVerifierInformation.setInt(1, idUtilisateur);
             resultSet = psVerifierInformation.executeQuery();
 
             if (resultSet.first()) {
                 if (VerifierDonnees.verifierEmail(courriel) && VerifierDonnees.verifierNomUtilisateur(nom)) {
-                    psModifierInformationUtilisateur = connection.prepareStatement("UPDATE utilisateur SET nom = ?, prenom = ?, psModifierInformationUtilisateureudo = ?, email = ? WHERE idUser = ?");
+                    psModifierInformationUtilisateur = connection.prepareStatement("UPDATE Utilisateur SET nom = ?, prenom = ?, pseudo = ?, email = ? WHERE idUser = ?");
                     psModifierInformationUtilisateur.setString(1, nom);
                     psModifierInformationUtilisateur.setString(2, prenom);
                     psModifierInformationUtilisateur.setString(3, pseudo);
                     psModifierInformationUtilisateur.setString(4, courriel);
-                    psModifierInformationUtilisateur.setString(5, "");
+                    psModifierInformationUtilisateur.setInt(5, idUtilisateur);
                     psModifierInformationUtilisateur.executeQuery();
                 }
             }
@@ -265,7 +290,7 @@ public class Utilisateur extends DatabaseConnection {
     }
 
     public static void deconnecterUtilisateur(ActionEvent event) {
-        //AppUtils.detruitInformation();
-        Connexion.changerScene(event, "View/ConnectionPage.fxml", AppUtils.getAppNameWithAction("Connexion"));
+        XmlUtils.setInformation("", null, 0);
+        Connexion.changerScene(event, cheminVue("ConnectionPage.fxml"), AppUtils.getAppNameWithAction("Connexion"));
     }
 }

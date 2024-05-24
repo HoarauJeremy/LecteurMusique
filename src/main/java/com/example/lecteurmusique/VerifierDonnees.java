@@ -12,7 +12,7 @@ public class VerifierDonnees {
     public static boolean verifierEmail(String courriel) {
         boolean resultat = true;
 
-        if (Pattern.matches("^[\\w\\.=-]+@[\\w\\.-]+\\.[\\w]{2,3}$", courriel) == false) {
+        if (!Pattern.matches("^[\\w\\.=-]+@[\\w\\.-]+\\.[\\w]{2,3}$", courriel)) {
             resultat = false;
         }
 
@@ -28,7 +28,7 @@ public class VerifierDonnees {
     public static boolean verifierNomUtilisateur(String nom) {
         boolean resultat = true;
 
-        if (Pattern.matches("^[a-zA-Zéèêë\\ -]{2,}$", nom) == false) {
+        if (!Pattern.matches("^[a-zA-Zéèêë\\ -]{2,}$", nom)) {
             resultat = false;
         }
 

@@ -96,6 +96,9 @@ public class Musique extends DatabaseConnection {
         return idArtiste;
     }
 
+    /**
+     * @return Les musiques.
+     */
     public static ArrayList<Musique> recuperMusique() {
         Connection connection = null;
         PreparedStatement ps = null;
@@ -130,6 +133,10 @@ public class Musique extends DatabaseConnection {
         return musiques;
     }
 
+    /**
+     * @param playlistId Id de la playlist choisie par l'utilisateur.
+     * @return Les musiques par rapport à une playlist.
+     */
     public static ArrayList<Musique> recuperMusiqueParPlaylistID(int playlistId) {
         Connection connection = null;
         PreparedStatement ps = null;
@@ -147,6 +154,7 @@ public class Musique extends DatabaseConnection {
                     + "INNER JOIN artistes a ON m.idArtiste = a.idArtiste "
                     + "INNER JOIN Playlist_Chanson pc ON m.idMusique = pc.idMusique "
                     + "WHERE pc.idPlaylist = ?");
+            ps.setInt(1, playlistId);
             resultSet = ps.executeQuery();
 
             if (resultSet.isBeforeFirst()) {
@@ -169,8 +177,8 @@ public class Musique extends DatabaseConnection {
 
     /**
      *
-     * @param idGenre
-     * @return les musiques par rapport à un genre.
+     * @param idGenre Id du genre choisie par l'utilisateur.
+     * @return Les musiques par rapport à un genre.
      */
     public static ArrayList<Musique> recuperMusiqueParGenre(int idGenre) {
         Connection connection = null;

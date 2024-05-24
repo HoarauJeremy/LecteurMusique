@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class AppUtils {
     private static Properties properties = null;
-    private static final String APPLICATION_PROPERTIES = "com/example/lecteurmusique/application.properties";
+    private static final String APPLICATION_PROPERTIES = "application.properties";
 
     static {
 

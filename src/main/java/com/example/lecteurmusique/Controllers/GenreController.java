@@ -56,6 +56,7 @@ public class GenreController implements Initializable {
             btn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
+                    // Jouer les musique en rapport avec le genre
                     System.out.println("ID du bouton : " + buttonId);
                 }
             });

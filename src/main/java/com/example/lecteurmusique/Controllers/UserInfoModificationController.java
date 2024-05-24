@@ -4,6 +4,7 @@ import com.example.lecteurmusique.AppUtils;
 import com.example.lecteurmusique.Connexion;
 import com.example.lecteurmusique.Models.Utilisateur;
 import com.example.lecteurmusique.VerifierDonnees;
+import com.example.lecteurmusique.XmlUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +22,8 @@ public class UserInfoModificationController implements Initializable {
     @FXML
     private TextField nomField, prenomField, pseudoField, emailField;
 
+    XmlUtils.UserInfo userInfo = XmlUtils.getInformation();
+
     /**
      * Initializes the controller class.
      * @param url
@@ -29,8 +32,7 @@ public class UserInfoModificationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.afficherProfileUtilisateur(event, 1);
-//            Connexion.afficherProfileUtilisateur(event, AppUtils.getIdUtilisateur());
+            Connexion.afficherProfileUtilisateur(event, userInfo.getUserId());
         });
 
         btnPlaylist.setOnAction((ActionEvent event) -> {
@@ -47,10 +49,14 @@ public class UserInfoModificationController implements Initializable {
             String pseudo = pseudoField.getText();
             String email = emailField.getText();
 
-            if (VerifierDonnees.verifierNomUtilisateur(nom) && VerifierDonnees.verifierNomUtilisateur(prenom) && VerifierDonnees.verifierNomUtilisateur(pseudo) && VerifierDonnees.verifierEmail(email)) {
-                Utilisateur.modifierInformationUtilisateur(nom, prenom, pseudo, email, AppUtils.getIdUtilisateur());
+            if (!nom.trim().isEmpty() && !prenom.trim().isEmpty() && !pseudo.trim().isEmpty() && !email.trim().isEmpty()) {
+                if (VerifierDonnees.verifierNomUtilisateur(nom) && VerifierDonnees.verifierNomUtilisateur(prenom) && VerifierDonnees.verifierNomUtilisateur(pseudo) && VerifierDonnees.verifierEmail(email)) {
+                    Utilisateur.modifierInformationUtilisateur(nom, prenom, pseudo, email, userInfo.getUserId());
+                } else {
+                    Connexion.afficherAlerte(Alert.AlertType.ERROR, "Une erreur est survenue.");
+                }
             } else {
-                Connexion.afficherAlerte(Alert.AlertType.ERROR, "Une erreur est souvenue.");
+                Connexion.afficherAlerte(Alert.AlertType.ERROR, "Merci de compléter tous les champs.");
             }
         });
 

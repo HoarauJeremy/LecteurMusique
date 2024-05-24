@@ -114,7 +114,7 @@ public class Playlist extends DatabaseConnection {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            psCheckPlaylistExists = connection.prepareStatement("SELECT * FROM playlist WHERE nom = ? AND idUser = ?");
+            psCheckPlaylistExists = connection.prepareStatement("SELECT * FROM Playlist WHERE nom = ? AND idUser = ?");
             psCheckPlaylistExists.setString(1, nomPlaylist);
             psCheckPlaylistExists.setInt(1, idUser);
             resultSet = psCheckPlaylistExists.executeQuery();
@@ -123,10 +123,10 @@ public class Playlist extends DatabaseConnection {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Playlist Already exist");
                 alert.setHeaderText(null);
-                alert.setContentText("You cannot use " + nomPlaylist + " .");
+                alert.setContentText("Vous ne pouvez pas utiliser " + nomPlaylist + " comme nom de playlist.");
                 alert.show();
             } else {
-                psInsert = connection.prepareStatement("INSERT INTO playlist (Nom, dateCreation, idUser, privee) VALUES (?, ?, ?, ?)");
+                psInsert = connection.prepareStatement("INSERT INTO Playlist (Nom, dateCreation, idUser, privee) VALUES (?, ?, ?, ?)");
                 psInsert.setString(1, nomPlaylist);
                 psInsert.setDate(2, (java.sql.Date) dateCreation);
                 psInsert.setInt(3, idUser);
@@ -159,7 +159,7 @@ public class Playlist extends DatabaseConnection {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            psCheckPlaylist = connection.prepareStatement("SELECT * FROM playlist WHERE PlaylistID = ? AND idUser = ?");
+            psCheckPlaylist = connection.prepareStatement("SELECT * FROM Playlist WHERE PlaylistID = ? AND idUser = ?");
             psCheckPlaylist.setInt(1, idPlaylist);
             psCheckPlaylist.setInt(2, idUser);
             resultSet = psCheckPlaylist.executeQuery();
@@ -171,7 +171,7 @@ public class Playlist extends DatabaseConnection {
                 alert.setContentText("Êtes-vous sur de vouloirs de supprimer cette playlist ?");
                 alert.showAndWait().filter(ButtonType.OK::equals).isPresent();
                 if (alert.getResult() == ButtonType.OK) {
-                    psDeletePlaylist = connection.prepareStatement("DELETE FROM playlist WHERE PlaylistID = ? AND idUser = ?");
+                    psDeletePlaylist = connection.prepareStatement("DELETE FROM Playlist WHERE PlaylistID = ? AND idUser = ?");
                     psDeletePlaylist.setInt(1, idPlaylist);
                     psDeletePlaylist.setInt(2, idUser);
                     psDeletePlaylist.executeUpdate();
@@ -204,7 +204,7 @@ public class Playlist extends DatabaseConnection {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            psUpdatePlaylist = connection.prepareStatement("UPDATE playlist SET nom = ?, privee = ? WHERE PlaylistID = ? AND nom = ?");
+            psUpdatePlaylist = connection.prepareStatement("UPDATE Playlist SET nom = ?, privee = ? WHERE PlaylistID = ? AND nom = ?");
             psUpdatePlaylist.setString(1, nomPlaylist);
             psUpdatePlaylist.setInt(2, privee);
             psUpdatePlaylist.setInt(3, idPlaylist);

@@ -1,6 +1,7 @@
 package com.example.lecteurmusique.Controllers;
 
 import com.example.lecteurmusique.Connexion;
+import com.example.lecteurmusique.XmlUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,9 +26,7 @@ public class HomePageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        btnPlaylist.setOnAction((ActionEvent event) -> {
-            this.showPlaylist(event);
-        });
+        btnPlaylist.setOnAction(this::showPlaylist);
 
         btnGenre.setOnAction((ActionEvent event) -> {
             this.showGender(event);
@@ -44,19 +43,16 @@ public class HomePageController implements Initializable {
     }
 
     public void showPlaylist(ActionEvent event) {
-        System.out.println("PLAYLIST");
         Connexion.afficherPlaylistList(event);
     }
 
     public void showGender(ActionEvent event) {
-        System.out.println("GENRE");
         Connexion.afficherGenreMusique(event);
     }
 
     public void showProfile(ActionEvent event) {
-        System.out.println("PROFILE");
-        Connexion.afficherProfileUtilisateur(event, 1);
-        // Connexion.afficherProfileUtilisateur(event, AppUtils.getIdUtilisateur());
+        XmlUtils.UserInfo userInfo = XmlUtils.getInformation();
+        Connexion.afficherProfileUtilisateur(event, userInfo.getUserId());
     }
 
 }

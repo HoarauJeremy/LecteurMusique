@@ -10,7 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import static com.example.lecteurmusique.Connexion.cheminVue;
 
 public class LoggedInController implements Initializable {
 
@@ -41,11 +44,11 @@ public class LoggedInController implements Initializable {
         });
 
         btnModifcation.setOnAction((ActionEvent event) -> {
-            Connexion.changerScene(event, "View/UserInfoModification.fxml", AppUtils.getAppNameWithAction("Modification"));
+            Connexion.changerScene(event, cheminVue("UserInfoModification.fxml"), AppUtils.getAppNameWithAction("Modification"));
         });
 
         btnModificationMDP.setOnAction((ActionEvent event) -> {
-            Connexion.changerScene(event, "View/UserPasswordModification.fxml", AppUtils.getAppNameWithAction("Modification"));
+            Connexion.changerScene(event, cheminVue("UserPasswordModification.fxml"), AppUtils.getAppNameWithAction("Modification"));
         });
 
         btnLogout.setOnAction((ActionEvent event) -> {
@@ -54,17 +57,15 @@ public class LoggedInController implements Initializable {
     }
 
     /**
-     *
-     * @param nom
-     * @param prenom
-     * @param pseudo
-     * @param email
+     * @param utilisateurs
      */
-    public void setUserInformation(String nom, String prenom, String pseudo, String email) {
-        nomLabel.setText(nom);
-        prenomLabel.setText(prenom);
-        pseudoLabel.setText(pseudo);
-        emailLabel.setText(email);
+    public void setUserInformation(ArrayList<Utilisateur> utilisateurs) {
+        for (Utilisateur utilisateur : utilisateurs) {
+            nomLabel.setText(utilisateur.getNom());
+            prenomLabel.setText(utilisateur.getPrenom());
+            pseudoLabel.setText(utilisateur.getPseudo());
+            emailLabel.setText(utilisateur.getEmail());
+        }
     }
 
 }

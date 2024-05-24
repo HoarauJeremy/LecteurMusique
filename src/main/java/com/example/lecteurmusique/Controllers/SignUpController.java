@@ -14,6 +14,8 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static com.example.lecteurmusique.Connexion.cheminVue;
+
 public class SignUpController implements Initializable {
 
     @FXML
@@ -45,7 +47,7 @@ public class SignUpController implements Initializable {
         });
 
         LoginButton.setOnAction((ActionEvent event) -> {
-            Connexion.changerScene(event, "View/ConnectionPage.fxml", "Login");
+            Connexion.changerScene(event, cheminVue("ConnectionPage.fxml"), "Connexion");
         });
     }
 

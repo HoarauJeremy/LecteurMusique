@@ -6,7 +6,6 @@ import java.util.Properties;
 public class DatabaseConfig {
     private static Properties properties = null;
 
-
     static {
         try (InputStream input = DatabaseConfig.class.getClassLoader().getResourceAsStream("config.properties")) {
             if (input == null) {

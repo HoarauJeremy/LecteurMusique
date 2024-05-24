@@ -1,10 +1,7 @@
 package com.example.lecteurmusique;
 
 import com.example.lecteurmusique.Controllers.*;
-import com.example.lecteurmusique.Models.DatabaseConnection;
-import com.example.lecteurmusique.Models.Genre;
-import com.example.lecteurmusique.Models.Musique;
-import com.example.lecteurmusique.Models.Playlist;
+import com.example.lecteurmusique.Models.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -26,6 +23,7 @@ import java.util.logging.Logger;
 import static com.example.lecteurmusique.Models.DatabaseConnection.creerConnexion;
 
 public class Connexion {
+
     /**
      *
      * @param event
@@ -59,7 +57,7 @@ public class Connexion {
 
         if (pseudo != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(Connexion.class.getResource("View/homePage.fxml"));
+                FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(cheminVue("homePage.fxml")));
                 root = loader.load();
                 HomePageController homePageController = loader.getController();
                 homePageController.setUserInformation(pseudo);
@@ -68,7 +66,7 @@ public class Connexion {
             }
         } else {
             try {
-                root = FXMLLoader.load(Connexion.class.getResource("View/homePage.fxml"));
+                root = FXMLLoader.load(Connexion.class.getResource(cheminVue("homePage.fxml")));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -85,24 +83,17 @@ public class Connexion {
      * @param event
      * @param fxmlFile
      * @param title
-     * @param nom
-     * @param email
+     * @param utilisateurs
      */
-    private static void changerScenePourProfile(ActionEvent event, String fxmlFile, String title, String nom, String prenom, String pseudo, String email) {
+    private static void changerScenePourProfile(ActionEvent event, String fxmlFile, String title, ArrayList<Utilisateur> utilisateurs) {
         Parent root = null;
 
-        if (nom != null && email != null) {
+        if (utilisateurs != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
                 root = loader.load();
                 LoggedInController loggedInController = loader.getController();
-                loggedInController.setUserInformation(nom, prenom, pseudo, email);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                root = FXMLLoader.load(Connexion.class.getResource(fxmlFile));
+                loggedInController.setUserInformation(utilisateurs);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -115,14 +106,12 @@ public class Connexion {
     }
 
     /**
-     *
      * @param event
      * @param fxmlFile
-     * @param title
      * @param playlists
      * @param musiques
      */
-    private static void changerScenePourPlaylist(ActionEvent event, String fxmlFile, String title, String message, ArrayList<Playlist> playlists, ArrayList<Musique> musiques) {
+    private static void changerScenePourPlaylist(ActionEvent event, String fxmlFile, String message, ArrayList<Playlist> playlists, ArrayList<Musique> musiques) {
         Parent root = null;
 
         if (playlists != null && musiques != null) {
@@ -146,19 +135,17 @@ public class Connexion {
         }
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle(title);
+        stage.setTitle("Playlist");
         stage.setScene(new Scene(root));
         stage.show();
     }
 
     /**
-     *
      * @param event
      * @param fxmlFile
-     * @param title
      * @param tabGenre
      */
-    private static void changerScenePourGenre(ActionEvent event, String fxmlFile, String title, HashMap<Integer, Genre> tabGenre) {
+    private static void changerScenePourGenre(ActionEvent event, String fxmlFile, HashMap<Integer, Genre> tabGenre) {
         Parent root = null;
 
         if (tabGenre != null) {
@@ -170,32 +157,31 @@ public class Connexion {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
+        } /*else {
             try {
                 root = FXMLLoader.load(Connexion.class.getResource(fxmlFile));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle(title);
+        stage.setTitle("Genre");
         stage.setScene(new Scene(root));
         stage.show();
     }
 
     /**
-     *
      * @param event
      * @param fxmlFile
-     * @param title
      * @param message
      */
-    private static void changerScenePourPlaylisList(ActionEvent event, String fxmlFile, String title, String message, ArrayList<Playlist> arrayListPlaylist) {
+    private static void changerScenePourPlaylisList(ActionEvent event, String fxmlFile, String message, ArrayList<Playlist> arrayListPlaylist) {
         Parent root = null;
 
         if (message != null) {
             try {
+                System.out.println(fxmlFile);
                 FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
                 root = loader.load();
                 PlaylistListeController playlistListeController = loader.getController();
@@ -205,6 +191,7 @@ public class Connexion {
             }
         } else {
             try {
+                System.out.println(fxmlFile);
                 FXMLLoader loader = new FXMLLoader(Connexion.class.getResource(fxmlFile));
                 root = loader.load();
                 PlaylistListeController playlistListeController = loader.getController();
@@ -215,21 +202,23 @@ public class Connexion {
         }
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle(title);
+        stage.setTitle("PLaylist");
         stage.setScene(new Scene(root));
         stage.show();
     }
 
     /**
-     * Fonction qui va récupérer toutes les infotmations d'un utilisateur.
+     * Fonction qui va récupérer toutes les informations d'un utilisateur.
      *
      * @param event
-     * @param user_id
+     * @param idUtilisateur
      */
-    public static void afficherProfileUtilisateur(ActionEvent event, int user_id) {
+    public static void afficherProfileUtilisateur(ActionEvent event, int idUtilisateur) {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
+        ArrayList<Utilisateur> utilisateurs = new ArrayList<>();
+        String pseudo = "";
 
         try {
             try {
@@ -237,14 +226,20 @@ public class Connexion {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            ps = connection.prepareStatement("SELECT * FROM utilisateur WHERE idUser = ?");
-            ps.setInt(1, user_id);
+            ps = connection.prepareStatement("SELECT * FROM Utilisateur WHERE idUser = ?");
+            ps.setInt(1, idUtilisateur);
             resultSet = ps.executeQuery();
 
-            if (!resultSet.isBeforeFirst()) {
-                afficherAlerte(Alert.AlertType.ERROR, "msg temporaire");
+            if (resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    utilisateurs.add(new Utilisateur(resultSet.getString("nom"), resultSet.getString("prenom"), resultSet.getString("pseudo"), resultSet.getString("email")));
+                    pseudo = resultSet.getString("pseudo");
+                }
+
+                changerScenePourProfile(event, cheminVue("logged-in.fxml"), AppUtils.getAppNameWithAction("Profile de "+ pseudo), utilisateurs);
+
             } else {
-                changerScenePourProfile(event, "View/logged-in.fxml", AppUtils.getAppNameWithAction("Profile de " + resultSet.getString("pseudo")), resultSet.getString("nom"), resultSet.getString("prenom"), resultSet.getString("pseudo"), resultSet.getString("email"));
+                afficherAlerte(Alert.AlertType.ERROR, "msg temporaire");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -275,7 +270,7 @@ public class Connexion {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            ps = connection.prepareStatement("SELECT * FROM playlist;");
+            ps = connection.prepareStatement("SELECT * FROM Playlist;");
             //ps = connection.prepareStatement("SELECT * FROM playlist WHERE idUser = ?;");
             resultSet = ps.executeQuery();
 
@@ -295,7 +290,8 @@ public class Connexion {
                 message = "Aucune playlist disponible";
             }
 
-            changerScenePourPlaylisList(event, "View/Playlist-Liste.fxml", AppUtils.getAppNameWithAction("PLaylist"), message, playlists);
+            changerScenePourPlaylisList(event, cheminVue("Playlist-Liste.fxml"), message, playlists);
+            //changerScenePourPlaylisList(event, "View/Playlist-Liste.fxml", AppUtils.getAppNameWithAction("PLaylist"), message, playlists);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -328,7 +324,7 @@ public class Connexion {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            ps = connection.prepareStatement("SELECT p.*, m.* FROM playlist p INNER JOIN playlist_chanson pC ON p.PlaylistID = pC.PlaylistID INNER JOIN musique m ON pC.idMusique = m.idMusique WHERE p.PlaylistID = ?");
+            ps = connection.prepareStatement("SELECT p.*, m.* FROM Playlist p INNER JOIN playlist_chanson pC ON p.PlaylistID = pC.PlaylistID INNER JOIN musique m ON pC.idMusique = m.idMusique WHERE p.PlaylistID = ?");
             ps.setInt(1, playlistId);
             resultSet = ps.executeQuery();
 
@@ -349,7 +345,8 @@ public class Connexion {
                 message = "Aucune Musique dans cette Playlist";
             }
 
-            changerScenePourPlaylist(event, "View/Playlist.fxml", AppUtils.getAppNameWithAction("Playlist"), message, playlists, musiques);
+            changerScenePourPlaylist(event, cheminVue("Playlist.fxml"), message, playlists, musiques);
+            //changerScenePourPlaylist(event, cheminVue("Playlist.fxml"), AppUtils.getAppNameWithAction("Playlist"), message, playlists, musiques);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -382,14 +379,15 @@ public class Connexion {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            ps = connection.prepareStatement("SELECT * FROM genre");
+            ps = connection.prepareStatement("SELECT * FROM Genre");
             resultSet = ps.executeQuery();
 
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {
                     genres.put(resultSet.getInt(1), new Genre(resultSet.getInt(1), resultSet.getString(2)));
                 }
-                changerScenePourGenre(event, "View/genre.fxml", AppUtils.getAppNameWithAction("Genre"), genres);
+                changerScenePourGenre(event, cheminVue("genre.fxml"), genres);
+                //changerScenePourGenre(event, cheminVue("genre.fxml"), AppUtils.getAppNameWithAction("Genre"), genres);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -415,6 +413,10 @@ public class Connexion {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.show();
+    }
+
+    public static String cheminVue(String nomFichier) {
+        return "/com/example/lecteurmusique/Views/" + nomFichier;
     }
 
 }

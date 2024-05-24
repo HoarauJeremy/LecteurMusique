@@ -2,6 +2,7 @@ package com.example.lecteurmusique.Controllers;
 
 import com.example.lecteurmusique.Connexion;
 import com.example.lecteurmusique.VerifierDonnees;
+import com.example.lecteurmusique.XmlUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +18,8 @@ public class UserPasswordModificationController implements Initializable {
     @FXML
     private PasswordField motDePasseField1, motDePasseField2;
 
+    XmlUtils.UserInfo userInfo = XmlUtils.getInformation();
+
     /**
      * Initializes the controller class.
      * @param url
@@ -25,8 +28,7 @@ public class UserPasswordModificationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnRetour.setOnAction((ActionEvent event) -> {
-            Connexion.afficherProfileUtilisateur(event, 1);
-            // Connexion.afficherProfileUtilisateur(event, AppUtils.getIdUtilisateur());
+            Connexion.afficherProfileUtilisateur(event, userInfo.getUserId());
         });
 
         btnPlaylist.setOnAction((ActionEvent event) -> {

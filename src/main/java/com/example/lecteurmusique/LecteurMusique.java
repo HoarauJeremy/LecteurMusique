@@ -22,20 +22,19 @@ public class LecteurMusique extends Application {
     public void start(Stage primaryStage) throws IOException {
         try {
 
-            String fxmlFile = "com/example/lecteurmusique/Views/ConnectionPage.fxml";
+            String fxmlFile = "/com/example/lecteurmusique/Views/ConnectionPage.fxml";
+
             // Initialiser le fichier de configuration si nécessaire
             XmlUtils.initializeConfigFile();
 
-            // Définir les informations de l'utilisateur
-            XmlUtils.setInformation("connected", new Date(), 12345);
-
             // Récupérer les informations de l'utilisateur
             XmlUtils.UserInfo userInfo = XmlUtils.getInformation();
+
             if (userInfo != null) {
                 if (userInfo.getConnection().equals("connected")) {
-                    fxmlFile = "com/example/lecteurmusique/Views/homePage.fxml";
+                    fxmlFile = "/com/example/lecteurmusique/Views/homePage.fxml";
                 } else {
-                    fxmlFile = "com/example/lecteurmusique/Views/ConnectionPage.fxml";
+                    fxmlFile = "/com/example/lecteurmusique/Views/ConnectionPage.fxml";
                 }
             } else {
                 System.out.println("Aucune information utilisateur trouvée.");
@@ -46,8 +45,8 @@ public class LecteurMusique extends Application {
             Scene scene = new Scene(root, 900, 600);
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
-            primaryStage.setTitle("APP.Name");
-            //primaryStage.getIcons().add(new Image("com/example/lecteurmusique/Icons/music-1005-svgrepo-com.png"));
+            primaryStage.setTitle(AppUtils.getAppName());
+            primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(AppUtils.getAppLogo())));
             primaryStage.show();
 
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -60,6 +59,10 @@ public class LecteurMusique extends Application {
         } catch (IOException ex) {
             Logger.getLogger(LecteurMusique.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static void main(String[] args) {
+        launch();
     }
 
 }

@@ -5,12 +5,9 @@ import com.example.lecteurmusique.DatabaseConfig;
 import java.sql.*;
 
 public class DatabaseConnection {
-    private static final String JDBC_URL = "jdbc:mysql://mysql-lecteurmusique.alwaysdata.net:3306/lecteurmusique_db";
-    //private static final String JDBC_URL = DatabaseConfig.getDbUrl();
-    private static final String USER = "356967";
-    //private static final String USER = DatabaseConfig.getDbUser();
-    private static final String PASSWORD = "L_4pp2L3cTur32Mus1q3";
-    //private static final String PASSWORD = DatabaseConfig.getDbPassword();
+    private static final String JDBC_URL = DatabaseConfig.getDbUrl();
+    private static final String USER = DatabaseConfig.getDbUser();
+    private static final String PASSWORD = DatabaseConfig.getDbPassword();
 
     /**
      * Créer une connexion avec la base de données
