@@ -1,0 +1,16 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.background {
+    -fx-background-color: #4f4f4f;
+}
+
+.menu-nav {
+    -fx-background-color: #3f3f3f;
+}
+
+.btn-retour, .menu-btn, .btn-Enregistrer {
+    -fx-background-color: #e5e5e5;
+    -fx-border-width: 0;
+}

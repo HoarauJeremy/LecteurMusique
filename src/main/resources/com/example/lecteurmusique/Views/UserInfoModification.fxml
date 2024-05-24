@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" styleClass="background" stylesheets="@../css/userinfomodification.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lecteurmusique.Controllers.UserInfoModificationController">
+   <children>
+       <fx:include source="menuBar.fxml" />
+      <AnchorPane layoutX="31.0" layoutY="58.0" maxWidth="200.0" prefHeight="577.0" prefWidth="200.0" style="-fx-max-width: 200; -fx-min-width: 200; -fx-pref-width: 200;" styleClass="menu-nav" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <Label alignment="CENTER" layoutX="30.0" layoutY="14.0" minWidth="60.0" prefHeight="27.0" prefWidth="140.0" style="&#10;" text="Menu" textAlignment="CENTER" textFill="#9c9c9c" wrapText="false" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="18.0" fx:id="x1" />
+               </font>
+            </Label>
+            <Button fx:id="btnRetour" contentDisplay="CENTER" layoutX="11.0" layoutY="531.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="121.0" styleClass="btn-retour" text="Retour" textAlignment="CENTER" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnGenre" layoutX="55.0" layoutY="65.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="102.0" styleClass="menu-btn" text="Genre" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnPlaylist" layoutX="16.0" layoutY="302.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="menu-btn" text="Playlist" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="200.0" layoutY="23.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
+         <children>
+            <Button fx:id="btnEnregistrement" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="502.0" mnemonicParsing="false" styleClass="btn-Enregistrer" text="Enregistrer" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="290.0" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="501.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </Button>
+            <TextField fx:id="nomField" layoutX="240.0" layoutY="121.0" AnchorPane.bottomAnchor="420.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="121.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="prenomField" layoutX="240.0" layoutY="205.0" AnchorPane.bottomAnchor="336.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="205.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </TextField>
+            <Label layoutX="200.0" layoutY="181.0" text="Prenom :" textFill="WHITE" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="334.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="200.0" layoutY="97.0" text="Nom :" textFill="WHITE" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="334.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="emailField" layoutX="200.0" layoutY="374.0" AnchorPane.bottomAnchor="167.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="374.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </TextField>
+            <Label layoutX="187.0" layoutY="271.0" text="Pseudo :" textFill="WHITE" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="334.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="pseudoField" layoutX="200.0" layoutY="295.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </TextField>
+            <Label layoutX="200.0" layoutY="350.0" text="Email :" textFill="WHITE" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="334.0">
+               <font>
+                  <Font name="Noto Sans Regular" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
