@@ -1,6 +1,7 @@
 package com.example.lecteurmusique.Controllers;
 
 import com.example.lecteurmusique.Connexion;
+import com.example.lecteurmusique.Models.NombreEcoute;
 import com.example.lecteurmusique.XmlUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,12 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class HomePageController implements Initializable {
 
     @FXML
-    private Button btnGenre, btnPlaylist, btnProfil;
+    private Button btnGenre, btnPlaylist, btnProfil, btnTop50;
 
     @FXML
     private Label pseudoLabel;
@@ -34,6 +36,17 @@ public class HomePageController implements Initializable {
 
         btnProfil.setOnAction((ActionEvent event) -> {
             this.showProfile(event);
+        });
+
+        btnTop50.setOnAction(event -> {
+            //Connexion.changerScene(event, "/com/example/lecteurmusique/Views/Top50.fxml", "TOP 50");
+            try {
+                NombreEcoute.recupererMusique();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         });
 
     }

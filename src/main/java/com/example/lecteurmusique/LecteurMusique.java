@@ -61,8 +61,4 @@ public class LecteurMusique extends Application {
         }
     }
 
-    public static void main(String[] args) {
-        launch();
-    }
-
 }
